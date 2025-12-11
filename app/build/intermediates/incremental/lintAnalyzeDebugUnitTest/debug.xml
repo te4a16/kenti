@@ -1,0 +1,27 @@
+<variant
+    name="debug"
+    package="org.tensorflow.lite.examples.objectdetection"
+    minSdkVersion="21"
+    targetSdkVersion="34"
+    debuggable="true"
+    mergedManifest="build\intermediates\merged_manifest\debug\processDebugMainManifest\AndroidManifest.xml"
+    partialResultsDir="build\intermediates\unit_test_lint_partial_results\debug\lintAnalyzeDebugUnitTest\out"
+    desugaredMethodsFiles="C:\Users\220508\.gradle\caches\8.14.3\transforms\09057d5587fda8f5ab2aaa7f7e2d1fd2\transformed\D8BackportedDesugaredMethods.txt">
+  <buildFeatures
+      viewBinding="true"
+      namespacing="REQUIRED"/>
+  <sourceProviders>
+  </sourceProviders>
+  <testSourceProviders>
+    <sourceProvider
+        manifests="src\test\AndroidManifest.xml"
+        javaDirectories="src\test\java;src\testDebug\java;src\test\kotlin;src\testDebug\kotlin"
+        assetsDirectories="src\test\assets;src\testDebug\assets"
+        unitTest="true"/>
+  </testSourceProviders>
+  <testFixturesSourceProviders>
+  </testFixturesSourceProviders>
+  <artifact
+      type="UNIT_TEST">
+  </artifact>
+</variant>
