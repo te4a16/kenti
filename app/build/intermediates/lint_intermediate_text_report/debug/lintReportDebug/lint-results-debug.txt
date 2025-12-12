@@ -1,16 +1,16 @@
-E:\sotuken\android\app\src\main\java\org\tensorflow\lite\examples\objectdetection\fragments\CameraFragment.kt:199: Warning: Implicitly using the default locale is a common source of bugs: Use String.format(Locale, ...) instead [DefaultLocale]
+E:\sotuken\android\app\src\main\java\org\tensorflow\lite\examples\objectdetection\fragments\CameraFragment.kt:216: Warning: Implicitly using the default locale is a common source of bugs: Use String.format(Locale, ...) instead [DefaultLocale]
             String.format("%.2f", objectDetectorHelper.threshold)
             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-E:\sotuken\android\app\src\main\java\org\tensorflow\lite\examples\objectdetection\fragments\CameraFragment.kt:199: Warning: Implicitly using the default locale is a common source of bugs: Use String.format(Locale, ...) instead [DefaultLocale]
+E:\sotuken\android\app\src\main\java\org\tensorflow\lite\examples\objectdetection\fragments\CameraFragment.kt:216: Warning: Implicitly using the default locale is a common source of bugs: Use String.format(Locale, ...) instead [DefaultLocale]
             String.format("%.2f", objectDetectorHelper.threshold)
             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-E:\sotuken\android\app\src\main\java\org\tensorflow\lite\examples\objectdetection\fragments\CameraFragment.kt:307: Warning: Implicitly using the default locale is a common source of bugs: Use String.format(Locale, ...) instead [DefaultLocale]
+E:\sotuken\android\app\src\main\java\org\tensorflow\lite\examples\objectdetection\fragments\CameraFragment.kt:337: Warning: Implicitly using the default locale is a common source of bugs: Use String.format(Locale, ...) instead [DefaultLocale]
                             String.format("%d ms", inferenceTime)
                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-E:\sotuken\android\app\src\main\java\org\tensorflow\lite\examples\objectdetection\fragments\CameraFragment.kt:307: Warning: Implicitly using the default locale is a common source of bugs: Use String.format(Locale, ...) instead [DefaultLocale]
+E:\sotuken\android\app\src\main\java\org\tensorflow\lite\examples\objectdetection\fragments\CameraFragment.kt:337: Warning: Implicitly using the default locale is a common source of bugs: Use String.format(Locale, ...) instead [DefaultLocale]
                             String.format("%d ms", inferenceTime)
                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-E:\sotuken\android\app\src\main\java\org\tensorflow\lite\examples\objectdetection\OverlayView.kt:87: Warning: Implicitly using the default locale is a common source of bugs: Use String.format(Locale, ...) instead [DefaultLocale]
+E:\sotuken\android\app\src\main\java\org\tensorflow\lite\examples\objectdetection\OverlayView.kt:105: Warning: Implicitly using the default locale is a common source of bugs: Use String.format(Locale, ...) instead [DefaultLocale]
                         String.format("%.2f", result.categories[0].score)
                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

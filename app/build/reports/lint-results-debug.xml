@@ -15,7 +15,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="E:\sotuken\android\app\src\main\java\org\tensorflow\lite\examples\objectdetection\fragments\CameraFragment.kt"
-            line="199"
+            line="216"
             column="13"/>
     </issue>
 
@@ -33,7 +33,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="E:\sotuken\android\app\src\main\java\org\tensorflow\lite\examples\objectdetection\fragments\CameraFragment.kt"
-            line="199"
+            line="216"
             column="13"/>
     </issue>
 
@@ -51,7 +51,7 @@
         errorLine2="                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="E:\sotuken\android\app\src\main\java\org\tensorflow\lite\examples\objectdetection\fragments\CameraFragment.kt"
-            line="307"
+            line="337"
             column="29"/>
     </issue>
 
@@ -69,7 +69,7 @@
         errorLine2="                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="E:\sotuken\android\app\src\main\java\org\tensorflow\lite\examples\objectdetection\fragments\CameraFragment.kt"
-            line="307"
+            line="337"
             column="29"/>
     </issue>
 
@@ -87,7 +87,7 @@
         errorLine2="                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="E:\sotuken\android\app\src\main\java\org\tensorflow\lite\examples\objectdetection\OverlayView.kt"
-            line="87"
+            line="105"
             column="25"/>
     </issue>
 

@@ -13,6 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+ /*
+ *cameraXを使ってカメラ映像を取得し、TensorFlow Liteの物体検出を行うFragment
+ */
+
 package org.tensorflow.lite.examples.objectdetection.fragments
 
 import android.annotation.SuppressLint
@@ -53,20 +58,25 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
     private val fragmentCameraBinding
         get() = _fragmentCameraBinding!!
 
+    //物体検出の補助クラス
     private lateinit var objectDetectorHelper: ObjectDetectorHelper
+
+    //カメラ画像保持用
     private lateinit var bitmapBuffer: Bitmap
+
+    //CameraX用の各種ユースケース
     private var preview: Preview? = null
     private var imageAnalyzer: ImageAnalysis? = null
     private var camera: Camera? = null
     private var cameraProvider: ProcessCameraProvider? = null
 
+    //カメラ処理を行うバックグラウンドスレッド
     /** Blocking camera operations are performed using this executor */
     private lateinit var cameraExecutor: ExecutorService
 
     override fun onResume() {
         super.onResume()
-        // Make sure that all permissions are still present, since the
-        // user could have removed them while the app was in paused state.
+        //パーミッションが剥奪されていないか確認
         if (!PermissionsFragment.hasPermissions(requireContext())) {
             Navigation.findNavController(requireActivity(), R.id.fragment_container)
                 .navigate(CameraFragmentDirections.actionCameraToPermissions())
@@ -77,7 +87,7 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
         _fragmentCameraBinding = null
         super.onDestroyView()
 
-        // Shut down our background executor
+        //バックグラウンドスレッド停止
         cameraExecutor.shutdown()
     }
 
@@ -95,25 +105,29 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //物体検出の初期化
         objectDetectorHelper = ObjectDetectorHelper(
             context = requireContext(),
             objectDetectorListener = this)
 
-        // Initialize our background executor
+        //バックグラウンド実行者を初期化する
+        //バックグラウンドスレッド開始
         cameraExecutor = Executors.newSingleThreadExecutor()
 
-        // Wait for the views to be properly laid out
+        //viewFinderがレイアウト完了したらカメラをセットアップ
         fragmentCameraBinding.viewFinder.post {
-            // Set up the camera and its use cases
+            //カメラとその使用例を設定する
             setUpCamera()
         }
 
-        // Attach listeners to UI control widgets
+        //UIコントロールウィジェットにリスナーをアタッチする
+        //下部UIのボタンなど設定
         initBottomSheetControls()
     }
 
+    // 下部の設定用 UI（閾値・検出数・スレッド数・モデルなど）のリスナー設定を行う
     private fun initBottomSheetControls() {
-        // When clicked, lower detection score threshold floor
+        //クリック時、検出スコアの閾値を下限値まで引き下げ
         fragmentCameraBinding.bottomSheetLayout.thresholdMinus.setOnClickListener {
             if (objectDetectorHelper.threshold >= 0.1) {
                 objectDetectorHelper.threshold -= 0.1f
@@ -121,7 +135,7 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
             }
         }
 
-        // When clicked, raise detection score threshold floor
+        //クリックすると、検出スコアの閾値下限を引き上げる
         fragmentCameraBinding.bottomSheetLayout.thresholdPlus.setOnClickListener {
             if (objectDetectorHelper.threshold <= 0.8) {
                 objectDetectorHelper.threshold += 0.1f
@@ -129,7 +143,7 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
             }
         }
 
-        // When clicked, reduce the number of objects that can be detected at a time
+        //クリック時、検出数減らす
         fragmentCameraBinding.bottomSheetLayout.maxResultsMinus.setOnClickListener {
             if (objectDetectorHelper.maxResults > 1) {
                 objectDetectorHelper.maxResults--
@@ -137,7 +151,7 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
             }
         }
 
-        // When clicked, increase the number of objects that can be detected at a time
+        //クリック時、検出数増やす
         fragmentCameraBinding.bottomSheetLayout.maxResultsPlus.setOnClickListener {
             if (objectDetectorHelper.maxResults < 5) {
                 objectDetectorHelper.maxResults++
@@ -145,6 +159,7 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
             }
         }
 
+        //クリック時、スレッド数減
         // When clicked, decrease the number of threads used for detection
         fragmentCameraBinding.bottomSheetLayout.threadsMinus.setOnClickListener {
             if (objectDetectorHelper.numThreads > 1) {
@@ -153,7 +168,7 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
             }
         }
 
-        // When clicked, increase the number of threads used for detection
+        //クリック時、スレッド数増
         fragmentCameraBinding.bottomSheetLayout.threadsPlus.setOnClickListener {
             if (objectDetectorHelper.numThreads < 4) {
                 objectDetectorHelper.numThreads++
@@ -161,8 +176,9 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
             }
         }
 
-        // When clicked, change the underlying hardware used for inference. Current options are CPU
-        // GPU, and NNAPI
+        //推論デリゲート選択(CPU / GPU / NNAPI)
+        //クリックすると、推論に使用される基盤となるハードウェアを変更します。
+        //現在の選択肢はCPU、GPU、NNAPIです
         fragmentCameraBinding.bottomSheetLayout.spinnerDelegate.setSelection(0, false)
         fragmentCameraBinding.bottomSheetLayout.spinnerDelegate.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
@@ -176,7 +192,8 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
                 }
             }
 
-        // When clicked, change the underlying model used for object detection
+        //モデル選択(各種TFLiteモデル)
+        //クリックすると、オブジェクト検出に使用される基盤モデルを変更します
         fragmentCameraBinding.bottomSheetLayout.spinnerModel.setSelection(0, false)
         fragmentCameraBinding.bottomSheetLayout.spinnerModel.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
@@ -191,7 +208,7 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
             }
     }
 
-    // Update the values displayed in the bottom sheet. Reset detector.
+    // UI 表示値更新 + 検出器リセット
     private fun updateControlsUi() {
         fragmentCameraBinding.bottomSheetLayout.maxResultsValue.text =
             objectDetectorHelper.maxResults.toString()
@@ -200,13 +217,14 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
         fragmentCameraBinding.bottomSheetLayout.threadsValue.text =
             objectDetectorHelper.numThreads.toString()
 
-        // Needs to be cleared instead of reinitialized because the GPU
-        // delegate needs to be initialized on the thread using it when applicable
+        // 再初期化ではなくクリアする必要があるのは、GPUデリゲートが
+        //適用可能な場合に使用するスレッド上で初期化される必要があるためである。
+        //検出器再生成
         objectDetectorHelper.clearObjectDetector()
         fragmentCameraBinding.overlay.clear()
     }
 
-    // Initialize CameraX, and prepare to bind the camera use cases
+    //CameraXを初期化し、カメラユースケースのバインド準備を行う
     private fun setUpCamera() {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext())
         cameraProviderFuture.addListener(
@@ -214,14 +232,14 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
                 // CameraProvider
                 cameraProvider = cameraProviderFuture.get()
 
-                // Build and bind the camera use cases
+                // カメラのユースケースを構築し、連携させる
                 bindCameraUseCases()
             },
             ContextCompat.getMainExecutor(requireContext())
         )
     }
 
-    // Declare and bind preview, capture and analysis use cases
+    //プレビュー / 画像解析ユースケースをバインド
     @SuppressLint("UnsafeOptInUsageError")
     private fun bindCameraUseCases() {
 
@@ -229,18 +247,21 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
         val cameraProvider =
             cameraProvider ?: throw IllegalStateException("Camera initialization failed.")
 
-        // CameraSelector - makes assumption that we're only using the back camera
+        // CameraSelector - 背面カメラのみを使用しているという前提で動作します
+        //背面カメラを選択
         val cameraSelector =
             CameraSelector.Builder().requireLensFacing(CameraSelector.LENS_FACING_BACK).build()
 
-        // Preview. Only using the 4:3 ratio because this is the closest to our models
+        // Preview. 4:3比率のみを使用しています。これは当社のモデルに最も近い比率だからです。
+        //プレビュー設定
         preview =
             Preview.Builder()
                 .setTargetAspectRatio(AspectRatio.RATIO_4_3)
                 .setTargetRotation(fragmentCameraBinding.viewFinder.display.rotation)
                 .build()
 
-        // ImageAnalysis. Using RGBA 8888 to match how our models work
+        // 画像解析。モデル動作に合わせるためRGBA 8888を使用
+        //画像解析（RGBA 8888）で物体検出を行う
         imageAnalyzer =
             ImageAnalysis.Builder()
                 .setTargetAspectRatio(AspectRatio.RATIO_4_3)
@@ -248,12 +269,13 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
                 .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
                 .setOutputImageFormat(OUTPUT_IMAGE_FORMAT_RGBA_8888)
                 .build()
-                // The analyzer can then be assigned to the instance
+                //その後、アナライザーをインスタンスに割り当てることができます
                 .also {
                     it.setAnalyzer(cameraExecutor) { image ->
+                    // 初回のみ Bitmap バッファを生成
                         if (!::bitmapBuffer.isInitialized) {
-                            // The image rotation and RGB image buffer are initialized only once
-                            // the analyzer has started running
+                            //画像回転とRGB画像バッファは、アナライザの実行が
+                            //開始された後にのみ初期化される
                             bitmapBuffer = Bitmap.createBitmap(
                               image.width,
                               image.height,
@@ -266,36 +288,43 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
                 }
 
         // Must unbind the use-cases before rebinding them
+        //再バインドのため一度クリア
         cameraProvider.unbindAll()
 
         try {
-            // A variable number of use-cases can be passed here -
-            // camera provides access to CameraControl & CameraInfo
+            //ここで渡せるユースケースの数は可変です - 
+            //カメラは CameraControl および CameraInfo へのアクセスを提供します
+            // プレビューと解析をライフサイクルにバインド
             camera = cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageAnalyzer)
 
-            // Attach the viewfinder's surface provider to preview use case
+            // ビューファインダーの表面プロバイダーをプレビューユースケースに接続する
+            // プレビュー表示先をセット
             preview?.setSurfaceProvider(fragmentCameraBinding.viewFinder.surfaceProvider)
         } catch (exc: Exception) {
             Log.e(TAG, "Use case binding failed", exc)
         }
     }
 
+    //画像解析　→　物体検出
     private fun detectObjects(image: ImageProxy) {
-        // Copy out RGB bits to the shared bitmap buffer
+        // RGBA バッファを bitmapBuffer にコピー
         image.use { bitmapBuffer.copyPixelsFromBuffer(image.planes[0].buffer) }
 
         val imageRotation = image.imageInfo.rotationDegrees
-        // Pass Bitmap and rotation to the object detector helper for processing and detection
+        //ビットマップと回転角度をオブジェクト検出ヘルパーに渡して処理と検出を行う
+        // TFLite に画像と回転を渡して検出
         objectDetectorHelper.detect(bitmapBuffer, imageRotation)
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
+        // 画面回転時にターゲット回転を更新
         imageAnalyzer?.targetRotation = fragmentCameraBinding.viewFinder.display.rotation
     }
 
-    // Update UI after objects have been detected. Extracts original image height/width
-    // to scale and place bounding boxes properly through OverlayView
+    //オブジェクト検出後にUIを更新する。元の画像の高さ/幅を抽出し、
+    //OverlayViewを通じてバウンディングボックスを適切にスケーリング・配置する。
+    // 物体検出結果を UI に反映
     override fun onResults(
       results: MutableList<Detection>?,
       inferenceTime: Long,
@@ -303,21 +332,24 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
       imageWidth: Int
     ) {
         activity?.runOnUiThread {
+            //推論時間表示
             fragmentCameraBinding.bottomSheetLayout.inferenceTimeVal.text =
                             String.format("%d ms", inferenceTime)
 
-            // Pass necessary information to OverlayView for drawing on the canvas
+            // 必要な情報をOverlayViewに渡してキャンバス上に描画する
+            //検出結果を OverlayView に渡す
             fragmentCameraBinding.overlay.setResults(
                 results ?: LinkedList<Detection>(),
                 imageHeight,
                 imageWidth
             )
 
-            // Force a redraw
+            //再描画
             fragmentCameraBinding.overlay.invalidate()
         }
     }
 
+    //エラー時
     override fun onError(error: String) {
         activity?.runOnUiThread {
             Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()

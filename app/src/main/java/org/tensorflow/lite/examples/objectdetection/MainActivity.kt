@@ -27,20 +27,28 @@ import org.tensorflow.lite.examples.objectdetection.databinding.ActivityMainBind
  */
 class MainActivity : AppCompatActivity() {
 
+    // ViewBinding 用の変数
     private lateinit var activityMainBinding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // layout/activity_main.xml を ViewBinding 経由で読み込む
         activityMainBinding = ActivityMainBinding.inflate(layoutInflater)
+
+        // アクティビティの表示内容としてセット
         setContentView(activityMainBinding.root)
     }
 
     override fun onBackPressed() {
+        // Android 10(Q) の戻る操作で起きるメモリリーク対策
         if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q) {
-            // Workaround for Android Q memory leak issue in IRequestFinishCallback$Stub.
+            // Android Qにおけるメモリリーク問題の回避策（IRequestFinishCallback$Stub内）
             // (https://issuetracker.google.com/issues/139738913)
+            // 特殊処理
             finishAfterTransition()
         } else {
+            // 通常の戻る動作
             super.onBackPressed()
         }
     }

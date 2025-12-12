@@ -213,12 +213,12 @@
         message="Implicitly using the default locale is a common source of bugs: Use `String.format(Locale, ...)` instead">
         <location
             file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt"
-            line="199"
+            line="216"
             column="13"
-            startOffset="7886"
-            endLine="199"
+            startOffset="7677"
+            endLine="216"
             endColumn="66"
-            endOffset="7939"/>
+            endOffset="7730"/>
     </incident>
 
     <incident
@@ -227,12 +227,12 @@
         message="Implicitly using the default locale is a common source of bugs: Use `String.format(Locale, ...)` instead">
         <location
             file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt"
-            line="199"
+            line="216"
             column="13"
-            startOffset="7886"
-            endLine="199"
+            startOffset="7677"
+            endLine="216"
             endColumn="66"
-            endOffset="7939"/>
+            endOffset="7730"/>
     </incident>
 
     <incident
@@ -241,12 +241,12 @@
         message="Implicitly using the default locale is a common source of bugs: Use `String.format(Locale, ...)` instead">
         <location
             file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt"
-            line="307"
+            line="337"
             column="29"
-            startOffset="12525"
-            endLine="307"
+            startOffset="12148"
+            endLine="337"
             endColumn="66"
-            endOffset="12562"/>
+            endOffset="12185"/>
     </incident>
 
     <incident
@@ -255,12 +255,12 @@
         message="Implicitly using the default locale is a common source of bugs: Use `String.format(Locale, ...)` instead">
         <location
             file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt"
-            line="307"
+            line="337"
             column="29"
-            startOffset="12525"
-            endLine="307"
+            startOffset="12148"
+            endLine="337"
             endColumn="66"
-            endOffset="12562"/>
+            endOffset="12185"/>
     </incident>
 
     <incident
@@ -269,12 +269,12 @@
         message="Implicitly using the default locale is a common source of bugs: Use `String.format(Locale, ...)` instead">
         <location
             file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/org/tensorflow/lite/examples/objectdetection/OverlayView.kt"
-            line="87"
+            line="105"
             column="25"
-            startOffset="2794"
-            endLine="87"
+            startOffset="3185"
+            endLine="105"
             endColumn="74"
-            endOffset="2843"/>
+            endOffset="3234"/>
     </incident>
 
     <incident

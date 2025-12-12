@@ -13,6 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+//TensorFlow Lite の物体検出を扱うためのヘルパークラス
+
 package org.tensorflow.lite.examples.objectdetection
 
 import android.content.Context
@@ -28,47 +31,53 @@ import org.tensorflow.lite.task.vision.detector.Detection
 import org.tensorflow.lite.task.vision.detector.ObjectDetector
 
 class ObjectDetectorHelper(
-  var threshold: Float = 0.5f,
-  var numThreads: Int = 2,
-  var maxResults: Int = 3,
-  var currentDelegate: Int = 0,
-  var currentModel: Int = 0,
+  var threshold: Float = 0.5f,  //検出スコアの閾値
+  var numThreads: Int = 2,      //使用スレッド数
+  var maxResults: Int = 3,      //返す最大検出数
+  var currentDelegate: Int = 0, //使用するDelegate（CPU/GPU/NNAPI）
+  var currentModel: Int = 0,    // 使用するモデルの種類
   val context: Context,
   val objectDetectorListener: DetectorListener?
 ) {
 
-    // For this example this needs to be a var so it can be reset on changes. If the ObjectDetector
-    // will not change, a lazy val would be preferable.
+    // この例では、変更時にリセットできるように変数（var）である必要があります。
+    //ObjectDetectorが変更されない場合は、遅延定数（lazy val）が望ましいでしょう。
+    // ObjectDetector のインスタンス（設定変更時に再作成するため var）
     private var objectDetector: ObjectDetector? = null
 
     init {
+        // 初期化時に Detector をセットアップ
         setupObjectDetector()
     }
 
     fun clearObjectDetector() {
+        // Detector をクリアして再作成を可能にする
         objectDetector = null
     }
 
-    // Initialize the object detector using current settings on the
-    // thread that is using it. CPU and NNAPI delegates can be used with detectors
-    // that are created on the main thread and used on a background thread, but
-    // the GPU delegate needs to be used on the thread that initialized the detector
+    // オブジェクト検出器を、それを使用しているスレッド上の現在の設定で初期化します。
+    //CPU および NNAPI デリゲートは、メインスレッドで作成されバックグラウンドスレッド
+    //で使用される検出器と併用できますが、GPU デリゲートは検出器を初期化したスレッド上
+    //で使用する必要があります。
+    // 現在の設定に基づいて ObjectDetector を初期化
     fun setupObjectDetector() {
-        // Create the base options for the detector using specifies max results and score threshold
+        // 検出器の基本オプションを作成し、最大結果数とスコア閾値を指定する
+        // モデルへの基本設定（閾値・結果数）
         val optionsBuilder =
             ObjectDetector.ObjectDetectorOptions.builder()
                 .setScoreThreshold(threshold)
                 .setMaxResults(maxResults)
 
-        // Set general detection options, including number of used threads
+        // BaseOptions：スレッド数や delegate 設定を行う
         val baseOptionsBuilder = BaseOptions.builder().setNumThreads(numThreads)
 
-        // Use the specified hardware for running the model. Default to CPU
+        // 使用 delegate の切替（CPU / GPU / NNAPI）デフォルトはCPU
         when (currentDelegate) {
             DELEGATE_CPU -> {
                 // Default
             }
             DELEGATE_GPU -> {
+                // GPU が使える端末かチェック
                 if (CompatibilityList().isDelegateSupportedOnThisDevice) {
                     baseOptionsBuilder.useGpu()
                 } else {
@@ -80,8 +89,10 @@ class ObjectDetectorHelper(
             }
         }
 
+        // BaseOptions を ObjectDetectorOptions に反映
         optionsBuilder.setBaseOptions(baseOptionsBuilder.build())
 
+        // 使用するモデルを選択
         val modelName =
             when (currentModel) {
                 MODEL_MOBILENETV1 -> "mobilenetv1.tflite"
@@ -91,10 +102,12 @@ class ObjectDetectorHelper(
                 else -> "mobilenetv1.tflite"
             }
 
+        // モデルファイルを読み込み ObjectDetector を初期化
         try {
             objectDetector =
                 ObjectDetector.createFromFileAndOptions(context, modelName, optionsBuilder.build())
         } catch (e: IllegalStateException) {
+            // 初期化に失敗した場合
             objectDetectorListener?.onError(
                 "Object detector failed to initialize. See error logs for details"
             )
@@ -102,28 +115,38 @@ class ObjectDetectorHelper(
         }
     }
 
+    // Bitmap 画像を入力して物体検出を実行
     fun detect(image: Bitmap, imageRotation: Int) {
+
+        // Detector が未生成なら再生成
         if (objectDetector == null) {
             setupObjectDetector()
         }
 
-        // Inference time is the difference between the system time at the start and finish of the
-        // process
+        // 推論時間は、プロセスの開始時と終了時のシステム時間の差である
+        // 処理時間計測開始
         var inferenceTime = SystemClock.uptimeMillis()
 
-        // Create preprocessor for the image.
+        // 画像用のプリプロセッサを作成する。
         // See https://www.tensorflow.org/lite/inference_with_metadata/
         //            lite_support#imageprocessor_architecture
+        // 入力画像の前処理（回転補正）
         val imageProcessor =
             ImageProcessor.Builder()
-                .add(Rot90Op(-imageRotation / 90))
+                .add(Rot90Op(-imageRotation / 90)) // 画面の回転を補正
                 .build()
 
-        // Preprocess the image and convert it into a TensorImage for detection.
+        // 画像を前処理し、検出用にTensorImageに変換する。
+        // Bitmap → TensorImage に変換
         val tensorImage = imageProcessor.process(TensorImage.fromBitmap(image))
 
+        // 検出実行
         val results = objectDetector?.detect(tensorImage)
+
+        // 処理時間計測終了
         inferenceTime = SystemClock.uptimeMillis() - inferenceTime
+
+        // 結果をコールバックで返す
         objectDetectorListener?.onResults(
             results,
             inferenceTime,
@@ -131,6 +154,7 @@ class ObjectDetectorHelper(
             tensorImage.width)
     }
 
+    // 結果・エラーを受け取るリスナー
     interface DetectorListener {
         fun onError(error: String)
         fun onResults(
@@ -142,9 +166,11 @@ class ObjectDetectorHelper(
     }
 
     companion object {
+        // Delegate 種類
         const val DELEGATE_CPU = 0
         const val DELEGATE_GPU = 1
         const val DELEGATE_NNAPI = 2
+        // 使用モデル種類
         const val MODEL_MOBILENETV1 = 0
         const val MODEL_EFFICIENTDETV0 = 1
         const val MODEL_EFFICIENTDETV1 = 2
