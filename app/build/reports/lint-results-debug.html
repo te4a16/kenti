@@ -177,9 +177,9 @@ document.getElementById(id).style.display = 'none';
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
   <header class="mdl-layout__header">
     <div class="mdl-layout__header-row">
-      <span class="mdl-layout-title">Lint Report: 59 warnings</span>
+      <span class="mdl-layout-title">Lint Report: 60 warnings</span>
       <div class="mdl-layout-spacer"></div>
-      <nav class="mdl-navigation mdl-layout--large-screen-only">Check performed at Thu Dec 11 14:09:04 JST 2025 by AGP (8.5.1)</nav>
+      <nav class="mdl-navigation mdl-layout--large-screen-only">Check performed at Fri Dec 12 13:39:35 JST 2025 by AGP (8.5.1)</nav>
     </div>
   </header>
   <div class="mdl-layout__drawer">
@@ -187,7 +187,7 @@ document.getElementById(id).style.display = 'none';
     <nav class="mdl-navigation">
       <a class="mdl-navigation__link" href="#overview"><i class="material-icons">dashboard</i>Overview</a>
       <a class="mdl-navigation__link" href="#DefaultLocale"><i class="material-icons warning-icon">warning</i>Implied default locale in case conversion (5)</a>
-      <a class="mdl-navigation__link" href="#GradleDependency"><i class="material-icons warning-icon">warning</i>Obsolete Gradle Dependency (25)</a>
+      <a class="mdl-navigation__link" href="#GradleDependency"><i class="material-icons warning-icon">warning</i>Obsolete Gradle Dependency (26)</a>
       <a class="mdl-navigation__link" href="#Typos"><i class="material-icons warning-icon">warning</i>Spelling error (1)</a>
       <a class="mdl-navigation__link" href="#Overdraw"><i class="material-icons warning-icon">warning</i>Overdraw: Painting regions more than once (1)</a>
       <a class="mdl-navigation__link" href="#UnusedResources"><i class="material-icons warning-icon">warning</i>Unused resources (8)</a>
@@ -216,7 +216,7 @@ document.getElementById(id).style.display = 'none';
 <td class="countColumn">5</td><td class="issueColumn"><i class="material-icons warning-icon">warning</i>
 <a href="#DefaultLocale">DefaultLocale</a>: Implied default locale in case conversion</td></tr>
 <tr>
-<td class="countColumn">25</td><td class="issueColumn"><i class="material-icons warning-icon">warning</i>
+<td class="countColumn">26</td><td class="issueColumn"><i class="material-icons warning-icon">warning</i>
 <a href="#GradleDependency">GradleDependency</a>: Obsolete Gradle Dependency</td></tr>
 <tr><td class="countColumn"></td><td class="categoryColumn"><a href="#Correctness:Messages">Correctness:Messages</a>
 </td></tr>
@@ -418,7 +418,7 @@ Dismiss</button>            </div>
 <span class="lineno">  84 </span>    implementation <span class="string">'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'</span>
 </pre>
 
-<button class="mdl-button mdl-js-button mdl-button--primary" id="GradleDependencyDivLink" onclick="reveal('GradleDependencyDiv');" />+ 20 More Occurrences...</button>
+<button class="mdl-button mdl-js-button mdl-button--primary" id="GradleDependencyDivLink" onclick="reveal('GradleDependencyDiv');" />+ 21 More Occurrences...</button>
 <div id="GradleDependencyDiv" style="display: none">
 <span class="location"><a href="../../build.gradle">../../build.gradle</a>:82</span>: <span class="message">A newer version of androidx.constraintlayout:constraintlayout than 2.0.4 is available: 2.2.1</span><br /><pre class="errorlines">
 <span class="lineno">  79 </span>    <span class="comment">// App compat and UI things</span>
@@ -614,6 +614,14 @@ Dismiss</button>            </div>
 <span class="lineno"> 122 </span>    <span class="comment">// Import the GPU delegate plugin Library for GPU inference</span>
 <span class="lineno"> 123 </span>    implementation <span class="string">'org.tensorflow:tensorflow-lite-gpu-delegate-plugin:0.4.0'</span>
 <span class="lineno"> 124 </span>    implementation <span class="string">'org.tensorflow:tensorflow-lite-gpu:2.9.0'</span>
+</pre>
+
+<span class="location"><a href="../../build.gradle">../../build.gradle</a>:124</span>: <span class="message">A newer version of org.tensorflow:tensorflow-lite-gpu than 2.9.0 is available: 2.12.0</span><br /><pre class="errorlines">
+<span class="lineno"> 121 </span>    implementation <span class="string">'org.tensorflow:tensorflow-lite-task-vision:0.4.0'</span>
+<span class="lineno"> 122 </span>    <span class="comment">// Import the GPU delegate plugin Library for GPU inference</span>
+<span class="lineno"> 123 </span>    implementation <span class="string">'org.tensorflow:tensorflow-lite-gpu-delegate-plugin:0.4.0'</span>
+<span class="caretline"><span class="lineno"> 124 </span>    implementation <span class="warning"><span class="string">'org.tensorflow:tensorflow-lite-gpu:2.9.0'</span></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+<span class="lineno"> 125 </span>}
 </pre>
 
 </div>

@@ -741,6 +741,26 @@
     </incident>
 
     <incident
+        id="GradleDependency"
+        severity="warning"
+        message="A newer version of org.tensorflow:tensorflow-lite-gpu than 2.9.0 is available: 2.12.0">
+        <fix-replace
+            description="Change to 2.12.0"
+            family="Update versions"
+            oldString="2.9.0"
+            replacement="2.12.0"
+            priority="0"/>
+        <location
+            file="${:app*projectDir}/build.gradle"
+            line="124"
+            column="20"
+            startOffset="4424"
+            endLine="124"
+            endColumn="62"
+            endOffset="4466"/>
+    </incident>
+
+    <incident
         id="IconLocation"
         severity="warning"
         message="Found bitmap drawable `res/drawable/icn_chevron_up.png` in densityless folder">

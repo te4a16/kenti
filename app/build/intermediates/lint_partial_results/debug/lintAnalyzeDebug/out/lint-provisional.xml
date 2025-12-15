@@ -11,17 +11,17 @@
             priority="0">
             <range
                 file="${:app*debug*MAIN*sourceProvider*0*manifest*0}"
-                startOffset="1963"
-                endOffset="1982"/>
+                startOffset="2016"
+                endOffset="2035"/>
         </fix-replace>
         <location
             file="${:app*debug*MAIN*sourceProvider*0*manifest*0}"
-            line="49"
+            line="50"
             column="13"
-            startOffset="1963"
-            endLine="49"
+            startOffset="2016"
+            endLine="50"
             endColumn="32"
-            endOffset="1982"/>
+            endOffset="2035"/>
         <map>
             <condition minGE="fffffffffe000000"/>
         </map>

@@ -28,11 +28,14 @@ import org.tensorflow.lite.examples.objectdetection.databinding.ActivityMainBind
 class MainActivity : AppCompatActivity() {
 
     private lateinit var activityMainBinding: ActivityMainBinding
+    private lateinit var pipController: PipController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityMainBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(activityMainBinding.root)
+        //PIPのコントローラー呼び出し
+        pipController = PipController(this)
     }
 
     override fun onBackPressed() {
@@ -44,4 +47,10 @@ class MainActivity : AppCompatActivity() {
             super.onBackPressed()
         }
     }
+    override fun onUserLeaveHint() {
+    super.onUserLeaveHint()
+    pipController.enterPip()
+    }
+
+
 }
