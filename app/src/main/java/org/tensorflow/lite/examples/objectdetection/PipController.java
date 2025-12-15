@@ -17,7 +17,7 @@ public class PipController {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             PictureInPictureParams params =
                 new PictureInPictureParams.Builder()
-                    .setAspectRatio(new Rational(3, 4)) // CameraXのアスペクト比に合わせる
+                    .setAspectRatio(new Rational(3, 4)) // CameraX のアスペクト比に合わせる
                     .build();
             activity.enterPictureInPictureMode(params);
         }
