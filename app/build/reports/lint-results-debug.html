@@ -177,16 +177,16 @@ document.getElementById(id).style.display = 'none';
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
   <header class="mdl-layout__header">
     <div class="mdl-layout__header-row">
-      <span class="mdl-layout-title">Lint Report: 62 warnings</span>
+      <span class="mdl-layout-title">Lint Report: 64 warnings</span>
       <div class="mdl-layout-spacer"></div>
-      <nav class="mdl-navigation mdl-layout--large-screen-only">Check performed at Tue Dec 16 15:57:25 JST 2025 by AGP (8.5.1)</nav>
+      <nav class="mdl-navigation mdl-layout--large-screen-only">Check performed at Tue Dec 16 16:27:26 JST 2025 by AGP (8.5.1)</nav>
     </div>
   </header>
   <div class="mdl-layout__drawer">
     <span class="mdl-layout-title">Issue Types</span>
     <nav class="mdl-navigation">
       <a class="mdl-navigation__link" href="#overview"><i class="material-icons">dashboard</i>Overview</a>
-      <a class="mdl-navigation__link" href="#DefaultLocale"><i class="material-icons warning-icon">warning</i>Implied default locale in case conversion (8)</a>
+      <a class="mdl-navigation__link" href="#DefaultLocale"><i class="material-icons warning-icon">warning</i>Implied default locale in case conversion (10)</a>
       <a class="mdl-navigation__link" href="#GradleDependency"><i class="material-icons warning-icon">warning</i>Obsolete Gradle Dependency (25)</a>
       <a class="mdl-navigation__link" href="#Typos"><i class="material-icons warning-icon">warning</i>Spelling error (1)</a>
       <a class="mdl-navigation__link" href="#Overdraw"><i class="material-icons warning-icon">warning</i>Overdraw: Painting regions more than once (1)</a>
@@ -213,7 +213,7 @@ document.getElementById(id).style.display = 'none';
 <tr><td class="countColumn"></td><td class="categoryColumn"><a href="#Correctness">Correctness</a>
 </td></tr>
 <tr>
-<td class="countColumn">8</td><td class="issueColumn"><i class="material-icons warning-icon">warning</i>
+<td class="countColumn">10</td><td class="issueColumn"><i class="material-icons warning-icon">warning</i>
 <a href="#DefaultLocale">DefaultLocale</a>: Implied default locale in case conversion</td></tr>
 <tr>
 <td class="countColumn">25</td><td class="issueColumn"><i class="material-icons warning-icon">warning</i>
@@ -281,50 +281,72 @@ Dismiss</button>            </div>
               <div class="mdl-card__supporting-text">
 <div class="issue">
 <div class="warningslist">
-<span class="location"><a href="../../src/main/java/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt">../../src/main/java/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt</a>:232</span>: <span class="message">Implicitly using the default locale is a common source of bugs: Use <code>String.format(Locale, ...)</code> instead</span><br /><pre class="errorlines">
-<span class="lineno"> 229 </span>        fragmentCameraBinding.bottomSheetLayout.maxResultsValue.text =
-<span class="lineno"> 230 </span>            objectDetectorHelper.maxResults.toString()
-<span class="lineno"> 231 </span>        fragmentCameraBinding.bottomSheetLayout.thresholdValue.text =
-<span class="caretline"><span class="lineno"> 232 </span>            <span class="warning">String.format(<span class="string">"%.2f"</span>, objectDetectorHelper.threshold)</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-<span class="lineno"> 233 </span>        fragmentCameraBinding.bottomSheetLayout.threadsValue.text =
-<span class="lineno"> 234 </span>            objectDetectorHelper.numThreads.toString()
+<span class="location"><a href="../../src/main/java/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt">../../src/main/java/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt</a>:238</span>: <span class="message">Implicitly using the default locale is a common source of bugs: Use <code>String.format(Locale, ...)</code> instead</span><br /><pre class="errorlines">
+<span class="lineno"> 235 </span>        fragmentCameraBinding.bottomSheetLayout.maxResultsValue.text =
+<span class="lineno"> 236 </span>            objectDetectorHelper.maxResults.toString()
+<span class="lineno"> 237 </span>        fragmentCameraBinding.bottomSheetLayout.thresholdValue.text =
+<span class="caretline"><span class="lineno"> 238 </span>            <span class="warning">String.format(<span class="string">"%.2f"</span>, objectDetectorHelper.threshold)</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+<span class="lineno"> 239 </span>        fragmentCameraBinding.bottomSheetLayout.threadsValue.text =
+<span class="lineno"> 240 </span>            objectDetectorHelper.numThreads.toString()
 </pre>
 
-<span class="location"><a href="../../src/main/java/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt">../../src/main/java/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt</a>:232</span>: <span class="message">Implicitly using the default locale is a common source of bugs: Use <code>String.format(Locale, ...)</code> instead</span><br /><pre class="errorlines">
-<span class="lineno"> 229 </span>        fragmentCameraBinding.bottomSheetLayout.maxResultsValue.text =
-<span class="lineno"> 230 </span>            objectDetectorHelper.maxResults.toString()
-<span class="lineno"> 231 </span>        fragmentCameraBinding.bottomSheetLayout.thresholdValue.text =
-<span class="caretline"><span class="lineno"> 232 </span>            <span class="warning">String.format(<span class="string">"%.2f"</span>, objectDetectorHelper.threshold)</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-<span class="lineno"> 233 </span>        fragmentCameraBinding.bottomSheetLayout.threadsValue.text =
-<span class="lineno"> 234 </span>            objectDetectorHelper.numThreads.toString()
+<span class="location"><a href="../../src/main/java/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt">../../src/main/java/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt</a>:238</span>: <span class="message">Implicitly using the default locale is a common source of bugs: Use <code>String.format(Locale, ...)</code> instead</span><br /><pre class="errorlines">
+<span class="lineno"> 235 </span>        fragmentCameraBinding.bottomSheetLayout.maxResultsValue.text =
+<span class="lineno"> 236 </span>            objectDetectorHelper.maxResults.toString()
+<span class="lineno"> 237 </span>        fragmentCameraBinding.bottomSheetLayout.thresholdValue.text =
+<span class="caretline"><span class="lineno"> 238 </span>            <span class="warning">String.format(<span class="string">"%.2f"</span>, objectDetectorHelper.threshold)</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+<span class="lineno"> 239 </span>        fragmentCameraBinding.bottomSheetLayout.threadsValue.text =
+<span class="lineno"> 240 </span>            objectDetectorHelper.numThreads.toString()
 </pre>
 
-<span class="location"><a href="../../src/main/java/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt">../../src/main/java/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt</a>:353</span>: <span class="message">Implicitly using the default locale is a common source of bugs: Use <code>String.format(Locale, ...)</code> instead</span><br /><pre class="errorlines">
-<span class="lineno"> 350 </span>        activity?.runOnUiThread {
-<span class="lineno"> 351 </span>            <span class="comment">//推論時間表示</span>
-<span class="lineno"> 352 </span>            fragmentCameraBinding.bottomSheetLayout.inferenceTimeVal.text =
-<span class="caretline"><span class="lineno"> 353 </span>                            <span class="warning">String.format(<span class="string">"%d ms"</span>, inferenceTime)</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-<span class="lineno"> 354 </span>
-<span class="lineno"> 355 </span>            <span class="comment">// 必要な情報をOverlayViewに渡してキャンバス上に描画する</span>
-<span class="lineno"> 356 </span>            <span class="comment">//検出結果を OverlayView に渡す</span></pre>
+<span class="location"><a href="../../src/main/java/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt">../../src/main/java/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt</a>:359</span>: <span class="message">Implicitly using the default locale is a common source of bugs: Use <code>String.format(Locale, ...)</code> instead</span><br /><pre class="errorlines">
+<span class="lineno"> 356 </span>        activity?.runOnUiThread {
+<span class="lineno"> 357 </span>            <span class="comment">//推論時間表示</span>
+<span class="lineno"> 358 </span>            fragmentCameraBinding.bottomSheetLayout.inferenceTimeVal.text =
+<span class="caretline"><span class="lineno"> 359 </span>                            <span class="warning">String.format(<span class="string">"%d ms"</span>, inferenceTime)</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+<span class="lineno"> 360 </span>
+<span class="lineno"> 361 </span>            <span class="comment">// 必要な情報をOverlayViewに渡してキャンバス上に描画する</span>
+<span class="lineno"> 362 </span>            <span class="comment">//検出結果を OverlayView に渡す</span></pre>
 
-<span class="location"><a href="../../src/main/java/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt">../../src/main/java/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt</a>:353</span>: <span class="message">Implicitly using the default locale is a common source of bugs: Use <code>String.format(Locale, ...)</code> instead</span><br /><pre class="errorlines">
-<span class="lineno"> 350 </span>        activity?.runOnUiThread {
-<span class="lineno"> 351 </span>            <span class="comment">//推論時間表示</span>
-<span class="lineno"> 352 </span>            fragmentCameraBinding.bottomSheetLayout.inferenceTimeVal.text =
-<span class="caretline"><span class="lineno"> 353 </span>                            <span class="warning">String.format(<span class="string">"%d ms"</span>, inferenceTime)</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-<span class="lineno"> 354 </span>
-<span class="lineno"> 355 </span>            <span class="comment">// 必要な情報をOverlayViewに渡してキャンバス上に描画する</span>
-<span class="lineno"> 356 </span>            <span class="comment">//検出結果を OverlayView に渡す</span></pre>
+<span class="location"><a href="../../src/main/java/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt">../../src/main/java/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt</a>:359</span>: <span class="message">Implicitly using the default locale is a common source of bugs: Use <code>String.format(Locale, ...)</code> instead</span><br /><pre class="errorlines">
+<span class="lineno"> 356 </span>        activity?.runOnUiThread {
+<span class="lineno"> 357 </span>            <span class="comment">//推論時間表示</span>
+<span class="lineno"> 358 </span>            fragmentCameraBinding.bottomSheetLayout.inferenceTimeVal.text =
+<span class="caretline"><span class="lineno"> 359 </span>                            <span class="warning">String.format(<span class="string">"%d ms"</span>, inferenceTime)</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+<span class="lineno"> 360 </span>
+<span class="lineno"> 361 </span>            <span class="comment">// 必要な情報をOverlayViewに渡してキャンバス上に描画する</span>
+<span class="lineno"> 362 </span>            <span class="comment">//検出結果を OverlayView に渡す</span></pre>
 
-<span class="location"><a href="../../src/main/java/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt">../../src/main/java/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt</a>:382</span>: <span class="message">Implicitly using the default locale is a common source of bugs: Use <code>String.format(Locale, ...)</code> instead</span><br /><pre class="errorlines">
-<span class="lineno"> 379 </span>  <span class="comment">// 検出されたオブジェクトがある場合、最も信頼度の高いものを表示</span>
-<span class="lineno"> 380 </span>  <span class="keyword">val</span> topResult = results!!.maxByOrNull { it.categories[<span class="number">0</span>].score }
-<span class="lineno"> 381 </span>  <span class="keyword">val</span> label = topResult?.categories?.get(<span class="number">0</span>)?.label ?: <span class="string">"Unknown"</span>
-<span class="caretline"><span class="lineno"> 382 </span>  <span class="keyword">val</span> score = <span class="warning">String.format(<span class="string">"%.0f%%"</span>, (topResult?.categories?.get(<span class="number">0</span>)?.score ?: <span class="number">0f</span>) * <span class="number">100</span>)</span></span>
-<span class="lineno"> 383 </span>  
-<span class="lineno"> 384 </span>  title = <span class="string">"Object Detected! ($detectedCount item${</span><span class="keyword">if</span> (detectedCount > <span class="number">1</span>) <span class="string">"s"</span> <span class="keyword">else</span> <span class="string">""})"</span>
-<span class="lineno"> 385 </span>  message = <span class="string">"$label detected with $score confidence."</span></pre>
+<span class="location"><a href="../../src/main/java/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt">../../src/main/java/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt</a>:390</span>: <span class="message">Implicitly using the default locale is a common source of bugs: Use <code>String.format(Locale, ...)</code> instead</span><br /><pre class="errorlines">
+<span class="lineno"> 387 </span>  <span class="keyword">val</span> distanceMeters = (DistanceConstants.VIRTUAL_FOCAL_LENGTH_F * DistanceConstants.TARGET_REAL_WIDTH_M) / pixelWidth
+<span class="lineno"> 388 </span>  
+<span class="lineno"> 389 </span>  <span class="keyword">val</span> label = closestDetection.categories.firstOrNull()?.label ?: <span class="string">"Object"</span>
+<span class="caretline"><span class="lineno"> 390 </span>  <span class="keyword">val</span> score = <span class="warning">String.format(<span class="string">"%.0f%%"</span>, (closestDetection.categories.firstOrNull()?.score ?: <span class="number">0f</span>) * <span class="number">100</span>)</span></span>
+<span class="lineno"> 391 </span>  
+<span class="lineno"> 392 </span>  notificationTitle = <span class="string">"Object Detected!"</span>
+<span class="lineno"> 393 </span>  notificationMessage = <span class="string">"$label is at ${</span>String.format(<span class="string">"%.2f m"</span>, distanceMeters)<span class="string">}. Confidence: $score"</span></pre>
+
+<button class="mdl-button mdl-js-button mdl-button--primary" id="DefaultLocaleDivLink" onclick="reveal('DefaultLocaleDiv');" />+ 5 More Occurrences...</button>
+<div id="DefaultLocaleDiv" style="display: none">
+<span class="location"><a href="../../src/main/java/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt">../../src/main/java/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt</a>:393</span>: <span class="message">Implicitly using the default locale is a common source of bugs: Use <code>String.format(Locale, ...)</code> instead</span><br /><pre class="errorlines">
+<span class="lineno"> 390 </span>  <span class="keyword">val</span> score = String.format(<span class="string">"%.0f%%"</span>, (closestDetection.categories.firstOrNull()?.score ?: <span class="number">0f</span>) * <span class="number">100</span>)
+<span class="lineno"> 391 </span>  
+<span class="lineno"> 392 </span>  notificationTitle = <span class="string">"Object Detected!"</span>
+<span class="caretline"><span class="lineno"> 393 </span>  notificationMessage = <span class="string">"$label is at ${</span><span class="warning">String.format(<span class="string">"%.2f m"</span>, distanceMeters)</span><span class="string">}. Confidence: $score"</span></span>
+<span class="lineno"> 394 </span>
+<span class="lineno"> 395 </span>  <span class="comment">// 4メートル以内かチェック</span>
+<span class="lineno"> 396 </span>  <span class="keyword">if</span> (distanceMeters &lt;= ALERT_DISTANCE_M) {
+</pre>
+
+<span class="location"><a href="../../src/main/java/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt">../../src/main/java/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt</a>:400</span>: <span class="message">Implicitly using the default locale is a common source of bugs: Use <code>String.format(Locale, ...)</code> instead</span><br /><pre class="errorlines">
+<span class="lineno"> 397 </span>  <span class="keyword">if</span> (!isNotificationSent) {
+<span class="lineno"> 398 </span>      <span class="comment">// 4m 圏内に入った瞬間で、まだ通知を送っていない場合</span>
+<span class="lineno"> 399 </span>      notificationTitle = <span class="string">"🚨 ALERT: $label が近づいています。注意してください"</span>
+<span class="caretline"><span class="lineno"> 400 </span>      notificationMessage = <span class="string">"Distance: ${</span><span class="warning">String.format(<span class="string">"%.2f m"</span>, distanceMeters)</span><span class="string">} (within 4.00 m)"</span></span>
+<span class="lineno"> 401 </span>      shouldNotify = <span class="keyword">true</span>
+<span class="lineno"> 402 </span>      isNotificationSent = <span class="keyword">true</span> <span class="comment">// 通知済みフラグをON</span>
+<span class="lineno"> 403 </span>  }
+</pre>
 
 <span class="location"><a href="../../src/main/java/org/tensorflow/lite/examples/objectdetection/OverlayView.kt">../../src/main/java/org/tensorflow/lite/examples/objectdetection/OverlayView.kt</a>:149</span>: <span class="message">Implicitly using the default locale is a common source of bugs: Use <code>String.format(Locale, ...)</code> instead</span><br /><pre class="errorlines">
 <span class="lineno"> 146 </span><span class="comment">                        String.format("%.2f", result.categories[0].score)
@@ -354,6 +376,7 @@ Dismiss</button>            </div>
 <span class="lineno"> 154 </span>            <span class="keyword">val</span> drawableText = <span class="string">"${</span>label<span class="string">} ${</span>score<span class="string">}${</span>distanceText<span class="string">} ${</span>pixelWidthText<span class="string">}"</span>
 </pre>
 
+</div>
 </div>
 <div class="metadata"><div class="explanation" id="explanationDefaultLocale" style="display: none;">
 Calling <code>String#toLowerCase()</code> or <code>#toUpperCase()</code> <b>without specifying an explicit locale</b> is a common source of bugs. The reason for that is that those methods will use the current locale on the user's device, and even though the code appears to work correctly when you are developing the app, it will fail in some locales. For example, in the Turkish locale, the uppercase replacement for <code>i</code> is <b>not</b> <code>I</code>.<br/>

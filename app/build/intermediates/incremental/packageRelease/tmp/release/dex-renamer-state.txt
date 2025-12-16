@@ -1,4 +1,4 @@
-#Tue Dec 16 15:57:17 JST 2025
+#Tue Dec 16 16:27:19 JST 2025
 base.0=E\:\\sotuken\\kenti\\app\\build\\intermediates\\dex\\release\\mergeDexRelease\\classes.dex
 path.0=classes.dex
 renamed.0=classes.dex

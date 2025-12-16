@@ -1,18 +1,24 @@
-E:\sotuken\kenti\app\src\main\java\org\tensorflow\lite\examples\objectdetection\fragments\CameraFragment.kt:232: Warning: Implicitly using the default locale is a common source of bugs: Use String.format(Locale, ...) instead [DefaultLocale]
+E:\sotuken\kenti\app\src\main\java\org\tensorflow\lite\examples\objectdetection\fragments\CameraFragment.kt:238: Warning: Implicitly using the default locale is a common source of bugs: Use String.format(Locale, ...) instead [DefaultLocale]
             String.format("%.2f", objectDetectorHelper.threshold)
             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-E:\sotuken\kenti\app\src\main\java\org\tensorflow\lite\examples\objectdetection\fragments\CameraFragment.kt:232: Warning: Implicitly using the default locale is a common source of bugs: Use String.format(Locale, ...) instead [DefaultLocale]
+E:\sotuken\kenti\app\src\main\java\org\tensorflow\lite\examples\objectdetection\fragments\CameraFragment.kt:238: Warning: Implicitly using the default locale is a common source of bugs: Use String.format(Locale, ...) instead [DefaultLocale]
             String.format("%.2f", objectDetectorHelper.threshold)
             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-E:\sotuken\kenti\app\src\main\java\org\tensorflow\lite\examples\objectdetection\fragments\CameraFragment.kt:353: Warning: Implicitly using the default locale is a common source of bugs: Use String.format(Locale, ...) instead [DefaultLocale]
+E:\sotuken\kenti\app\src\main\java\org\tensorflow\lite\examples\objectdetection\fragments\CameraFragment.kt:359: Warning: Implicitly using the default locale is a common source of bugs: Use String.format(Locale, ...) instead [DefaultLocale]
                             String.format("%d ms", inferenceTime)
                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-E:\sotuken\kenti\app\src\main\java\org\tensorflow\lite\examples\objectdetection\fragments\CameraFragment.kt:353: Warning: Implicitly using the default locale is a common source of bugs: Use String.format(Locale, ...) instead [DefaultLocale]
+E:\sotuken\kenti\app\src\main\java\org\tensorflow\lite\examples\objectdetection\fragments\CameraFragment.kt:359: Warning: Implicitly using the default locale is a common source of bugs: Use String.format(Locale, ...) instead [DefaultLocale]
                             String.format("%d ms", inferenceTime)
                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-E:\sotuken\kenti\app\src\main\java\org\tensorflow\lite\examples\objectdetection\fragments\CameraFragment.kt:382: Warning: Implicitly using the default locale is a common source of bugs: Use String.format(Locale, ...) instead [DefaultLocale]
-                    val score = String.format("%.0f%%", (topResult?.categories?.get(0)?.score ?: 0f) * 100)
-                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\sotuken\kenti\app\src\main\java\org\tensorflow\lite\examples\objectdetection\fragments\CameraFragment.kt:390: Warning: Implicitly using the default locale is a common source of bugs: Use String.format(Locale, ...) instead [DefaultLocale]
+                    val score = String.format("%.0f%%", (closestDetection.categories.firstOrNull()?.score ?: 0f) * 100)
+                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\sotuken\kenti\app\src\main\java\org\tensorflow\lite\examples\objectdetection\fragments\CameraFragment.kt:393: Warning: Implicitly using the default locale is a common source of bugs: Use String.format(Locale, ...) instead [DefaultLocale]
+                    notificationMessage = "$label is at ${String.format("%.2f m", distanceMeters)}. Confidence: $score"
+                                                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\sotuken\kenti\app\src\main\java\org\tensorflow\lite\examples\objectdetection\fragments\CameraFragment.kt:400: Warning: Implicitly using the default locale is a common source of bugs: Use String.format(Locale, ...) instead [DefaultLocale]
+                            notificationMessage = "Distance: ${String.format("%.2f m", distanceMeters)} (within 4.00 m)"
+                                                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 E:\sotuken\kenti\app\src\main\java\org\tensorflow\lite\examples\objectdetection\OverlayView.kt:149: Warning: Implicitly using the default locale is a common source of bugs: Use String.format(Locale, ...) instead [DefaultLocale]
             val score = String.format("%.2f", result.categories[0].score)
                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -339,4 +345,4 @@ E:\sotuken\kenti\app\src\main\AndroidManifest.xml: Warning: The project referenc
    If you have started adding RTL attributes, but have not yet finished the
    migration, you can set the attribute to false to satisfy this lint check.
 
-0 errors, 62 warnings
+0 errors, 64 warnings

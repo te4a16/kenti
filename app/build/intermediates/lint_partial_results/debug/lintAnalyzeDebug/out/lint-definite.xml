@@ -213,12 +213,12 @@
         message="Implicitly using the default locale is a common source of bugs: Use `String.format(Locale, ...)` instead">
         <location
             file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt"
-            line="232"
+            line="238"
             column="13"
-            startOffset="8213"
-            endLine="232"
+            startOffset="8387"
+            endLine="238"
             endColumn="66"
-            endOffset="8266"/>
+            endOffset="8440"/>
     </incident>
 
     <incident
@@ -227,12 +227,12 @@
         message="Implicitly using the default locale is a common source of bugs: Use `String.format(Locale, ...)` instead">
         <location
             file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt"
-            line="232"
+            line="238"
             column="13"
-            startOffset="8213"
-            endLine="232"
+            startOffset="8387"
+            endLine="238"
             endColumn="66"
-            endOffset="8266"/>
+            endOffset="8440"/>
     </incident>
 
     <incident
@@ -241,12 +241,12 @@
         message="Implicitly using the default locale is a common source of bugs: Use `String.format(Locale, ...)` instead">
         <location
             file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt"
-            line="353"
+            line="359"
             column="29"
-            startOffset="12684"
-            endLine="353"
+            startOffset="12858"
+            endLine="359"
             endColumn="66"
-            endOffset="12721"/>
+            endOffset="12895"/>
     </incident>
 
     <incident
@@ -255,12 +255,12 @@
         message="Implicitly using the default locale is a common source of bugs: Use `String.format(Locale, ...)` instead">
         <location
             file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt"
-            line="353"
+            line="359"
             column="29"
-            startOffset="12684"
-            endLine="353"
+            startOffset="12858"
+            endLine="359"
             endColumn="66"
-            endOffset="12721"/>
+            endOffset="12895"/>
     </incident>
 
     <incident
@@ -269,12 +269,40 @@
         message="Implicitly using the default locale is a common source of bugs: Use `String.format(Locale, ...)` instead">
         <location
             file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt"
-            line="382"
+            line="390"
             column="33"
-            startOffset="13841"
-            endLine="382"
-            endColumn="108"
-            endOffset="13916"/>
+            startOffset="14367"
+            endLine="390"
+            endColumn="120"
+            endOffset="14454"/>
+    </incident>
+
+    <incident
+        id="DefaultLocale"
+        severity="warning"
+        message="Implicitly using the default locale is a common source of bugs: Use `String.format(Locale, ...)` instead">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt"
+            line="393"
+            column="59"
+            startOffset="14593"
+            endLine="393"
+            endColumn="98"
+            endOffset="14632"/>
+    </incident>
+
+    <incident
+        id="DefaultLocale"
+        severity="warning"
+        message="Implicitly using the default locale is a common source of bugs: Use `String.format(Locale, ...)` instead">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt"
+            line="400"
+            column="64"
+            startOffset="15011"
+            endLine="400"
+            endColumn="103"
+            endOffset="15050"/>
     </incident>
 
     <incident

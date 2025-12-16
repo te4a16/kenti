@@ -15,7 +15,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="E:\sotuken\kenti\app\src\main\java\org\tensorflow\lite\examples\objectdetection\fragments\CameraFragment.kt"
-            line="232"
+            line="238"
             column="13"/>
     </issue>
 
@@ -33,7 +33,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="E:\sotuken\kenti\app\src\main\java\org\tensorflow\lite\examples\objectdetection\fragments\CameraFragment.kt"
-            line="232"
+            line="238"
             column="13"/>
     </issue>
 
@@ -51,7 +51,7 @@
         errorLine2="                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="E:\sotuken\kenti\app\src\main\java\org\tensorflow\lite\examples\objectdetection\fragments\CameraFragment.kt"
-            line="353"
+            line="359"
             column="29"/>
     </issue>
 
@@ -69,7 +69,7 @@
         errorLine2="                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="E:\sotuken\kenti\app\src\main\java\org\tensorflow\lite\examples\objectdetection\fragments\CameraFragment.kt"
-            line="353"
+            line="359"
             column="29"/>
     </issue>
 
@@ -83,12 +83,48 @@
         explanation="Calling `String#toLowerCase()` or `#toUpperCase()` **without specifying an explicit locale** is a common source of bugs. The reason for that is that those methods will use the current locale on the user&apos;s device, and even though the code appears to work correctly when you are developing the app, it will fail in some locales. For example, in the Turkish locale, the uppercase replacement for `i` is **not** `I`.&#xA;&#xA;If you want the methods to just perform ASCII replacement, for example to convert an enum name, call `String#toUpperCase(Locale.ROOT)` instead. If you really want to use the current locale, call `String#toUpperCase(Locale.getDefault())` instead."
         url="https://developer.android.com/reference/java/util/Locale.html#default_locale"
         urls="https://developer.android.com/reference/java/util/Locale.html#default_locale"
-        errorLine1="                    val score = String.format(&quot;%.0f%%&quot;, (topResult?.categories?.get(0)?.score ?: 0f) * 100)"
-        errorLine2="                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        errorLine1="                    val score = String.format(&quot;%.0f%%&quot;, (closestDetection.categories.firstOrNull()?.score ?: 0f) * 100)"
+        errorLine2="                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="E:\sotuken\kenti\app\src\main\java\org\tensorflow\lite\examples\objectdetection\fragments\CameraFragment.kt"
-            line="382"
+            line="390"
             column="33"/>
+    </issue>
+
+    <issue
+        id="DefaultLocale"
+        severity="Warning"
+        message="Implicitly using the default locale is a common source of bugs: Use `String.format(Locale, ...)` instead"
+        category="Correctness"
+        priority="6"
+        summary="Implied default locale in case conversion"
+        explanation="Calling `String#toLowerCase()` or `#toUpperCase()` **without specifying an explicit locale** is a common source of bugs. The reason for that is that those methods will use the current locale on the user&apos;s device, and even though the code appears to work correctly when you are developing the app, it will fail in some locales. For example, in the Turkish locale, the uppercase replacement for `i` is **not** `I`.&#xA;&#xA;If you want the methods to just perform ASCII replacement, for example to convert an enum name, call `String#toUpperCase(Locale.ROOT)` instead. If you really want to use the current locale, call `String#toUpperCase(Locale.getDefault())` instead."
+        url="https://developer.android.com/reference/java/util/Locale.html#default_locale"
+        urls="https://developer.android.com/reference/java/util/Locale.html#default_locale"
+        errorLine1="                    notificationMessage = &quot;$label is at ${String.format(&quot;%.2f m&quot;, distanceMeters)}. Confidence: $score&quot;"
+        errorLine2="                                                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="E:\sotuken\kenti\app\src\main\java\org\tensorflow\lite\examples\objectdetection\fragments\CameraFragment.kt"
+            line="393"
+            column="59"/>
+    </issue>
+
+    <issue
+        id="DefaultLocale"
+        severity="Warning"
+        message="Implicitly using the default locale is a common source of bugs: Use `String.format(Locale, ...)` instead"
+        category="Correctness"
+        priority="6"
+        summary="Implied default locale in case conversion"
+        explanation="Calling `String#toLowerCase()` or `#toUpperCase()` **without specifying an explicit locale** is a common source of bugs. The reason for that is that those methods will use the current locale on the user&apos;s device, and even though the code appears to work correctly when you are developing the app, it will fail in some locales. For example, in the Turkish locale, the uppercase replacement for `i` is **not** `I`.&#xA;&#xA;If you want the methods to just perform ASCII replacement, for example to convert an enum name, call `String#toUpperCase(Locale.ROOT)` instead. If you really want to use the current locale, call `String#toUpperCase(Locale.getDefault())` instead."
+        url="https://developer.android.com/reference/java/util/Locale.html#default_locale"
+        urls="https://developer.android.com/reference/java/util/Locale.html#default_locale"
+        errorLine1="                            notificationMessage = &quot;Distance: ${String.format(&quot;%.2f m&quot;, distanceMeters)} (within 4.00 m)&quot;"
+        errorLine2="                                                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="E:\sotuken\kenti\app\src\main\java\org\tensorflow\lite\examples\objectdetection\fragments\CameraFragment.kt"
+            line="400"
+            column="64"/>
     </issue>
 
     <issue

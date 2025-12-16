@@ -54,6 +54,8 @@ import android.os.Looper
 import org.tensorflow.lite.examples.objectdetection.NotificationHelper
 import java.util.concurrent.TimeUnit
 
+import org.tensorflow.lite.examples.objectdetection.DistanceConstants
+
 class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
 
     private val TAG = "ObjectDetection"
@@ -82,10 +84,14 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
     // 通知ヘルパー
     private lateinit var notificationHelper: NotificationHelper
 
-    // 通知用のタイマー管理
-    private val notificationHandler = Handler(Looper.getMainLooper())
-    private var lastNotificationTime = 0L
-    private val NOTIFICATION_INTERVAL = 5000L // 5秒間隔 (ミリ秒)
+    // 距離ベースの通知制御用変数
+    private var isNotificationSent = false // 通知が送信済みかどうか (4m圏内に入った時)
+    private val ALERT_DISTANCE_M = 4.0f // 通知を出す距離の閾値 (4メートル)
+
+    // 画面の縦横比 (OverlayView のスケール計算に利用)
+    private var previewWidth = 0
+    private var previewHeight = 0
+    private var scaleFactor = 1f
 
     override fun onResume() {
         super.onResume()
@@ -360,43 +366,59 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
                 imageWidth
             )
 
-            //再描画
-            fragmentCameraBinding.overlay.invalidate()
-
             // -------------------------------------------------------------
-            val currentTime = System.currentTimeMillis()
+            var shouldNotify = false
+            var notificationTitle = "No Object Detected"
+            var notificationMessage = "Ready for detection."
             
-            // 最後の通知から 5秒 (5000ms) 以上経過しているかチェック
-            if (currentTime - lastNotificationTime >= NOTIFICATION_INTERVAL) {
-                
-                // 検出されたオブジェクトの数をカウント
-                val detectedCount = results?.size ?: 0
-                
-                val title: String
-                val message: String
-                
-                if (detectedCount > 0) {
-                    // 検出されたオブジェクトがある場合、最も信頼度の高いものを表示
-                    val topResult = results!!.maxByOrNull { it.categories[0].score }
-                    val label = topResult?.categories?.get(0)?.label ?: "Unknown"
-                    val score = String.format("%.0f%%", (topResult?.categories?.get(0)?.score ?: 0f) * 100)
-                    
-                    title = "Object Detected! ($detectedCount item${if (detectedCount > 1) "s" else ""})"
-                    message = "$label detected with $score confidence."
-                    
-                } else {
-                    // 検出されたオブジェクトがない場合
-                    title = "No Object Detected"
-                    message = "Ready for detection. Move camera to target."
+            val detectedObjectCount = results?.size ?: 0
+            
+            if (detectedObjectCount > 0) {
+                // 最も近いオブジェクトの距離を計算し、通知の対象とする
+                val closestDetection = results!!.minByOrNull { detection ->
+                    val pixelWidth = detection.boundingBox.width()
+                    // 距離を計算: D = (F * R_W) / P_W
+                    val distanceMeters = (DistanceConstants.VIRTUAL_FOCAL_LENGTH_F * DistanceConstants.TARGET_REAL_WIDTH_M) / pixelWidth
+                    distanceMeters
                 }
                 
-                // 通知を表示 (ヘッドアップ通知として表示されます)
-                notificationHelper.showNotification(title, message)
-                
-                // 最後の通知時間を更新
-                lastNotificationTime = currentTime
+                if (closestDetection != null) {
+                    val pixelWidth = closestDetection.boundingBox.width()
+                    val distanceMeters = (DistanceConstants.VIRTUAL_FOCAL_LENGTH_F * DistanceConstants.TARGET_REAL_WIDTH_M) / pixelWidth
+                    
+                    val label = closestDetection.categories.firstOrNull()?.label ?: "Object"
+                    val score = String.format("%.0f%%", (closestDetection.categories.firstOrNull()?.score ?: 0f) * 100)
+                    
+                    notificationTitle = "Object Detected!"
+                    notificationMessage = "$label is at ${String.format("%.2f m", distanceMeters)}. Confidence: $score"
+
+                    // 4メートル以内かチェック
+                    if (distanceMeters <= ALERT_DISTANCE_M) {
+                        if (!isNotificationSent) {
+                            // 4m 圏内に入った瞬間で、まだ通知を送っていない場合
+                            notificationTitle = "🚨 ALERT: $label が近づいています。注意してください"
+                            notificationMessage = "Distance: ${String.format("%.2f m", distanceMeters)} (within 4.00 m)"
+                            shouldNotify = true
+                            isNotificationSent = true // 通知済みフラグをON
+                        }
+                    } else {
+                        // 4m 圏外に出た場合、フラグをリセットし、次回4m圏内に入ったときに通知可能にする
+                        isNotificationSent = false
+                    }
+                }
+            } else {
+                // 検出物が無い場合、フラグをリセット
+                isNotificationSent = false
+            }
+
+            // 通知の実行
+            if (shouldNotify) {
+                notificationHelper.showNotification(notificationTitle, notificationMessage)
             }
             // -------------------------------------------------------------
+
+            //再描画
+            fragmentCameraBinding.overlay.invalidate()
             
         }
     }
