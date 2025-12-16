@@ -106,5 +106,9 @@
     {
         "merged": "org.tensorflow.lite.examples.objectdetection.app-release-42:/navigation_nav_graph.xml.flat",
         "source": "org.tensorflow.lite.examples.objectdetection.app-main-43:/navigation/nav_graph.xml"
+    },
+    {
+        "merged": "org.tensorflow.lite.examples.objectdetection.app-release-42:/drawable_ic_notification.xml.flat",
+        "source": "org.tensorflow.lite.examples.objectdetection.app-main-43:/drawable/ic_notification.xml"
     }
 ]

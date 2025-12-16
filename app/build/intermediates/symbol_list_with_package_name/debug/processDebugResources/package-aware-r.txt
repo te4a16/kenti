@@ -1234,6 +1234,7 @@ drawable ic_minus
 drawable ic_mtrl_chip_checked_black
 drawable ic_mtrl_chip_checked_circle
 drawable ic_mtrl_chip_close_circle
+drawable ic_notification
 drawable ic_plus
 drawable icn_chevron_up
 drawable mtrl_snackbar_background

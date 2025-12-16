@@ -36,10 +36,10 @@ org.tensorflow.lite.examples.objectdetection.app-navigation-common-2.3.5-34 C:\U
 org.tensorflow.lite.examples.objectdetection.app-recyclerview-1.0.0-35 C:\Users\220508\.gradle\caches\8.14.3\transforms\ec600041a46fe2227f41f76b0a92431a\transformed\recyclerview-1.0.0\res
 org.tensorflow.lite.examples.objectdetection.app-coordinatorlayout-1.0.0-36 C:\Users\220508\.gradle\caches\8.14.3\transforms\f0149a58db13722b92901dc10b74dd97\transformed\coordinatorlayout-1.0.0\res
 org.tensorflow.lite.examples.objectdetection.app-jetified-core-ktx-1.6.0-37 C:\Users\220508\.gradle\caches\8.14.3\transforms\f86f506d714cb0f9f09e2193c7f630c2\transformed\jetified-core-ktx-1.6.0\res
-org.tensorflow.lite.examples.objectdetection.app-pngs-38 E:\sotuken\android\app\build\generated\res\pngs\release
-org.tensorflow.lite.examples.objectdetection.app-resValues-39 E:\sotuken\android\app\build\generated\res\resValues\release
-org.tensorflow.lite.examples.objectdetection.app-packageReleaseResources-40 E:\sotuken\android\app\build\intermediates\incremental\release\packageReleaseResources\merged.dir
-org.tensorflow.lite.examples.objectdetection.app-packageReleaseResources-41 E:\sotuken\android\app\build\intermediates\incremental\release\packageReleaseResources\stripped.dir
-org.tensorflow.lite.examples.objectdetection.app-release-42 E:\sotuken\android\app\build\intermediates\merged_res\release\mergeReleaseResources
-org.tensorflow.lite.examples.objectdetection.app-main-43 E:\sotuken\android\app\src\main\res
-org.tensorflow.lite.examples.objectdetection.app-release-44 E:\sotuken\android\app\src\release\res
+org.tensorflow.lite.examples.objectdetection.app-pngs-38 E:\sotuken\kenti\app\build\generated\res\pngs\release
+org.tensorflow.lite.examples.objectdetection.app-resValues-39 E:\sotuken\kenti\app\build\generated\res\resValues\release
+org.tensorflow.lite.examples.objectdetection.app-packageReleaseResources-40 E:\sotuken\kenti\app\build\intermediates\incremental\release\packageReleaseResources\merged.dir
+org.tensorflow.lite.examples.objectdetection.app-packageReleaseResources-41 E:\sotuken\kenti\app\build\intermediates\incremental\release\packageReleaseResources\stripped.dir
+org.tensorflow.lite.examples.objectdetection.app-release-42 E:\sotuken\kenti\app\build\intermediates\merged_res\release\mergeReleaseResources
+org.tensorflow.lite.examples.objectdetection.app-main-43 E:\sotuken\kenti\app\src\main\res
+org.tensorflow.lite.examples.objectdetection.app-release-44 E:\sotuken\kenti\app\src\release\res

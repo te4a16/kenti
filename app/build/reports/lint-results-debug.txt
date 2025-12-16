@@ -1,18 +1,27 @@
-E:\sotuken\android\app\src\main\java\org\tensorflow\lite\examples\objectdetection\fragments\CameraFragment.kt:216: Warning: Implicitly using the default locale is a common source of bugs: Use String.format(Locale, ...) instead [DefaultLocale]
+E:\sotuken\kenti\app\src\main\java\org\tensorflow\lite\examples\objectdetection\fragments\CameraFragment.kt:232: Warning: Implicitly using the default locale is a common source of bugs: Use String.format(Locale, ...) instead [DefaultLocale]
             String.format("%.2f", objectDetectorHelper.threshold)
             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-E:\sotuken\android\app\src\main\java\org\tensorflow\lite\examples\objectdetection\fragments\CameraFragment.kt:216: Warning: Implicitly using the default locale is a common source of bugs: Use String.format(Locale, ...) instead [DefaultLocale]
+E:\sotuken\kenti\app\src\main\java\org\tensorflow\lite\examples\objectdetection\fragments\CameraFragment.kt:232: Warning: Implicitly using the default locale is a common source of bugs: Use String.format(Locale, ...) instead [DefaultLocale]
             String.format("%.2f", objectDetectorHelper.threshold)
             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-E:\sotuken\android\app\src\main\java\org\tensorflow\lite\examples\objectdetection\fragments\CameraFragment.kt:337: Warning: Implicitly using the default locale is a common source of bugs: Use String.format(Locale, ...) instead [DefaultLocale]
+E:\sotuken\kenti\app\src\main\java\org\tensorflow\lite\examples\objectdetection\fragments\CameraFragment.kt:353: Warning: Implicitly using the default locale is a common source of bugs: Use String.format(Locale, ...) instead [DefaultLocale]
                             String.format("%d ms", inferenceTime)
                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-E:\sotuken\android\app\src\main\java\org\tensorflow\lite\examples\objectdetection\fragments\CameraFragment.kt:337: Warning: Implicitly using the default locale is a common source of bugs: Use String.format(Locale, ...) instead [DefaultLocale]
+E:\sotuken\kenti\app\src\main\java\org\tensorflow\lite\examples\objectdetection\fragments\CameraFragment.kt:353: Warning: Implicitly using the default locale is a common source of bugs: Use String.format(Locale, ...) instead [DefaultLocale]
                             String.format("%d ms", inferenceTime)
                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-E:\sotuken\android\app\src\main\java\org\tensorflow\lite\examples\objectdetection\OverlayView.kt:105: Warning: Implicitly using the default locale is a common source of bugs: Use String.format(Locale, ...) instead [DefaultLocale]
-                        String.format("%.2f", result.categories[0].score)
+E:\sotuken\kenti\app\src\main\java\org\tensorflow\lite\examples\objectdetection\fragments\CameraFragment.kt:382: Warning: Implicitly using the default locale is a common source of bugs: Use String.format(Locale, ...) instead [DefaultLocale]
+                    val score = String.format("%.0f%%", (topResult?.categories?.get(0)?.score ?: 0f) * 100)
+                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\sotuken\kenti\app\src\main\java\org\tensorflow\lite\examples\objectdetection\OverlayView.kt:149: Warning: Implicitly using the default locale is a common source of bugs: Use String.format(Locale, ...) instead [DefaultLocale]
+            val score = String.format("%.2f", result.categories[0].score)
                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\sotuken\kenti\app\src\main\java\org\tensorflow\lite\examples\objectdetection\OverlayView.kt:150: Warning: Implicitly using the default locale is a common source of bugs: Use String.format(Locale, ...) instead [DefaultLocale]
+            val distanceText = String.format(" (%.2f m)", distanceMeters)
+                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\sotuken\kenti\app\src\main\java\org\tensorflow\lite\examples\objectdetection\OverlayView.kt:152: Warning: Implicitly using the default locale is a common source of bugs: Use String.format(Locale, ...) instead [DefaultLocale]
+            val pixelWidthText = String.format(" | W: %d px", pixelWidth.toInt())
+                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
    Explanation for issues of type "DefaultLocale":
    Calling String#toLowerCase() or #toUpperCase() without specifying an
@@ -29,79 +38,79 @@ E:\sotuken\android\app\src\main\java\org\tensorflow\lite\examples\objectdetectio
 
    https://developer.android.com/reference/java/util/Locale.html#default_locale
 
-E:\sotuken\android\app\build.gradle:24: Warning: A newer version of compileSdkVersion than 33 is available: 34 [GradleDependency]
+E:\sotuken\kenti\app\build.gradle:24: Warning: A newer version of compileSdkVersion than 33 is available: 34 [GradleDependency]
     compileSdkVersion 33
     ~~~~~~~~~~~~~~~~~~~~
-E:\sotuken\android\app\build.gradle:75: Warning: A newer version of androidx.core:core-ktx than 1.6.0 is available: 1.17.0 [GradleDependency]
+E:\sotuken\kenti\app\build.gradle:75: Warning: A newer version of androidx.core:core-ktx than 1.6.0 is available: 1.17.0 [GradleDependency]
     implementation 'androidx.core:core-ktx:1.6.0'
                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-E:\sotuken\android\app\build.gradle:77: Warning: A newer version of org.jetbrains.kotlinx:kotlinx-coroutines-android than 1.5.0 is available: 1.6.4 [GradleDependency]
+E:\sotuken\kenti\app\build.gradle:77: Warning: A newer version of org.jetbrains.kotlinx:kotlinx-coroutines-android than 1.5.0 is available: 1.6.4 [GradleDependency]
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0'
                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-E:\sotuken\android\app\build.gradle:80: Warning: A newer version of androidx.appcompat:appcompat than 1.3.1 is available: 1.7.1 [GradleDependency]
+E:\sotuken\kenti\app\build.gradle:80: Warning: A newer version of androidx.appcompat:appcompat than 1.3.1 is available: 1.7.1 [GradleDependency]
     implementation 'androidx.appcompat:appcompat:1.3.1'
                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-E:\sotuken\android\app\build.gradle:81: Warning: A newer version of androidx.lifecycle:lifecycle-runtime-ktx than 2.3.1 is available: 2.10.0 [GradleDependency]
+E:\sotuken\kenti\app\build.gradle:81: Warning: A newer version of androidx.lifecycle:lifecycle-runtime-ktx than 2.3.1 is available: 2.10.0 [GradleDependency]
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-E:\sotuken\android\app\build.gradle:82: Warning: A newer version of androidx.constraintlayout:constraintlayout than 2.0.4 is available: 2.2.1 [GradleDependency]
+E:\sotuken\kenti\app\build.gradle:82: Warning: A newer version of androidx.constraintlayout:constraintlayout than 2.0.4 is available: 2.2.1 [GradleDependency]
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-E:\sotuken\android\app\build.gradle:83: Warning: A newer version of com.google.android.material:material than 1.0.0 is available: 1.13.0 [GradleDependency]
+E:\sotuken\kenti\app\build.gradle:83: Warning: A newer version of com.google.android.material:material than 1.0.0 is available: 1.13.0 [GradleDependency]
     implementation 'com.google.android.material:material:1.0.0'
                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-E:\sotuken\android\app\build.gradle:84: Warning: A newer version of androidx.localbroadcastmanager:localbroadcastmanager than 1.0.0 is available: 1.1.0 [GradleDependency]
+E:\sotuken\kenti\app\build.gradle:84: Warning: A newer version of androidx.localbroadcastmanager:localbroadcastmanager than 1.0.0 is available: 1.1.0 [GradleDependency]
     implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'
                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-E:\sotuken\android\app\build.gradle:88: Warning: A newer version of androidx.navigation:navigation-fragment-ktx than 2.3.5 is available: 2.9.6 [GradleDependency]
+E:\sotuken\kenti\app\build.gradle:88: Warning: A newer version of androidx.navigation:navigation-fragment-ktx than 2.3.5 is available: 2.9.6 [GradleDependency]
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-E:\sotuken\android\app\build.gradle:89: Warning: A newer version of androidx.navigation:navigation-ui-ktx than 2.3.5 is available: 2.9.6 [GradleDependency]
+E:\sotuken\kenti\app\build.gradle:89: Warning: A newer version of androidx.navigation:navigation-ui-ktx than 2.3.5 is available: 2.9.6 [GradleDependency]
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-E:\sotuken\android\app\build.gradle:93: Warning: A newer version of androidx.camera:camera-core than 1.1.0-beta03 is available: 1.5.2 [GradleDependency]
+E:\sotuken\kenti\app\build.gradle:93: Warning: A newer version of androidx.camera:camera-core than 1.1.0-beta03 is available: 1.5.2 [GradleDependency]
     implementation "androidx.camera:camera-core:$camerax_version"
                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-E:\sotuken\android\app\build.gradle:96: Warning: A newer version of androidx.camera:camera-camera2 than 1.1.0-beta03 is available: 1.5.2 [GradleDependency]
+E:\sotuken\kenti\app\build.gradle:96: Warning: A newer version of androidx.camera:camera-camera2 than 1.1.0-beta03 is available: 1.5.2 [GradleDependency]
     implementation "androidx.camera:camera-camera2:$camerax_version"
                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-E:\sotuken\android\app\build.gradle:99: Warning: A newer version of androidx.camera:camera-lifecycle than 1.1.0-beta03 is available: 1.5.2 [GradleDependency]
+E:\sotuken\kenti\app\build.gradle:99: Warning: A newer version of androidx.camera:camera-lifecycle than 1.1.0-beta03 is available: 1.5.2 [GradleDependency]
     implementation "androidx.camera:camera-lifecycle:$camerax_version"
                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-E:\sotuken\android\app\build.gradle:102: Warning: A newer version of androidx.camera:camera-view than 1.1.0-beta03 is available: 1.5.2 [GradleDependency]
+E:\sotuken\kenti\app\build.gradle:102: Warning: A newer version of androidx.camera:camera-view than 1.1.0-beta03 is available: 1.5.2 [GradleDependency]
     implementation "androidx.camera:camera-view:$camerax_version"
                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-E:\sotuken\android\app\build.gradle:105: Warning: A newer version of androidx.window:window than 1.0.0-alpha09 is available: 1.5.1 [GradleDependency]
+E:\sotuken\kenti\app\build.gradle:105: Warning: A newer version of androidx.window:window than 1.0.0-alpha09 is available: 1.5.1 [GradleDependency]
     implementation 'androidx.window:window:1.0.0-alpha09'
                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-E:\sotuken\android\app\build.gradle:108: Warning: A newer version of androidx.test.ext:junit than 1.1.3 is available: 1.3.0 [GradleDependency]
+E:\sotuken\kenti\app\build.gradle:108: Warning: A newer version of androidx.test.ext:junit than 1.1.3 is available: 1.3.0 [GradleDependency]
     testImplementation 'androidx.test.ext:junit:1.1.3'
                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-E:\sotuken\android\app\build.gradle:109: Warning: A newer version of androidx.test:rules than 1.4.0 is available: 1.7.0 [GradleDependency]
+E:\sotuken\kenti\app\build.gradle:109: Warning: A newer version of androidx.test:rules than 1.4.0 is available: 1.7.0 [GradleDependency]
     testImplementation 'androidx.test:rules:1.4.0'
                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-E:\sotuken\android\app\build.gradle:110: Warning: A newer version of androidx.test:runner than 1.4.0 is available: 1.7.0 [GradleDependency]
+E:\sotuken\kenti\app\build.gradle:110: Warning: A newer version of androidx.test:runner than 1.4.0 is available: 1.7.0 [GradleDependency]
     testImplementation 'androidx.test:runner:1.4.0'
                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-E:\sotuken\android\app\build.gradle:111: Warning: A newer version of androidx.test.espresso:espresso-core than 3.4.0 is available: 3.7.0 [GradleDependency]
+E:\sotuken\kenti\app\build.gradle:111: Warning: A newer version of androidx.test.espresso:espresso-core than 3.4.0 is available: 3.7.0 [GradleDependency]
     testImplementation 'androidx.test.espresso:espresso-core:3.4.0'
                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-E:\sotuken\android\app\build.gradle:115: Warning: A newer version of androidx.test.ext:junit than 1.1.3 is available: 1.3.0 [GradleDependency]
+E:\sotuken\kenti\app\build.gradle:115: Warning: A newer version of androidx.test.ext:junit than 1.1.3 is available: 1.3.0 [GradleDependency]
     androidTestImplementation "androidx.test.ext:junit:1.1.3"
                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-E:\sotuken\android\app\build.gradle:116: Warning: A newer version of androidx.test:core than 1.4.0 is available: 1.7.0 [GradleDependency]
+E:\sotuken\kenti\app\build.gradle:116: Warning: A newer version of androidx.test:core than 1.4.0 is available: 1.7.0 [GradleDependency]
     androidTestImplementation "androidx.test:core:1.4.0"
                               ~~~~~~~~~~~~~~~~~~~~~~~~~~
-E:\sotuken\android\app\build.gradle:117: Warning: A newer version of androidx.test:rules than 1.4.0 is available: 1.7.0 [GradleDependency]
+E:\sotuken\kenti\app\build.gradle:117: Warning: A newer version of androidx.test:rules than 1.4.0 is available: 1.7.0 [GradleDependency]
     androidTestImplementation "androidx.test:rules:1.4.0"
                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-E:\sotuken\android\app\build.gradle:118: Warning: A newer version of androidx.test:runner than 1.4.0 is available: 1.7.0 [GradleDependency]
+E:\sotuken\kenti\app\build.gradle:118: Warning: A newer version of androidx.test:runner than 1.4.0 is available: 1.7.0 [GradleDependency]
     androidTestImplementation "androidx.test:runner:1.4.0"
                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-E:\sotuken\android\app\build.gradle:119: Warning: A newer version of androidx.test.espresso:espresso-core than 3.4.0 is available: 3.7.0 [GradleDependency]
+E:\sotuken\kenti\app\build.gradle:119: Warning: A newer version of androidx.test.espresso:espresso-core than 3.4.0 is available: 3.7.0 [GradleDependency]
     androidTestImplementation "androidx.test.espresso:espresso-core:3.4.0"
                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-E:\sotuken\android\app\build.gradle:121: Warning: A newer version of org.tensorflow:tensorflow-lite-task-vision than 0.4.0 is available: 0.4.4 [GradleDependency]
+E:\sotuken\kenti\app\build.gradle:121: Warning: A newer version of org.tensorflow:tensorflow-lite-task-vision than 0.4.0 is available: 0.4.4 [GradleDependency]
     implementation 'org.tensorflow:tensorflow-lite-task-vision:0.4.0'
                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -112,7 +121,7 @@ E:\sotuken\android\app\build.gradle:121: Warning: A newer version of org.tensorf
    However, you may simply not be aware that a more recent version is
    available, and that is what this lint check helps find.
 
-E:\sotuken\android\app\src\main\res\values\strings.xml:50: Warning: Did you mean "Lite!" instead of "Lite1"? [Typos]
+E:\sotuken\kenti\app\src\main\res\values\strings.xml:50: Warning: Did you mean "Lite!" instead of "Lite1"? [Typos]
         <item>EfficientDet Lite1</item>
                            ^
 
@@ -120,7 +129,7 @@ E:\sotuken\android\app\src\main\res\values\strings.xml:50: Warning: Did you mean
    This check looks through the string definitions, and if it finds any words
    that look like likely misspellings, they are flagged.
 
-E:\sotuken\android\app\src\main\res\layout\info_bottom_sheet.xml:21: Warning: Possible overdraw: Root element paints background @color/bottom_sheet_background with a theme that also paints a background (inferred theme is @android:style/Theme.Holo) [Overdraw]
+E:\sotuken\kenti\app\src\main\res\layout\info_bottom_sheet.xml:21: Warning: Possible overdraw: Root element paints background @color/bottom_sheet_background with a theme that also paints a background (inferred theme is @android:style/Theme.Holo) [Overdraw]
     android:background="@color/bottom_sheet_background"
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -145,28 +154,28 @@ E:\sotuken\android\app\src\main\res\layout\info_bottom_sheet.xml:21: Warning: Po
    performance if you pre-mix the background with your drawable and use that
    resulting image or color as a custom theme background instead.
 
-E:\sotuken\android\app\src\main\res\values\colors.xml:25: Warning: The resource R.color.icActive appears to be unused [UnusedResources]
+E:\sotuken\kenti\app\src\main\res\values\colors.xml:25: Warning: The resource R.color.icActive appears to be unused [UnusedResources]
     <color name="icActive">#FFFFFFFF</color>
            ~~~~~~~~~~~~~~~
-E:\sotuken\android\app\src\main\res\values\colors.xml:26: Warning: The resource R.color.icFocused appears to be unused [UnusedResources]
+E:\sotuken\kenti\app\src\main\res\values\colors.xml:26: Warning: The resource R.color.icFocused appears to be unused [UnusedResources]
     <color name="icFocused">#DDFFFFFF</color>
            ~~~~~~~~~~~~~~~~
-E:\sotuken\android\app\src\main\res\values\colors.xml:27: Warning: The resource R.color.icPressed appears to be unused [UnusedResources]
+E:\sotuken\kenti\app\src\main\res\values\colors.xml:27: Warning: The resource R.color.icPressed appears to be unused [UnusedResources]
     <color name="icPressed">#AAFFFFFF</color>
            ~~~~~~~~~~~~~~~~
-E:\sotuken\android\app\src\main\res\values\dimens.xml:19: Warning: The resource R.dimen.stroke_small appears to be unused [UnusedResources]
+E:\sotuken\kenti\app\src\main\res\values\dimens.xml:19: Warning: The resource R.dimen.stroke_small appears to be unused [UnusedResources]
     <dimen name="stroke_small">4dp</dimen>
            ~~~~~~~~~~~~~~~~~~~
-E:\sotuken\android\app\src\main\res\values\dimens.xml:20: Warning: The resource R.dimen.round_button_medium appears to be unused [UnusedResources]
+E:\sotuken\kenti\app\src\main\res\values\dimens.xml:20: Warning: The resource R.dimen.round_button_medium appears to be unused [UnusedResources]
     <dimen name="round_button_medium">64dp</dimen>
            ~~~~~~~~~~~~~~~~~~~~~~~~~~
-E:\sotuken\android\app\src\main\res\drawable-v24\ic_launcher_foreground.xml:1: Warning: The resource R.drawable.ic_launcher_foreground appears to be unused [UnusedResources]
+E:\sotuken\kenti\app\src\main\res\drawable-v24\ic_launcher_foreground.xml:1: Warning: The resource R.drawable.ic_launcher_foreground appears to be unused [UnusedResources]
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
 ^
-E:\sotuken\android\app\src\main\res\color\selector_ic.xml:2: Warning: The resource R.color.selector_ic appears to be unused [UnusedResources]
+E:\sotuken\kenti\app\src\main\res\color\selector_ic.xml:2: Warning: The resource R.color.selector_ic appears to be unused [UnusedResources]
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 ^
-E:\sotuken\android\app\src\main\res\values\strings.xml:34: Warning: The resource R.string.label_fps appears to be unused [UnusedResources]
+E:\sotuken\kenti\app\src\main\res\values\strings.xml:34: Warning: The resource R.string.label_fps appears to be unused [UnusedResources]
     <string name="label_fps">Frames per Second</string>
             ~~~~~~~~~~~~~~~~
 
@@ -184,10 +193,10 @@ E:\sotuken\android\app\src\main\res\values\strings.xml:34: Warning: The resource
    lint.unused-resources.exclude-tests =true.
    ,
 
-E:\sotuken\android\app\src\main\res\mipmap-anydpi-v26\ic_launcher.xml:17: Warning: The application adaptive icon is missing a monochrome tag [MonochromeLauncherIcon]
+E:\sotuken\kenti\app\src\main\res\mipmap-anydpi-v26\ic_launcher.xml:17: Warning: The application adaptive icon is missing a monochrome tag [MonochromeLauncherIcon]
 <adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
 ^
-E:\sotuken\android\app\src\main\res\mipmap-anydpi-v26\ic_launcher_round.xml:17: Warning: The application adaptive roundIcon is missing a monochrome tag [MonochromeLauncherIcon]
+E:\sotuken\kenti\app\src\main\res\mipmap-anydpi-v26\ic_launcher_round.xml:17: Warning: The application adaptive roundIcon is missing a monochrome tag [MonochromeLauncherIcon]
 <adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
 ^
 
@@ -203,7 +212,7 @@ E:\sotuken\android\app\src\main\res\mipmap-anydpi-v26\ic_launcher_round.xml:17: 
    application iconwill not show if your monochrome attribute is not also
    specified in android:roundIcon.
 
-E:\sotuken\android\app\src\main\res\drawable\icn_chevron_up.png: Warning: Found bitmap drawable res/drawable/icn_chevron_up.png in densityless folder [IconLocation]
+E:\sotuken\kenti\app\src\main\res\drawable\icn_chevron_up.png: Warning: Found bitmap drawable res/drawable/icn_chevron_up.png in densityless folder [IconLocation]
 
    Explanation for issues of type "IconLocation":
    The res/drawable folder is intended for density-independent graphics such
@@ -214,7 +223,7 @@ E:\sotuken\android\app\src\main\res\drawable\icn_chevron_up.png: Warning: Found 
 
    https://developer.android.com/guide/practices/screens_support.html
 
-E:\sotuken\android\app\src\main\res\layout\activity_main.xml:49: Warning: Missing contentDescription attribute on image [ContentDescription]
+E:\sotuken\kenti\app\src\main\res\layout\activity_main.xml:49: Warning: Missing contentDescription attribute on image [ContentDescription]
             <ImageView
              ~~~~~~~~~
 
@@ -237,16 +246,16 @@ E:\sotuken\android\app\src\main\res\layout\activity_main.xml:49: Warning: Missin
 
    https://developer.android.com/guide/topics/ui/accessibility/apps#special-cases
 
-E:\sotuken\android\app\src\main\res\layout\info_bottom_sheet.xml:64: Warning: Hardcoded string "0ms", should use @string resource [HardcodedText]
+E:\sotuken\kenti\app\src\main\res\layout\info_bottom_sheet.xml:64: Warning: Hardcoded string "0ms", should use @string resource [HardcodedText]
                 android:text="0ms"
                 ~~~~~~~~~~~~~~~~~~
-E:\sotuken\android\app\src\main\res\layout\info_bottom_sheet.xml:111: Warning: Hardcoded string "0.50", should use @string resource [HardcodedText]
+E:\sotuken\kenti\app\src\main\res\layout\info_bottom_sheet.xml:111: Warning: Hardcoded string "0.50", should use @string resource [HardcodedText]
                     android:text="0.50"
                     ~~~~~~~~~~~~~~~~~~~
-E:\sotuken\android\app\src\main\res\layout\info_bottom_sheet.xml:160: Warning: Hardcoded string "3", should use @string resource [HardcodedText]
+E:\sotuken\kenti\app\src\main\res\layout\info_bottom_sheet.xml:160: Warning: Hardcoded string "3", should use @string resource [HardcodedText]
                     android:text="3"
                     ~~~~~~~~~~~~~~~~
-E:\sotuken\android\app\src\main\res\layout\info_bottom_sheet.xml:210: Warning: Hardcoded string "2", should use @string resource [HardcodedText]
+E:\sotuken\kenti\app\src\main\res\layout\info_bottom_sheet.xml:210: Warning: Hardcoded string "2", should use @string resource [HardcodedText]
                     android:text="2"
                     ~~~~~~~~~~~~~~~~
 
@@ -264,19 +273,19 @@ E:\sotuken\android\app\src\main\res\layout\info_bottom_sheet.xml:210: Warning: H
    There are quickfixes to automatically extract this hardcoded string into a
    resource lookup.
 
-E:\sotuken\android\app\src\main\res\layout\info_bottom_sheet.xml:81: Warning: TextView-1 can overlap LinearLayout-3 if @string/label_confidence_threshold grows due to localized text expansion [RelativeOverlap]
+E:\sotuken\kenti\app\src\main\res\layout\info_bottom_sheet.xml:81: Warning: TextView-1 can overlap LinearLayout-3 if @string/label_confidence_threshold grows due to localized text expansion [RelativeOverlap]
             <TextView
              ~~~~~~~~
-E:\sotuken\android\app\src\main\res\layout\info_bottom_sheet.xml:132: Warning: TextView-1 can overlap LinearLayout-3 if @string/label_max_results grows due to localized text expansion [RelativeOverlap]
+E:\sotuken\kenti\app\src\main\res\layout\info_bottom_sheet.xml:132: Warning: TextView-1 can overlap LinearLayout-3 if @string/label_max_results grows due to localized text expansion [RelativeOverlap]
             <TextView
              ~~~~~~~~
-E:\sotuken\android\app\src\main\res\layout\info_bottom_sheet.xml:180: Warning: TextView-1 can overlap LinearLayout-3 if @string/label_threads grows due to localized text expansion [RelativeOverlap]
+E:\sotuken\kenti\app\src\main\res\layout\info_bottom_sheet.xml:180: Warning: TextView-1 can overlap LinearLayout-3 if @string/label_threads grows due to localized text expansion [RelativeOverlap]
             <TextView
              ~~~~~~~~
-E:\sotuken\android\app\src\main\res\layout\info_bottom_sheet.xml:229: Warning: TextView-1 can overlap @id/spinner_delegate if @string/label_delegate grows due to localized text expansion [RelativeOverlap]
+E:\sotuken\kenti\app\src\main\res\layout\info_bottom_sheet.xml:229: Warning: TextView-1 can overlap @id/spinner_delegate if @string/label_delegate grows due to localized text expansion [RelativeOverlap]
             <TextView
              ~~~~~~~~
-E:\sotuken\android\app\src\main\res\layout\info_bottom_sheet.xml:254: Warning: TextView-1 can overlap @id/spinner_model if @string/label_models grows due to localized text expansion [RelativeOverlap]
+E:\sotuken\kenti\app\src\main\res\layout\info_bottom_sheet.xml:254: Warning: TextView-1 can overlap @id/spinner_model if @string/label_models grows due to localized text expansion [RelativeOverlap]
             <TextView
              ~~~~~~~~
 
@@ -285,19 +294,19 @@ E:\sotuken\android\app\src\main\res\layout\info_bottom_sheet.xml:254: Warning: T
    they can overlap each other due to localized text expansion unless they
    have mutual constraints like toEndOf/toStartOf.
 
-E:\sotuken\android\app\src\main\res\layout\info_bottom_sheet.xml:91: Warning: Consider replacing android:layout_alignParentRight with android:layout_alignParentEnd="true" to better support right-to-left layouts [RtlHardcoded]
+E:\sotuken\kenti\app\src\main\res\layout\info_bottom_sheet.xml:91: Warning: Consider replacing android:layout_alignParentRight with android:layout_alignParentEnd="true" to better support right-to-left layouts [RtlHardcoded]
                 android:layout_alignParentRight="true"
                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-E:\sotuken\android\app\src\main\res\layout\info_bottom_sheet.xml:143: Warning: Consider replacing android:layout_alignParentRight with android:layout_alignParentEnd="true" to better support right-to-left layouts [RtlHardcoded]
+E:\sotuken\kenti\app\src\main\res\layout\info_bottom_sheet.xml:143: Warning: Consider replacing android:layout_alignParentRight with android:layout_alignParentEnd="true" to better support right-to-left layouts [RtlHardcoded]
                 android:layout_alignParentRight="true"
                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-E:\sotuken\android\app\src\main\res\layout\info_bottom_sheet.xml:190: Warning: Consider replacing android:layout_alignParentRight with android:layout_alignParentEnd="true" to better support right-to-left layouts [RtlHardcoded]
+E:\sotuken\kenti\app\src\main\res\layout\info_bottom_sheet.xml:190: Warning: Consider replacing android:layout_alignParentRight with android:layout_alignParentEnd="true" to better support right-to-left layouts [RtlHardcoded]
                 android:layout_alignParentRight="true"
                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-E:\sotuken\android\app\src\main\res\layout\info_bottom_sheet.xml:243: Warning: Consider replacing android:layout_alignParentRight with android:layout_alignParentEnd="true" to better support right-to-left layouts [RtlHardcoded]
+E:\sotuken\kenti\app\src\main\res\layout\info_bottom_sheet.xml:243: Warning: Consider replacing android:layout_alignParentRight with android:layout_alignParentEnd="true" to better support right-to-left layouts [RtlHardcoded]
                 android:layout_alignParentRight="true"
                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-E:\sotuken\android\app\src\main\res\layout\info_bottom_sheet.xml:268: Warning: Consider replacing android:layout_alignParentRight with android:layout_alignParentEnd="true" to better support right-to-left layouts [RtlHardcoded]
+E:\sotuken\kenti\app\src\main\res\layout\info_bottom_sheet.xml:268: Warning: Consider replacing android:layout_alignParentRight with android:layout_alignParentEnd="true" to better support right-to-left layouts [RtlHardcoded]
                 android:layout_alignParentRight="true"
                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -320,7 +329,7 @@ E:\sotuken\android\app\src\main\res\layout\info_bottom_sheet.xml:268: Warning: C
    the left bitmask. Therefore, you can use gravity="start" rather than
    gravity="left|start".)
 
-E:\sotuken\android\app\src\main\AndroidManifest.xml: Warning: The project references RTL attributes, but does not explicitly enable or disable RTL support with android:supportsRtl in the manifest [RtlEnabled]
+E:\sotuken\kenti\app\src\main\AndroidManifest.xml: Warning: The project references RTL attributes, but does not explicitly enable or disable RTL support with android:supportsRtl in the manifest [RtlEnabled]
 
    Explanation for issues of type "RtlEnabled":
    To enable right-to-left support, when running on API 17 and higher, you
@@ -330,4 +339,4 @@ E:\sotuken\android\app\src\main\AndroidManifest.xml: Warning: The project refere
    If you have started adding RTL attributes, but have not yet finished the
    migration, you can set the attribute to false to satisfy this lint check.
 
-0 errors, 59 warnings
+0 errors, 62 warnings
