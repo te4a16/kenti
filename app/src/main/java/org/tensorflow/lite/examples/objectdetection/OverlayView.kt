@@ -86,6 +86,28 @@ class OverlayView(context: Context?, attrs: AttributeSet?) : View(context, attrs
     override fun draw(canvas: Canvas) {
         super.draw(canvas)
 
+        // 描画が始まる前に、校正用のピクセル幅を画面上部の情報として表示する
+        // --- 【追加】校正ピクセル幅の表示 ---
+        val FOCAL_LENGTH = DistanceConstants.VIRTUAL_FOCAL_LENGTH_F
+        val calibText = "FOCAL_LENGTH: ${FOCAL_LENGTH.toInt()}"
+
+        // 校正値の描画位置（例：Viewの左上隅から少し下げた位置）
+        textBackgroundPaint.getTextBounds(calibText, 0, calibText.length, bounds)
+        val calibTextX = 20f
+        val calibTextY = bounds.height() + 20f
+
+        // 背景矩形を描画（ここではシンプルに黒背景）
+        canvas.drawRect(
+            calibTextX,
+            calibTextY - bounds.height() - Companion.BOUNDING_RECT_TEXT_PADDING,
+            calibTextX + bounds.width() + Companion.BOUNDING_RECT_TEXT_PADDING,
+            calibTextY + Companion.BOUNDING_RECT_TEXT_PADDING,
+            textBackgroundPaint
+        )
+        // 文字を描画
+        canvas.drawText(calibText, calibTextX, calibTextY, textPaint)
+        // ------------------------------------
+
         for (result in results) {
             val boundingBox = result.boundingBox
 
@@ -95,14 +117,41 @@ class OverlayView(context: Context?, attrs: AttributeSet?) : View(context, attrs
             val left = boundingBox.left * scaleFactor
             val right = boundingBox.right * scaleFactor
 
+            // --- 【追加】距離計算ロジックをここに組み込む ---
+
+            val focalLength = DistanceConstants.VIRTUAL_FOCAL_LENGTH_F
+            val realWidth = DistanceConstants.TARGET_REAL_WIDTH_M
+
+            // 検出されたバウンディングボックスのピクセル幅 O_pixel を取得
+            val pixelWidth = boundingBox.right - boundingBox.left
+
+            // 距離 D を計算 (メートル単位)
+            // D = (O_physical * f) / O_pixel
+            val distanceMeters = if (pixelWidth > 0) {
+                (realWidth * focalLength) / pixelWidth
+            } else {
+                0.0f
+            }
+
+            // --- 【ここまで】距離計算ロジック ---
+
             // バウンディングボックスを描画
             val drawableRect = RectF(left, top, right, bottom)
             canvas.drawRect(drawableRect, boxPaint)
 
             // ラベル文字（カテゴリ名 + 信頼度）
+            /*
             val drawableText =
                 result.categories[0].label + " " +
                         String.format("%.2f", result.categories[0].score)
+            */
+            val label = result.categories[0].label
+            val score = String.format("%.2f", result.categories[0].score)
+            val distanceText = String.format(" (%.2f m)", distanceMeters)
+            // リアルタイムのピクセル幅を表示
+            val pixelWidthText = String.format(" | W: %d px", pixelWidth.toInt())
+
+            val drawableText = "${label} ${score}${distanceText} ${pixelWidthText}"
 
             // 表示テキストの背後に矩形を描画する
             // テキスト背景のサイズ計算
@@ -136,6 +185,7 @@ class OverlayView(context: Context?, attrs: AttributeSet?) : View(context, attrs
         //バウンディングボックスを拡大する必要があります。
         //カメラ画像と View のスケール差を補正する
         scaleFactor = max(width * 1f / imageWidth, height * 1f / imageHeight)
+
     }
 
     companion object {
