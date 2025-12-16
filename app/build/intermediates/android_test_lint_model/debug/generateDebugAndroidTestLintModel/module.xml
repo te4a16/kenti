@@ -1,9 +1,9 @@
 <lint-module
     format="1"
-    dir="E:\sotuken\android\app"
+    dir="E:\sotuken\kenti\app"
     name=":app"
     type="APP"
-    maven="android:app:unspecified"
+    maven="kenti:app:unspecified"
     agpVersion="8.5.1"
     buildFolder="build"
     bootClassPath="E:\Android\platforms\android-33\android.jar;E:\Android\build-tools\34.0.0\core-lambda-stubs.jar"

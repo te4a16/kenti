@@ -213,12 +213,12 @@
         message="Implicitly using the default locale is a common source of bugs: Use `String.format(Locale, ...)` instead">
         <location
             file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt"
-            line="216"
+            line="232"
             column="13"
-            startOffset="7677"
-            endLine="216"
+            startOffset="8213"
+            endLine="232"
             endColumn="66"
-            endOffset="7730"/>
+            endOffset="8266"/>
     </incident>
 
     <incident
@@ -227,12 +227,12 @@
         message="Implicitly using the default locale is a common source of bugs: Use `String.format(Locale, ...)` instead">
         <location
             file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt"
-            line="216"
+            line="232"
             column="13"
-            startOffset="7677"
-            endLine="216"
+            startOffset="8213"
+            endLine="232"
             endColumn="66"
-            endOffset="7730"/>
+            endOffset="8266"/>
     </incident>
 
     <incident
@@ -241,12 +241,12 @@
         message="Implicitly using the default locale is a common source of bugs: Use `String.format(Locale, ...)` instead">
         <location
             file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt"
-            line="337"
+            line="353"
             column="29"
-            startOffset="12148"
-            endLine="337"
+            startOffset="12684"
+            endLine="353"
             endColumn="66"
-            endOffset="12185"/>
+            endOffset="12721"/>
     </incident>
 
     <incident
@@ -255,12 +255,26 @@
         message="Implicitly using the default locale is a common source of bugs: Use `String.format(Locale, ...)` instead">
         <location
             file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt"
-            line="337"
+            line="353"
             column="29"
-            startOffset="12148"
-            endLine="337"
+            startOffset="12684"
+            endLine="353"
             endColumn="66"
-            endOffset="12185"/>
+            endOffset="12721"/>
+    </incident>
+
+    <incident
+        id="DefaultLocale"
+        severity="warning"
+        message="Implicitly using the default locale is a common source of bugs: Use `String.format(Locale, ...)` instead">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt"
+            line="382"
+            column="33"
+            startOffset="13841"
+            endLine="382"
+            endColumn="108"
+            endOffset="13916"/>
     </incident>
 
     <incident
@@ -269,12 +283,40 @@
         message="Implicitly using the default locale is a common source of bugs: Use `String.format(Locale, ...)` instead">
         <location
             file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/org/tensorflow/lite/examples/objectdetection/OverlayView.kt"
-            line="105"
+            line="149"
             column="25"
-            startOffset="3185"
-            endLine="105"
+            startOffset="4821"
+            endLine="149"
             endColumn="74"
-            endOffset="3234"/>
+            endOffset="4870"/>
+    </incident>
+
+    <incident
+        id="DefaultLocale"
+        severity="warning"
+        message="Implicitly using the default locale is a common source of bugs: Use `String.format(Locale, ...)` instead">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/org/tensorflow/lite/examples/objectdetection/OverlayView.kt"
+            line="150"
+            column="32"
+            startOffset="4902"
+            endLine="150"
+            endColumn="74"
+            endOffset="4944"/>
+    </incident>
+
+    <incident
+        id="DefaultLocale"
+        severity="warning"
+        message="Implicitly using the default locale is a common source of bugs: Use `String.format(Locale, ...)` instead">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/org/tensorflow/lite/examples/objectdetection/OverlayView.kt"
+            line="152"
+            column="34"
+            startOffset="5009"
+            endLine="152"
+            endColumn="82"
+            endOffset="5057"/>
     </incident>
 
     <incident
@@ -741,14 +783,6 @@
     </incident>
 
     <incident
-        id="IconLocation"
-        severity="warning"
-        message="Found bitmap drawable `res/drawable/icn_chevron_up.png` in densityless folder">
-        <location
-            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/drawable/icn_chevron_up.png"/>
-    </incident>
-
-    <incident
         id="Overdraw"
         severity="warning"
         message="Possible overdraw: Root element paints background `@color/bottom_sheet_background` with a theme that also paints a background (inferred theme is `@android:style/Theme.Holo`)">
@@ -760,6 +794,14 @@
             endLine="21"
             endColumn="56"
             endOffset="1029"/>
+    </incident>
+
+    <incident
+        id="IconLocation"
+        severity="warning"
+        message="Found bitmap drawable `res/drawable/icn_chevron_up.png` in densityless folder">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/drawable/icn_chevron_up.png"/>
     </incident>
 
 </incidents>

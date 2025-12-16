@@ -11,17 +11,17 @@
             priority="0">
             <range
                 file="${:app*debug*MAIN*sourceProvider*0*manifest*0}"
-                startOffset="1963"
-                endOffset="1982"/>
+                startOffset="2058"
+                endOffset="2077"/>
         </fix-replace>
         <location
             file="${:app*debug*MAIN*sourceProvider*0*manifest*0}"
-            line="49"
+            line="52"
             column="13"
-            startOffset="1963"
-            endLine="49"
+            startOffset="2058"
+            endLine="52"
             endColumn="32"
-            endOffset="1982"/>
+            endOffset="2077"/>
         <map>
             <condition minGE="fffffffffe000000"/>
         </map>
@@ -145,6 +145,21 @@
                 name="applies"
                 int="10"/>
         </map>
+    </incident>
+
+    <incident
+        id="NotificationPermission"
+        severity="error"
+        message="When targeting Android 13 or higher, posting a permission requires holding the `POST_NOTIFICATIONS` permission">
+        <fix-data missing="android.permission.POST_NOTIFICATIONS"/>
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/org/tensorflow/lite/examples/objectdetection/NotificationHelper.kt"
+            line="70"
+            column="9"
+            startOffset="2859"
+            endLine="70"
+            endColumn="66"
+            endOffset="2916"/>
     </incident>
 
     <incident
