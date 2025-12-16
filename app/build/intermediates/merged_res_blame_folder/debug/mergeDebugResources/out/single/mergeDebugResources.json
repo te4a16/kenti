@@ -56,6 +56,10 @@
         "source": "org.tensorflow.lite.examples.objectdetection.app-main-44:/color/selector_ic.xml"
     },
     {
+        "merged": "org.tensorflow.lite.examples.objectdetection.app-debug-42:/drawable_ic_notification.xml.flat",
+        "source": "org.tensorflow.lite.examples.objectdetection.app-main-44:/drawable/ic_notification.xml"
+    },
+    {
         "merged": "org.tensorflow.lite.examples.objectdetection.app-debug-42:/mipmap-hdpi_ic_launcher_foreground.png.flat",
         "source": "org.tensorflow.lite.examples.objectdetection.app-main-44:/mipmap-hdpi/ic_launcher_foreground.png"
     },

@@ -23,6 +23,7 @@ dimen round_button_medium
 dimen stroke_small
 drawable ic_launcher_foreground
 drawable ic_minus
+drawable ic_notification
 drawable ic_plus
 drawable icn_chevron_up
 drawable tfl_logo

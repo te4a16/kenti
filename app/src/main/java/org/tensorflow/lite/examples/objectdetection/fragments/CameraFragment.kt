@@ -48,6 +48,11 @@ import org.tensorflow.lite.examples.objectdetection.ObjectDetectorHelper
 import org.tensorflow.lite.examples.objectdetection.R
 import org.tensorflow.lite.examples.objectdetection.databinding.FragmentCameraBinding
 import org.tensorflow.lite.task.vision.detector.Detection
+//通知にて追加
+import android.os.Handler
+import android.os.Looper
+import org.tensorflow.lite.examples.objectdetection.NotificationHelper
+import java.util.concurrent.TimeUnit
 
 class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
 
@@ -74,6 +79,14 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
     /** Blocking camera operations are performed using this executor */
     private lateinit var cameraExecutor: ExecutorService
 
+    //通知用ヘルパー
+    private lateinit var notificationHelper: NotificationHelper
+
+    // 通知用のタイマー管理
+    private val notificationHandler = Handler(Looper.getMainLooper())
+    private var lastNotificationTime = 0L
+    private val NOTIFICATION_INTERVAL = 5000L // 5秒間隔 (ミリ秒)
+
     override fun onResume() {
         super.onResume()
         //パーミッションが剥奪されていないか確認
@@ -97,6 +110,10 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
       savedInstanceState: Bundle?
     ): View {
         _fragmentCameraBinding = FragmentCameraBinding.inflate(inflater, container, false)
+
+        // NotificationHelper の初期化 // 通知にて追加
+        notificationHelper = NotificationHelper(requireContext())
+
 
         return fragmentCameraBinding.root
     }
@@ -346,6 +363,43 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
 
             //再描画
             fragmentCameraBinding.overlay.invalidate()
+
+            // -------------------------------------------------------------
+            // ★ここから通知ロジックを追加/修正
+            // -------------------------------------------------------------
+            val currentTime = System.currentTimeMillis()
+            
+            // 最後の通知から 5秒 (5000ms) 以上経過しているかチェック
+            if (currentTime - lastNotificationTime >= NOTIFICATION_INTERVAL) {
+                
+                // 検出されたオブジェクトの数をカウント
+                val detectedCount = results?.size ?: 0
+                
+                val title: String
+                val message: String
+                
+                if (detectedCount > 0) {
+                    // 検出されたオブジェクトがある場合、最も信頼度の高いものを表示
+                    val topResult = results!!.maxByOrNull { it.categories[0].score }
+                    val label = topResult?.categories?.get(0)?.label ?: "Unknown"
+                    val score = String.format("%.0f%%", (topResult?.categories?.get(0)?.score ?: 0f) * 100)
+                    
+                    title = "Object Detected! ($detectedCount item${if (detectedCount > 1) "s" else ""})"
+                    message = "$label detected with $score confidence."
+                    
+                } else {
+                    // 検出されたオブジェクトがない場合
+                    title = "No Object Detected"
+                    message = "Ready for detection. Move camera to target."
+                }
+                
+                // 通知を表示 (ヘッドアップ通知として表示されます)
+                notificationHelper.showNotification(title, message)
+                
+                // 最後の通知時間を更新
+                lastNotificationTime = currentTime
+            }
+            // -------------------------------------------------------------
         }
     }
 
@@ -355,4 +409,5 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
             Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
         }
     }
+
 }

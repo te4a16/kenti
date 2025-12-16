@@ -2,6 +2,20 @@
 <incidents format="6" by="lint 8.5.1" type="incidents">
 
     <incident
+        id="ExtraText"
+        severity="warning"
+        message="Unexpected text found in manifest file: &quot;>&quot;">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*manifest*0}"
+            line="32"
+            column="16"
+            startOffset="1273"
+            endLine="32"
+            endColumn="17"
+            endOffset="1274"/>
+    </incident>
+
+    <incident
         id="ContentDescription"
         severity="warning"
         message="Missing `contentDescription` attribute on image">
@@ -213,12 +227,12 @@
         message="Implicitly using the default locale is a common source of bugs: Use `String.format(Locale, ...)` instead">
         <location
             file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt"
-            line="216"
+            line="233"
             column="13"
-            startOffset="7677"
-            endLine="216"
+            startOffset="8228"
+            endLine="233"
             endColumn="66"
-            endOffset="7730"/>
+            endOffset="8281"/>
     </incident>
 
     <incident
@@ -227,12 +241,12 @@
         message="Implicitly using the default locale is a common source of bugs: Use `String.format(Locale, ...)` instead">
         <location
             file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt"
-            line="216"
+            line="233"
             column="13"
-            startOffset="7677"
-            endLine="216"
+            startOffset="8228"
+            endLine="233"
             endColumn="66"
-            endOffset="7730"/>
+            endOffset="8281"/>
     </incident>
 
     <incident
@@ -241,12 +255,12 @@
         message="Implicitly using the default locale is a common source of bugs: Use `String.format(Locale, ...)` instead">
         <location
             file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt"
-            line="337"
+            line="354"
             column="29"
-            startOffset="12148"
-            endLine="337"
+            startOffset="12699"
+            endLine="354"
             endColumn="66"
-            endOffset="12185"/>
+            endOffset="12736"/>
     </incident>
 
     <incident
@@ -255,12 +269,26 @@
         message="Implicitly using the default locale is a common source of bugs: Use `String.format(Locale, ...)` instead">
         <location
             file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt"
-            line="337"
+            line="354"
             column="29"
-            startOffset="12148"
-            endLine="337"
+            startOffset="12699"
+            endLine="354"
             endColumn="66"
-            endOffset="12185"/>
+            endOffset="12736"/>
+    </incident>
+
+    <incident
+        id="DefaultLocale"
+        severity="warning"
+        message="Implicitly using the default locale is a common source of bugs: Use `String.format(Locale, ...)` instead">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt"
+            line="385"
+            column="33"
+            startOffset="13966"
+            endLine="385"
+            endColumn="108"
+            endOffset="14041"/>
     </incident>
 
     <incident
@@ -741,14 +769,6 @@
     </incident>
 
     <incident
-        id="IconLocation"
-        severity="warning"
-        message="Found bitmap drawable `res/drawable/icn_chevron_up.png` in densityless folder">
-        <location
-            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/drawable/icn_chevron_up.png"/>
-    </incident>
-
-    <incident
         id="Overdraw"
         severity="warning"
         message="Possible overdraw: Root element paints background `@color/bottom_sheet_background` with a theme that also paints a background (inferred theme is `@android:style/Theme.Holo`)">
@@ -760,6 +780,14 @@
             endLine="21"
             endColumn="56"
             endOffset="1029"/>
+    </incident>
+
+    <incident
+        id="IconLocation"
+        severity="warning"
+        message="Found bitmap drawable `res/drawable/icn_chevron_up.png` in densityless folder">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/drawable/icn_chevron_up.png"/>
     </incident>
 
 </incidents>
