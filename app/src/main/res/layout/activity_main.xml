@@ -36,7 +36,6 @@
         android:keepScreenOn="true"
         app:defaultNavHost="true"
         app:navGraph="@navigation/nav_graph"
-        android:layout_marginTop="?android:attr/actionBarSize"
         tools:context=".MainActivity"/>
 
         <androidx.appcompat.widget.Toolbar
