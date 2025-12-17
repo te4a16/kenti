@@ -49,6 +49,7 @@
             android:rotationAnimation="seamless"
             android:resizeableActivity="true"
             android:configChanges="orientation|screenLayout|screenSize|smallestScreenSize"
+            android:supportsPictureInPicture="true"
             tools:targetApi="O">
 
             <!-- Main app intent filter -->

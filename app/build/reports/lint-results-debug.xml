@@ -14,8 +14,8 @@
         errorLine1="            String.format(&quot;%.2f&quot;, objectDetectorHelper.threshold)"
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="E:\sotuken\kenti\app\src\main\java\org\tensorflow\lite\examples\objectdetection\fragments\CameraFragment.kt"
-            line="238"
+            file="D:\sotuken\kenti\app\src\main\java\org\tensorflow\lite\examples\objectdetection\fragments\CameraFragment.kt"
+            line="258"
             column="13"/>
     </issue>
 
@@ -32,8 +32,8 @@
         errorLine1="            String.format(&quot;%.2f&quot;, objectDetectorHelper.threshold)"
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="E:\sotuken\kenti\app\src\main\java\org\tensorflow\lite\examples\objectdetection\fragments\CameraFragment.kt"
-            line="238"
+            file="D:\sotuken\kenti\app\src\main\java\org\tensorflow\lite\examples\objectdetection\fragments\CameraFragment.kt"
+            line="258"
             column="13"/>
     </issue>
 
@@ -50,8 +50,8 @@
         errorLine1="                            String.format(&quot;%d ms&quot;, inferenceTime)"
         errorLine2="                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="E:\sotuken\kenti\app\src\main\java\org\tensorflow\lite\examples\objectdetection\fragments\CameraFragment.kt"
-            line="359"
+            file="D:\sotuken\kenti\app\src\main\java\org\tensorflow\lite\examples\objectdetection\fragments\CameraFragment.kt"
+            line="379"
             column="29"/>
     </issue>
 
@@ -68,8 +68,8 @@
         errorLine1="                            String.format(&quot;%d ms&quot;, inferenceTime)"
         errorLine2="                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="E:\sotuken\kenti\app\src\main\java\org\tensorflow\lite\examples\objectdetection\fragments\CameraFragment.kt"
-            line="359"
+            file="D:\sotuken\kenti\app\src\main\java\org\tensorflow\lite\examples\objectdetection\fragments\CameraFragment.kt"
+            line="379"
             column="29"/>
     </issue>
 
@@ -86,8 +86,8 @@
         errorLine1="                    val score = String.format(&quot;%.0f%%&quot;, (closestDetection.categories.firstOrNull()?.score ?: 0f) * 100)"
         errorLine2="                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="E:\sotuken\kenti\app\src\main\java\org\tensorflow\lite\examples\objectdetection\fragments\CameraFragment.kt"
-            line="390"
+            file="D:\sotuken\kenti\app\src\main\java\org\tensorflow\lite\examples\objectdetection\fragments\CameraFragment.kt"
+            line="410"
             column="33"/>
     </issue>
 
@@ -104,8 +104,8 @@
         errorLine1="                    notificationMessage = &quot;$label is at ${String.format(&quot;%.2f m&quot;, distanceMeters)}. Confidence: $score&quot;"
         errorLine2="                                                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="E:\sotuken\kenti\app\src\main\java\org\tensorflow\lite\examples\objectdetection\fragments\CameraFragment.kt"
-            line="393"
+            file="D:\sotuken\kenti\app\src\main\java\org\tensorflow\lite\examples\objectdetection\fragments\CameraFragment.kt"
+            line="413"
             column="59"/>
     </issue>
 
@@ -122,8 +122,8 @@
         errorLine1="                            notificationMessage = &quot;Distance: ${String.format(&quot;%.2f m&quot;, distanceMeters)} (within 4.00 m)&quot;"
         errorLine2="                                                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="E:\sotuken\kenti\app\src\main\java\org\tensorflow\lite\examples\objectdetection\fragments\CameraFragment.kt"
-            line="400"
+            file="D:\sotuken\kenti\app\src\main\java\org\tensorflow\lite\examples\objectdetection\fragments\CameraFragment.kt"
+            line="420"
             column="64"/>
     </issue>
 
@@ -140,7 +140,7 @@
         errorLine1="            val score = String.format(&quot;%.2f&quot;, result.categories[0].score)"
         errorLine2="                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="E:\sotuken\kenti\app\src\main\java\org\tensorflow\lite\examples\objectdetection\OverlayView.kt"
+            file="D:\sotuken\kenti\app\src\main\java\org\tensorflow\lite\examples\objectdetection\OverlayView.kt"
             line="149"
             column="25"/>
     </issue>
@@ -158,7 +158,7 @@
         errorLine1="            val distanceText = String.format(&quot; (%.2f m)&quot;, distanceMeters)"
         errorLine2="                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="E:\sotuken\kenti\app\src\main\java\org\tensorflow\lite\examples\objectdetection\OverlayView.kt"
+            file="D:\sotuken\kenti\app\src\main\java\org\tensorflow\lite\examples\objectdetection\OverlayView.kt"
             line="150"
             column="32"/>
     </issue>
@@ -176,7 +176,7 @@
         errorLine1="            val pixelWidthText = String.format(&quot; | W: %d px&quot;, pixelWidth.toInt())"
         errorLine2="                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="E:\sotuken\kenti\app\src\main\java\org\tensorflow\lite\examples\objectdetection\OverlayView.kt"
+            file="D:\sotuken\kenti\app\src\main\java\org\tensorflow\lite\examples\objectdetection\OverlayView.kt"
             line="152"
             column="34"/>
     </issue>
@@ -192,7 +192,7 @@
         errorLine1="    compileSdkVersion 33"
         errorLine2="    ~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="E:\sotuken\kenti\app\build.gradle"
+            file="D:\sotuken\kenti\app\build.gradle"
             line="24"
             column="5"/>
     </issue>
@@ -208,7 +208,7 @@
         errorLine1="    implementation &apos;androidx.core:core-ktx:1.6.0&apos;"
         errorLine2="                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="E:\sotuken\kenti\app\build.gradle"
+            file="D:\sotuken\kenti\app\build.gradle"
             line="75"
             column="20"/>
     </issue>
@@ -224,7 +224,7 @@
         errorLine1="    implementation &apos;org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0&apos;"
         errorLine2="                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="E:\sotuken\kenti\app\build.gradle"
+            file="D:\sotuken\kenti\app\build.gradle"
             line="77"
             column="20"/>
     </issue>
@@ -240,7 +240,7 @@
         errorLine1="    implementation &apos;androidx.appcompat:appcompat:1.3.1&apos;"
         errorLine2="                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="E:\sotuken\kenti\app\build.gradle"
+            file="D:\sotuken\kenti\app\build.gradle"
             line="80"
             column="20"/>
     </issue>
@@ -256,7 +256,7 @@
         errorLine1="    implementation &apos;androidx.lifecycle:lifecycle-runtime-ktx:2.3.1&apos;"
         errorLine2="                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="E:\sotuken\kenti\app\build.gradle"
+            file="D:\sotuken\kenti\app\build.gradle"
             line="81"
             column="20"/>
     </issue>
@@ -272,7 +272,7 @@
         errorLine1="    implementation &apos;androidx.constraintlayout:constraintlayout:2.0.4&apos;"
         errorLine2="                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="E:\sotuken\kenti\app\build.gradle"
+            file="D:\sotuken\kenti\app\build.gradle"
             line="82"
             column="20"/>
     </issue>
@@ -288,7 +288,7 @@
         errorLine1="    implementation &apos;com.google.android.material:material:1.0.0&apos;"
         errorLine2="                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="E:\sotuken\kenti\app\build.gradle"
+            file="D:\sotuken\kenti\app\build.gradle"
             line="83"
             column="20"/>
     </issue>
@@ -304,7 +304,7 @@
         errorLine1="    implementation &apos;androidx.localbroadcastmanager:localbroadcastmanager:1.0.0&apos;"
         errorLine2="                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="E:\sotuken\kenti\app\build.gradle"
+            file="D:\sotuken\kenti\app\build.gradle"
             line="84"
             column="20"/>
     </issue>
@@ -320,7 +320,7 @@
         errorLine1="    implementation &quot;androidx.navigation:navigation-fragment-ktx:$nav_version&quot;"
         errorLine2="                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="E:\sotuken\kenti\app\build.gradle"
+            file="D:\sotuken\kenti\app\build.gradle"
             line="88"
             column="20"/>
     </issue>
@@ -336,7 +336,7 @@
         errorLine1="    implementation &quot;androidx.navigation:navigation-ui-ktx:$nav_version&quot;"
         errorLine2="                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="E:\sotuken\kenti\app\build.gradle"
+            file="D:\sotuken\kenti\app\build.gradle"
             line="89"
             column="20"/>
     </issue>
@@ -352,7 +352,7 @@
         errorLine1="    implementation &quot;androidx.camera:camera-core:$camerax_version&quot;"
         errorLine2="                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="E:\sotuken\kenti\app\build.gradle"
+            file="D:\sotuken\kenti\app\build.gradle"
             line="93"
             column="20"/>
     </issue>
@@ -368,7 +368,7 @@
         errorLine1="    implementation &quot;androidx.camera:camera-camera2:$camerax_version&quot;"
         errorLine2="                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="E:\sotuken\kenti\app\build.gradle"
+            file="D:\sotuken\kenti\app\build.gradle"
             line="96"
             column="20"/>
     </issue>
@@ -384,7 +384,7 @@
         errorLine1="    implementation &quot;androidx.camera:camera-lifecycle:$camerax_version&quot;"
         errorLine2="                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="E:\sotuken\kenti\app\build.gradle"
+            file="D:\sotuken\kenti\app\build.gradle"
             line="99"
             column="20"/>
     </issue>
@@ -400,7 +400,7 @@
         errorLine1="    implementation &quot;androidx.camera:camera-view:$camerax_version&quot;"
         errorLine2="                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="E:\sotuken\kenti\app\build.gradle"
+            file="D:\sotuken\kenti\app\build.gradle"
             line="102"
             column="20"/>
     </issue>
@@ -416,7 +416,7 @@
         errorLine1="    implementation &apos;androidx.window:window:1.0.0-alpha09&apos;"
         errorLine2="                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="E:\sotuken\kenti\app\build.gradle"
+            file="D:\sotuken\kenti\app\build.gradle"
             line="105"
             column="20"/>
     </issue>
@@ -432,7 +432,7 @@
         errorLine1="    testImplementation &apos;androidx.test.ext:junit:1.1.3&apos;"
         errorLine2="                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="E:\sotuken\kenti\app\build.gradle"
+            file="D:\sotuken\kenti\app\build.gradle"
             line="108"
             column="24"/>
     </issue>
@@ -448,7 +448,7 @@
         errorLine1="    testImplementation &apos;androidx.test:rules:1.4.0&apos;"
         errorLine2="                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="E:\sotuken\kenti\app\build.gradle"
+            file="D:\sotuken\kenti\app\build.gradle"
             line="109"
             column="24"/>
     </issue>
@@ -464,7 +464,7 @@
         errorLine1="    testImplementation &apos;androidx.test:runner:1.4.0&apos;"
         errorLine2="                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="E:\sotuken\kenti\app\build.gradle"
+            file="D:\sotuken\kenti\app\build.gradle"
             line="110"
             column="24"/>
     </issue>
@@ -480,7 +480,7 @@
         errorLine1="    testImplementation &apos;androidx.test.espresso:espresso-core:3.4.0&apos;"
         errorLine2="                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="E:\sotuken\kenti\app\build.gradle"
+            file="D:\sotuken\kenti\app\build.gradle"
             line="111"
             column="24"/>
     </issue>
@@ -496,7 +496,7 @@
         errorLine1="    androidTestImplementation &quot;androidx.test.ext:junit:1.1.3&quot;"
         errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="E:\sotuken\kenti\app\build.gradle"
+            file="D:\sotuken\kenti\app\build.gradle"
             line="115"
             column="31"/>
     </issue>
@@ -512,7 +512,7 @@
         errorLine1="    androidTestImplementation &quot;androidx.test:core:1.4.0&quot;"
         errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="E:\sotuken\kenti\app\build.gradle"
+            file="D:\sotuken\kenti\app\build.gradle"
             line="116"
             column="31"/>
     </issue>
@@ -528,7 +528,7 @@
         errorLine1="    androidTestImplementation &quot;androidx.test:rules:1.4.0&quot;"
         errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="E:\sotuken\kenti\app\build.gradle"
+            file="D:\sotuken\kenti\app\build.gradle"
             line="117"
             column="31"/>
     </issue>
@@ -544,7 +544,7 @@
         errorLine1="    androidTestImplementation &quot;androidx.test:runner:1.4.0&quot;"
         errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="E:\sotuken\kenti\app\build.gradle"
+            file="D:\sotuken\kenti\app\build.gradle"
             line="118"
             column="31"/>
     </issue>
@@ -560,25 +560,9 @@
         errorLine1="    androidTestImplementation &quot;androidx.test.espresso:espresso-core:3.4.0&quot;"
         errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="E:\sotuken\kenti\app\build.gradle"
+            file="D:\sotuken\kenti\app\build.gradle"
             line="119"
             column="31"/>
-    </issue>
-
-    <issue
-        id="GradleDependency"
-        severity="Warning"
-        message="A newer version of org.tensorflow:tensorflow-lite-task-vision than 0.4.0 is available: 0.4.4"
-        category="Correctness"
-        priority="4"
-        summary="Obsolete Gradle Dependency"
-        explanation="This detector looks for usages of libraries where the version you are using is not the current stable release. Using older versions is fine, and there are cases where you deliberately want to stick with an older version. However, you may simply not be aware that a more recent version is available, and that is what this lint check helps find."
-        errorLine1="    implementation &apos;org.tensorflow:tensorflow-lite-task-vision:0.4.0&apos;"
-        errorLine2="                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="E:\sotuken\kenti\app\build.gradle"
-            line="121"
-            column="20"/>
     </issue>
 
     <issue
@@ -592,7 +576,7 @@
         errorLine1="        &lt;item>EfficientDet Lite1&lt;/item>"
         errorLine2="                           ^">
         <location
-            file="E:\sotuken\kenti\app\src\main\res\values\strings.xml"
+            file="D:\sotuken\kenti\app\src\main\res\values\strings.xml"
             line="50"
             column="28"/>
     </issue>
@@ -608,7 +592,7 @@
         errorLine1="    android:background=&quot;@color/bottom_sheet_background&quot;"
         errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="E:\sotuken\kenti\app\src\main\res\layout\info_bottom_sheet.xml"
+            file="D:\sotuken\kenti\app\src\main\res\layout\info_bottom_sheet.xml"
             line="21"
             column="5"/>
     </issue>
@@ -624,7 +608,7 @@
         errorLine1="    &lt;color name=&quot;icActive&quot;>#FFFFFFFF&lt;/color>"
         errorLine2="           ~~~~~~~~~~~~~~~">
         <location
-            file="E:\sotuken\kenti\app\src\main\res\values\colors.xml"
+            file="D:\sotuken\kenti\app\src\main\res\values\colors.xml"
             line="25"
             column="12"/>
     </issue>
@@ -640,7 +624,7 @@
         errorLine1="    &lt;color name=&quot;icFocused&quot;>#DDFFFFFF&lt;/color>"
         errorLine2="           ~~~~~~~~~~~~~~~~">
         <location
-            file="E:\sotuken\kenti\app\src\main\res\values\colors.xml"
+            file="D:\sotuken\kenti\app\src\main\res\values\colors.xml"
             line="26"
             column="12"/>
     </issue>
@@ -656,7 +640,7 @@
         errorLine1="    &lt;color name=&quot;icPressed&quot;>#AAFFFFFF&lt;/color>"
         errorLine2="           ~~~~~~~~~~~~~~~~">
         <location
-            file="E:\sotuken\kenti\app\src\main\res\values\colors.xml"
+            file="D:\sotuken\kenti\app\src\main\res\values\colors.xml"
             line="27"
             column="12"/>
     </issue>
@@ -672,7 +656,7 @@
         errorLine1="    &lt;dimen name=&quot;stroke_small&quot;>4dp&lt;/dimen>"
         errorLine2="           ~~~~~~~~~~~~~~~~~~~">
         <location
-            file="E:\sotuken\kenti\app\src\main\res\values\dimens.xml"
+            file="D:\sotuken\kenti\app\src\main\res\values\dimens.xml"
             line="19"
             column="12"/>
     </issue>
@@ -688,7 +672,7 @@
         errorLine1="    &lt;dimen name=&quot;round_button_medium&quot;>64dp&lt;/dimen>"
         errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="E:\sotuken\kenti\app\src\main\res\values\dimens.xml"
+            file="D:\sotuken\kenti\app\src\main\res\values\dimens.xml"
             line="20"
             column="12"/>
     </issue>
@@ -704,7 +688,7 @@
         errorLine1="&lt;vector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
         errorLine2="^">
         <location
-            file="E:\sotuken\kenti\app\src\main\res\drawable-v24\ic_launcher_foreground.xml"
+            file="D:\sotuken\kenti\app\src\main\res\drawable-v24\ic_launcher_foreground.xml"
             line="1"
             column="1"/>
     </issue>
@@ -720,7 +704,7 @@
         errorLine1="&lt;selector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;>"
         errorLine2="^">
         <location
-            file="E:\sotuken\kenti\app\src\main\res\color\selector_ic.xml"
+            file="D:\sotuken\kenti\app\src\main\res\color\selector_ic.xml"
             line="2"
             column="1"/>
     </issue>
@@ -736,7 +720,7 @@
         errorLine1="    &lt;string name=&quot;label_fps&quot;>Frames per Second&lt;/string>"
         errorLine2="            ~~~~~~~~~~~~~~~~">
         <location
-            file="E:\sotuken\kenti\app\src\main\res\values\strings.xml"
+            file="D:\sotuken\kenti\app\src\main\res\values\strings.xml"
             line="34"
             column="13"/>
     </issue>
@@ -752,7 +736,7 @@
         errorLine1="&lt;adaptive-icon xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;>"
         errorLine2="^">
         <location
-            file="E:\sotuken\kenti\app\src\main\res\mipmap-anydpi-v26\ic_launcher.xml"
+            file="D:\sotuken\kenti\app\src\main\res\mipmap-anydpi-v26\ic_launcher.xml"
             line="17"
             column="1"/>
     </issue>
@@ -768,7 +752,7 @@
         errorLine1="&lt;adaptive-icon xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;>"
         errorLine2="^">
         <location
-            file="E:\sotuken\kenti\app\src\main\res\mipmap-anydpi-v26\ic_launcher_round.xml"
+            file="D:\sotuken\kenti\app\src\main\res\mipmap-anydpi-v26\ic_launcher_round.xml"
             line="17"
             column="1"/>
     </issue>
@@ -784,7 +768,7 @@
         url="https://developer.android.com/guide/practices/screens_support.html"
         urls="https://developer.android.com/guide/practices/screens_support.html">
         <location
-            file="E:\sotuken\kenti\app\src\main\res\drawable\icn_chevron_up.png"/>
+            file="D:\sotuken\kenti\app\src\main\res\drawable\icn_chevron_up.png"/>
     </issue>
 
     <issue
@@ -800,7 +784,7 @@
         errorLine1="            &lt;ImageView"
         errorLine2="             ~~~~~~~~~">
         <location
-            file="E:\sotuken\kenti\app\src\main\res\layout\activity_main.xml"
+            file="D:\sotuken\kenti\app\src\main\res\layout\activity_main.xml"
             line="49"
             column="14"/>
     </issue>
@@ -816,7 +800,7 @@
         errorLine1="                android:text=&quot;0ms&quot;"
         errorLine2="                ~~~~~~~~~~~~~~~~~~">
         <location
-            file="E:\sotuken\kenti\app\src\main\res\layout\info_bottom_sheet.xml"
+            file="D:\sotuken\kenti\app\src\main\res\layout\info_bottom_sheet.xml"
             line="64"
             column="17"/>
     </issue>
@@ -832,7 +816,7 @@
         errorLine1="                    android:text=&quot;0.50&quot;"
         errorLine2="                    ~~~~~~~~~~~~~~~~~~~">
         <location
-            file="E:\sotuken\kenti\app\src\main\res\layout\info_bottom_sheet.xml"
+            file="D:\sotuken\kenti\app\src\main\res\layout\info_bottom_sheet.xml"
             line="111"
             column="21"/>
     </issue>
@@ -848,7 +832,7 @@
         errorLine1="                    android:text=&quot;3&quot;"
         errorLine2="                    ~~~~~~~~~~~~~~~~">
         <location
-            file="E:\sotuken\kenti\app\src\main\res\layout\info_bottom_sheet.xml"
+            file="D:\sotuken\kenti\app\src\main\res\layout\info_bottom_sheet.xml"
             line="160"
             column="21"/>
     </issue>
@@ -864,7 +848,7 @@
         errorLine1="                    android:text=&quot;2&quot;"
         errorLine2="                    ~~~~~~~~~~~~~~~~">
         <location
-            file="E:\sotuken\kenti\app\src\main\res\layout\info_bottom_sheet.xml"
+            file="D:\sotuken\kenti\app\src\main\res\layout\info_bottom_sheet.xml"
             line="210"
             column="21"/>
     </issue>
@@ -880,7 +864,7 @@
         errorLine1="            &lt;TextView"
         errorLine2="             ~~~~~~~~">
         <location
-            file="E:\sotuken\kenti\app\src\main\res\layout\info_bottom_sheet.xml"
+            file="D:\sotuken\kenti\app\src\main\res\layout\info_bottom_sheet.xml"
             line="81"
             column="14"/>
     </issue>
@@ -896,7 +880,7 @@
         errorLine1="            &lt;TextView"
         errorLine2="             ~~~~~~~~">
         <location
-            file="E:\sotuken\kenti\app\src\main\res\layout\info_bottom_sheet.xml"
+            file="D:\sotuken\kenti\app\src\main\res\layout\info_bottom_sheet.xml"
             line="132"
             column="14"/>
     </issue>
@@ -912,7 +896,7 @@
         errorLine1="            &lt;TextView"
         errorLine2="             ~~~~~~~~">
         <location
-            file="E:\sotuken\kenti\app\src\main\res\layout\info_bottom_sheet.xml"
+            file="D:\sotuken\kenti\app\src\main\res\layout\info_bottom_sheet.xml"
             line="180"
             column="14"/>
     </issue>
@@ -928,7 +912,7 @@
         errorLine1="            &lt;TextView"
         errorLine2="             ~~~~~~~~">
         <location
-            file="E:\sotuken\kenti\app\src\main\res\layout\info_bottom_sheet.xml"
+            file="D:\sotuken\kenti\app\src\main\res\layout\info_bottom_sheet.xml"
             line="229"
             column="14"/>
     </issue>
@@ -944,7 +928,7 @@
         errorLine1="            &lt;TextView"
         errorLine2="             ~~~~~~~~">
         <location
-            file="E:\sotuken\kenti\app\src\main\res\layout\info_bottom_sheet.xml"
+            file="D:\sotuken\kenti\app\src\main\res\layout\info_bottom_sheet.xml"
             line="254"
             column="14"/>
     </issue>
@@ -960,7 +944,7 @@
         errorLine1="                android:layout_alignParentRight=&quot;true&quot;"
         errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="E:\sotuken\kenti\app\src\main\res\layout\info_bottom_sheet.xml"
+            file="D:\sotuken\kenti\app\src\main\res\layout\info_bottom_sheet.xml"
             line="91"
             column="17"/>
     </issue>
@@ -976,7 +960,7 @@
         errorLine1="                android:layout_alignParentRight=&quot;true&quot;"
         errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="E:\sotuken\kenti\app\src\main\res\layout\info_bottom_sheet.xml"
+            file="D:\sotuken\kenti\app\src\main\res\layout\info_bottom_sheet.xml"
             line="143"
             column="17"/>
     </issue>
@@ -992,7 +976,7 @@
         errorLine1="                android:layout_alignParentRight=&quot;true&quot;"
         errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="E:\sotuken\kenti\app\src\main\res\layout\info_bottom_sheet.xml"
+            file="D:\sotuken\kenti\app\src\main\res\layout\info_bottom_sheet.xml"
             line="190"
             column="17"/>
     </issue>
@@ -1008,7 +992,7 @@
         errorLine1="                android:layout_alignParentRight=&quot;true&quot;"
         errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="E:\sotuken\kenti\app\src\main\res\layout\info_bottom_sheet.xml"
+            file="D:\sotuken\kenti\app\src\main\res\layout\info_bottom_sheet.xml"
             line="243"
             column="17"/>
     </issue>
@@ -1024,7 +1008,7 @@
         errorLine1="                android:layout_alignParentRight=&quot;true&quot;"
         errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="E:\sotuken\kenti\app\src\main\res\layout\info_bottom_sheet.xml"
+            file="D:\sotuken\kenti\app\src\main\res\layout\info_bottom_sheet.xml"
             line="268"
             column="17"/>
     </issue>
@@ -1038,7 +1022,7 @@
         summary="Using RTL attributes without enabling RTL support"
         explanation="To enable right-to-left support, when running on API 17 and higher, you must set the `android:supportsRtl` attribute in the manifest `&lt;application>` element.&#xA;&#xA;If you have started adding RTL attributes, but have not yet finished the migration, you can set the attribute to false to satisfy this lint check.">
         <location
-            file="E:\sotuken\kenti\app\src\main\AndroidManifest.xml"/>
+            file="D:\sotuken\kenti\app\src\main\AndroidManifest.xml"/>
     </issue>
 
 </issues>

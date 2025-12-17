@@ -40,6 +40,15 @@ class MainActivity : AppCompatActivity() {
         setContentView(activityMainBinding.root)
     }
 
+    //PiP
+    override fun onUserLeaveHint() {
+        super.onUserLeaveHint()
+        
+        // PiPモードがサポートされており、かつ現在 PiP モードではない場合、
+        // PiPモードへの移行を試みるよう Fragment に促します。
+        // 実際のPiP移行は CameraFragment 内で行われます。
+    }
+
     override fun onBackPressed() {
         // Android 10(Q) の戻る操作で起きるメモリリーク対策
         if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q) {
@@ -52,4 +61,5 @@ class MainActivity : AppCompatActivity() {
             super.onBackPressed()
         }
     }
+
 }

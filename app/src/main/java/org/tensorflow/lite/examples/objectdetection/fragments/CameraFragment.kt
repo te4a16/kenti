@@ -56,6 +56,9 @@ import java.util.concurrent.TimeUnit
 
 import org.tensorflow.lite.examples.objectdetection.DistanceConstants
 
+//PiP
+import org.tensorflow.lite.examples.objectdetection.PipHelper
+
 class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
 
     private val TAG = "ObjectDetection"
@@ -101,6 +104,23 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
                 .navigate(CameraFragmentDirections.actionCameraToPermissions())
         }
     }
+
+    override fun onPause() {
+        super.onPause()
+        
+        // PiPモードがサポートされており、かつアクティビティが構成変更中ではない（例：画面回転ではない）場合
+        // PiPモードへの移行を試みます。
+        if (PipHelper.isPiPSupported() && !isChangingConfigurations()) {
+            activity?.let {
+                // PiPHelper を使って PiP モードに移行
+                // カメラプレビューが表示されている ViewFinder を渡す
+                PipHelper.enterPiPMode(it, fragmentCameraBinding.viewFinder)
+            }
+        }
+    }
+
+    //アクティビティが構成変更（回転など）中かどうかをチェック
+    private fun isChangingConfigurations() = activity?.isChangingConfigurations ?: false
 
     override fun onDestroyView() {
         _fragmentCameraBinding = null

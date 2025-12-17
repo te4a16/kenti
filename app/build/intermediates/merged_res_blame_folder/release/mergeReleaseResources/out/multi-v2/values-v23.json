@@ -4,7 +4,7 @@
             "outputFile": "org.tensorflow.lite.examples.objectdetection.app-mergeReleaseResources-40:/values-v23/values-v23.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\220508\\.gradle\\caches\\8.14.3\\transforms\\b6cf882f3267d37c76eb4430f2546627\\transformed\\cardview-1.0.0\\res\\values-v23\\values-v23.xml",
+                    "source": "C:\\Users\\any3r\\.gradle\\caches\\8.14.3\\transforms\\b6cf882f3267d37c76eb4430f2546627\\transformed\\cardview-1.0.0\\res\\values-v23\\values-v23.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -23,7 +23,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\220508\\.gradle\\caches\\8.14.3\\transforms\\bf65fa1d1fa169ddbd6c431287a3f9e7\\transformed\\appcompat-1.3.1\\res\\values-v23\\values-v23.xml",
+                    "source": "C:\\Users\\any3r\\.gradle\\caches\\8.14.3\\transforms\\bf65fa1d1fa169ddbd6c431287a3f9e7\\transformed\\appcompat-1.3.1\\res\\values-v23\\values-v23.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,20,34,35,36,39,43,44,45,46",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4",
