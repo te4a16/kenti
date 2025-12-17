@@ -20,6 +20,7 @@ import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import org.tensorflow.lite.examples.objectdetection.databinding.ActivityMainBinding
+import android.content.res.Configuration//PIP
 
 /**
  * Main entry point into our app. This app follows the single-activity pattern, and all
@@ -48,6 +49,8 @@ class MainActivity : AppCompatActivity() {
         // PiPモードへの移行を試みるよう Fragment に促します。
         // 実際のPiP移行は CameraFragment 内で行われます。
     }
+
+    
 
     override fun onBackPressed() {
         // Android 10(Q) の戻る操作で起きるメモリリーク対策

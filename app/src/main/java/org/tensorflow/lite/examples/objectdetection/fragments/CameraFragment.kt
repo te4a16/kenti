@@ -119,6 +119,38 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
         }
     }
 
+    override fun onPictureInPictureModeChanged(isInPictureInPictureMode: Boolean) {
+    super.onPictureInPictureModeChanged(isInPictureInPictureMode)
+
+    _fragmentCameraBinding?.let { binding ->
+        val params = view?.layoutParams as? ViewGroup.MarginLayoutParams
+        
+        if (isInPictureInPictureMode) {
+            // PiP時は余白を完全に消す
+            params?.topMargin = 0
+            view?.layoutParams = params
+            view?.requestLayout()
+
+            binding.bottomSheetLayout.root.visibility = View.GONE
+            binding.overlay.visibility = View.GONE
+            activity?.findViewById<View>(R.id.toolbar)?.visibility = View.GONE
+        } else {
+            // 通常時はアクションバー（ヘッダー）の高さ分のマージンを戻す
+            val typedArray = activity?.theme?.obtainStyledAttributes(intArrayOf(android.R.attr.actionBarSize))
+            val actionBarHeight = typedArray?.getDimensionPixelSize(0, 0) ?: 0
+            typedArray?.recycle() // ここで確実にメモリ解放
+
+            params?.topMargin = actionBarHeight
+            view?.layoutParams = params
+            view?.requestLayout()
+
+            binding.bottomSheetLayout.root.visibility = View.VISIBLE
+            binding.overlay.visibility = View.VISIBLE
+            activity?.findViewById<View>(R.id.toolbar)?.visibility = View.VISIBLE
+        }
+    }
+}
+
     //アクティビティが構成変更（回転など）中かどうかをチェック
     private fun isChangingConfigurations() = activity?.isChangingConfigurations ?: false
 
@@ -129,6 +161,7 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
         //バックグラウンドスレッド停止
         cameraExecutor.shutdown()
     }
+    
 
     override fun onCreateView(
       inflater: LayoutInflater,
