@@ -27,6 +27,6 @@
       applicationId="org.tensorflow.lite.examples.objectdetection"
       generatedSourceFolders="build\generated\java\generateSafeArgsRelease;build\generated\source\kapt\release;build\generated\ap_generated_sources\release\out;build\generated\data_binding_base_class_source_out\release\out"
       generatedResourceFolders="build\generated\res\resValues\release"
-      desugaredMethodsFiles="C:\Users\220508\.gradle\caches\8.14.3\transforms\09057d5587fda8f5ab2aaa7f7e2d1fd2\transformed\D8BackportedDesugaredMethods.txt">
+      desugaredMethodsFiles="C:\Users\any3r\.gradle\caches\8.14.3\transforms\09057d5587fda8f5ab2aaa7f7e2d1fd2\transformed\D8BackportedDesugaredMethods.txt">
   </artifact>
 </variant>

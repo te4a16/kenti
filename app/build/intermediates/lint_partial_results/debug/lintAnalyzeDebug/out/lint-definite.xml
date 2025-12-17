@@ -213,12 +213,12 @@
         message="Implicitly using the default locale is a common source of bugs: Use `String.format(Locale, ...)` instead">
         <location
             file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt"
-            line="232"
+            line="258"
             column="13"
-            startOffset="8213"
-            endLine="232"
+            startOffset="9038"
+            endLine="258"
             endColumn="66"
-            endOffset="8266"/>
+            endOffset="9091"/>
     </incident>
 
     <incident
@@ -227,12 +227,12 @@
         message="Implicitly using the default locale is a common source of bugs: Use `String.format(Locale, ...)` instead">
         <location
             file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt"
-            line="232"
+            line="258"
             column="13"
-            startOffset="8213"
-            endLine="232"
+            startOffset="9038"
+            endLine="258"
             endColumn="66"
-            endOffset="8266"/>
+            endOffset="9091"/>
     </incident>
 
     <incident
@@ -241,12 +241,12 @@
         message="Implicitly using the default locale is a common source of bugs: Use `String.format(Locale, ...)` instead">
         <location
             file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt"
-            line="353"
+            line="379"
             column="29"
-            startOffset="12684"
-            endLine="353"
+            startOffset="13509"
+            endLine="379"
             endColumn="66"
-            endOffset="12721"/>
+            endOffset="13546"/>
     </incident>
 
     <incident
@@ -255,12 +255,12 @@
         message="Implicitly using the default locale is a common source of bugs: Use `String.format(Locale, ...)` instead">
         <location
             file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt"
-            line="353"
+            line="379"
             column="29"
-            startOffset="12684"
-            endLine="353"
+            startOffset="13509"
+            endLine="379"
             endColumn="66"
-            endOffset="12721"/>
+            endOffset="13546"/>
     </incident>
 
     <incident
@@ -269,12 +269,40 @@
         message="Implicitly using the default locale is a common source of bugs: Use `String.format(Locale, ...)` instead">
         <location
             file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt"
-            line="382"
+            line="410"
             column="33"
-            startOffset="13841"
-            endLine="382"
-            endColumn="108"
-            endOffset="13916"/>
+            startOffset="15018"
+            endLine="410"
+            endColumn="120"
+            endOffset="15105"/>
+    </incident>
+
+    <incident
+        id="DefaultLocale"
+        severity="warning"
+        message="Implicitly using the default locale is a common source of bugs: Use `String.format(Locale, ...)` instead">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt"
+            line="413"
+            column="59"
+            startOffset="15244"
+            endLine="413"
+            endColumn="98"
+            endOffset="15283"/>
+    </incident>
+
+    <incident
+        id="DefaultLocale"
+        severity="warning"
+        message="Implicitly using the default locale is a common source of bugs: Use `String.format(Locale, ...)` instead">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt"
+            line="420"
+            column="64"
+            startOffset="15662"
+            endLine="420"
+            endColumn="103"
+            endOffset="15701"/>
     </incident>
 
     <incident
@@ -760,26 +788,6 @@
             endLine="119"
             endColumn="75"
             endOffset="4186"/>
-    </incident>
-
-    <incident
-        id="GradleDependency"
-        severity="warning"
-        message="A newer version of org.tensorflow:tensorflow-lite-task-vision than 0.4.0 is available: 0.4.4">
-        <fix-replace
-            description="Change to 0.4.4"
-            family="Update versions"
-            oldString="0.4.0"
-            replacement="0.4.4"
-            priority="0"/>
-        <location
-            file="${:app*projectDir}/build.gradle"
-            line="121"
-            column="20"
-            startOffset="4209"
-            endLine="121"
-            endColumn="70"
-            endOffset="4259"/>
     </incident>
 
     <incident
