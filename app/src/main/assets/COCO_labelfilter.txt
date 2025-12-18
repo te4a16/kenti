@@ -1,0 +1,21 @@
+1: person
+2: bicycle
+3: car
+4: motorcycle
+5: bus
+7: truck
+8: traffic light
+9: fire hydrant
+10: stop sign
+11: bench
+12: cat
+13: dog
+14: horse
+15: cow
+16: bear
+17: umbrella
+18: suitcase
+19: sports ball
+20: bottle
+21: chair
+22: potted plant
