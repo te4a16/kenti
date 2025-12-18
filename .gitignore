@@ -1,0 +1,11 @@
+# ビルド成果物（これが無いとエラーの原因になります）
+build/
+app/build/
+.gradle/
+
+# IDEの設定
+.idea/
+*.iml
+
+# ローカル設定（個人のPC環境に依存するファイル）
+local.properties
