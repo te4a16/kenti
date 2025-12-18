@@ -32,6 +32,9 @@
     <!--通知-->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
+    <!--音声通知-->
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <application
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher_round"

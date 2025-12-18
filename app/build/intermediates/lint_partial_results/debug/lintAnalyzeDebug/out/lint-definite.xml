@@ -21,12 +21,12 @@
         </fix-alternatives>
         <location
             file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/layout/activity_main.xml"
-            line="49"
+            line="48"
             column="14"
-            startOffset="2046"
-            endLine="49"
+            startOffset="2036"
+            endLine="48"
             endColumn="23"
-            endOffset="2055"/>
+            endOffset="2045"/>
     </incident>
 
     <incident
@@ -212,13 +212,13 @@
         severity="warning"
         message="Implicitly using the default locale is a common source of bugs: Use `String.format(Locale, ...)` instead">
         <location
-            file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt"
-            line="291"
+            file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/org/tensorflow/lite/examples/objectdetection/DistanceAlertManager.kt"
+            line="59"
             column="13"
-            startOffset="10344"
-            endLine="291"
-            endColumn="66"
-            endOffset="10397"/>
+            startOffset="1511"
+            endLine="59"
+            endColumn="67"
+            endOffset="1565"/>
     </incident>
 
     <incident
@@ -227,12 +227,12 @@
         message="Implicitly using the default locale is a common source of bugs: Use `String.format(Locale, ...)` instead">
         <location
             file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt"
-            line="291"
+            line="316"
             column="13"
-            startOffset="10344"
-            endLine="291"
+            startOffset="11272"
+            endLine="316"
             endColumn="66"
-            endOffset="10397"/>
+            endOffset="11325"/>
     </incident>
 
     <incident
@@ -241,12 +241,26 @@
         message="Implicitly using the default locale is a common source of bugs: Use `String.format(Locale, ...)` instead">
         <location
             file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt"
-            line="412"
+            line="316"
+            column="13"
+            startOffset="11272"
+            endLine="316"
+            endColumn="66"
+            endOffset="11325"/>
+    </incident>
+
+    <incident
+        id="DefaultLocale"
+        severity="warning"
+        message="Implicitly using the default locale is a common source of bugs: Use `String.format(Locale, ...)` instead">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt"
+            line="437"
             column="29"
-            startOffset="14815"
-            endLine="412"
+            startOffset="15743"
+            endLine="437"
             endColumn="66"
-            endOffset="14852"/>
+            endOffset="15780"/>
     </incident>
 
     <incident
@@ -255,12 +269,12 @@
         message="Implicitly using the default locale is a common source of bugs: Use `String.format(Locale, ...)` instead">
         <location
             file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt"
-            line="412"
+            line="437"
             column="29"
-            startOffset="14815"
-            endLine="412"
+            startOffset="15743"
+            endLine="437"
             endColumn="66"
-            endOffset="14852"/>
+            endOffset="15780"/>
     </incident>
 
     <incident
@@ -269,12 +283,12 @@
         message="Implicitly using the default locale is a common source of bugs: Use `String.format(Locale, ...)` instead">
         <location
             file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt"
-            line="443"
+            line="468"
             column="33"
-            startOffset="16324"
-            endLine="443"
+            startOffset="17252"
+            endLine="468"
             endColumn="120"
-            endOffset="16411"/>
+            endOffset="17339"/>
     </incident>
 
     <incident
@@ -283,12 +297,12 @@
         message="Implicitly using the default locale is a common source of bugs: Use `String.format(Locale, ...)` instead">
         <location
             file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt"
-            line="446"
+            line="471"
             column="59"
-            startOffset="16550"
-            endLine="446"
+            startOffset="17478"
+            endLine="471"
             endColumn="98"
-            endOffset="16589"/>
+            endOffset="17517"/>
     </incident>
 
     <incident
@@ -297,12 +311,12 @@
         message="Implicitly using the default locale is a common source of bugs: Use `String.format(Locale, ...)` instead">
         <location
             file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt"
-            line="453"
+            line="478"
             column="64"
-            startOffset="16968"
-            endLine="453"
+            startOffset="17896"
+            endLine="478"
             endColumn="103"
-            endOffset="17007"/>
+            endOffset="17935"/>
     </incident>
 
     <incident
@@ -311,12 +325,12 @@
         message="Implicitly using the default locale is a common source of bugs: Use `String.format(Locale, ...)` instead">
         <location
             file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/org/tensorflow/lite/examples/objectdetection/OverlayView.kt"
-            line="149"
+            line="165"
             column="25"
-            startOffset="4821"
-            endLine="149"
+            startOffset="5254"
+            endLine="165"
             endColumn="74"
-            endOffset="4870"/>
+            endOffset="5303"/>
     </incident>
 
     <incident
@@ -325,12 +339,12 @@
         message="Implicitly using the default locale is a common source of bugs: Use `String.format(Locale, ...)` instead">
         <location
             file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/org/tensorflow/lite/examples/objectdetection/OverlayView.kt"
-            line="150"
+            line="166"
             column="32"
-            startOffset="4902"
-            endLine="150"
+            startOffset="5335"
+            endLine="166"
             endColumn="74"
-            endOffset="4944"/>
+            endOffset="5377"/>
     </incident>
 
     <incident
@@ -339,12 +353,12 @@
         message="Implicitly using the default locale is a common source of bugs: Use `String.format(Locale, ...)` instead">
         <location
             file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/org/tensorflow/lite/examples/objectdetection/OverlayView.kt"
-            line="152"
+            line="168"
             column="34"
-            startOffset="5009"
-            endLine="152"
+            startOffset="5442"
+            endLine="168"
             endColumn="82"
-            endOffset="5057"/>
+            endOffset="5490"/>
     </incident>
 
     <incident
@@ -369,12 +383,12 @@
     <incident
         id="GradleDependency"
         severity="warning"
-        message="A newer version of androidx.core:core-ktx than 1.6.0 is available: 1.17.0">
+        message="A newer version of androidx.core:core-ktx than 1.6.0 is available: 1.12.0">
         <fix-replace
-            description="Change to 1.17.0"
+            description="Change to 1.12.0"
             family="Update versions"
             oldString="1.6.0"
-            replacement="1.17.0"
+            replacement="1.12.0"
             priority="0"/>
         <location
             file="${:app*projectDir}/build.gradle"
@@ -409,12 +423,12 @@
     <incident
         id="GradleDependency"
         severity="warning"
-        message="A newer version of androidx.appcompat:appcompat than 1.3.1 is available: 1.7.1">
+        message="A newer version of androidx.appcompat:appcompat than 1.3.1 is available: 1.6.1">
         <fix-replace
-            description="Change to 1.7.1"
+            description="Change to 1.6.1"
             family="Update versions"
             oldString="1.3.1"
-            replacement="1.7.1"
+            replacement="1.6.1"
             priority="0"/>
         <location
             file="${:app*projectDir}/build.gradle"
@@ -429,12 +443,12 @@
     <incident
         id="GradleDependency"
         severity="warning"
-        message="A newer version of androidx.lifecycle:lifecycle-runtime-ktx than 2.3.1 is available: 2.10.0">
+        message="A newer version of androidx.lifecycle:lifecycle-runtime-ktx than 2.3.1 is available: 2.6.1">
         <fix-replace
-            description="Change to 2.10.0"
+            description="Change to 2.6.1"
             family="Update versions"
             oldString="2.3.1"
-            replacement="2.10.0"
+            replacement="2.6.1"
             priority="0"/>
         <location
             file="${:app*projectDir}/build.gradle"
@@ -449,12 +463,12 @@
     <incident
         id="GradleDependency"
         severity="warning"
-        message="A newer version of androidx.constraintlayout:constraintlayout than 2.0.4 is available: 2.2.1">
+        message="A newer version of androidx.constraintlayout:constraintlayout than 2.0.4 is available: 2.1.4">
         <fix-replace
-            description="Change to 2.2.1"
+            description="Change to 2.1.4"
             family="Update versions"
             oldString="2.0.4"
-            replacement="2.2.1"
+            replacement="2.1.4"
             priority="0"/>
         <location
             file="${:app*projectDir}/build.gradle"
@@ -469,12 +483,12 @@
     <incident
         id="GradleDependency"
         severity="warning"
-        message="A newer version of com.google.android.material:material than 1.0.0 is available: 1.13.0">
+        message="A newer version of com.google.android.material:material than 1.0.0 is available: 1.10.0">
         <fix-replace
-            description="Change to 1.13.0"
+            description="Change to 1.10.0"
             family="Update versions"
             oldString="1.0.0"
-            replacement="1.13.0"
+            replacement="1.10.0"
             priority="0"/>
         <location
             file="${:app*projectDir}/build.gradle"
@@ -509,7 +523,7 @@
     <incident
         id="GradleDependency"
         severity="warning"
-        message="A newer version of androidx.navigation:navigation-fragment-ktx than 2.3.5 is available: 2.9.6">
+        message="A newer version of androidx.navigation:navigation-fragment-ktx than 2.3.5 is available: 2.6.0">
         <location
             file="${:app*projectDir}/build.gradle"
             line="88"
@@ -523,7 +537,7 @@
     <incident
         id="GradleDependency"
         severity="warning"
-        message="A newer version of androidx.navigation:navigation-ui-ktx than 2.3.5 is available: 2.9.6">
+        message="A newer version of androidx.navigation:navigation-ui-ktx than 2.3.5 is available: 2.6.0">
         <location
             file="${:app*projectDir}/build.gradle"
             line="89"
@@ -537,7 +551,7 @@
     <incident
         id="GradleDependency"
         severity="warning"
-        message="A newer version of androidx.camera:camera-core than 1.1.0-beta03 is available: 1.5.2">
+        message="A newer version of androidx.camera:camera-core than 1.1.0-beta03 is available: 1.3.1">
         <location
             file="${:app*projectDir}/build.gradle"
             line="93"
@@ -551,7 +565,7 @@
     <incident
         id="GradleDependency"
         severity="warning"
-        message="A newer version of androidx.camera:camera-camera2 than 1.1.0-beta03 is available: 1.5.2">
+        message="A newer version of androidx.camera:camera-camera2 than 1.1.0-beta03 is available: 1.3.1">
         <location
             file="${:app*projectDir}/build.gradle"
             line="96"
@@ -565,7 +579,7 @@
     <incident
         id="GradleDependency"
         severity="warning"
-        message="A newer version of androidx.camera:camera-lifecycle than 1.1.0-beta03 is available: 1.5.2">
+        message="A newer version of androidx.camera:camera-lifecycle than 1.1.0-beta03 is available: 1.3.1">
         <location
             file="${:app*projectDir}/build.gradle"
             line="99"
@@ -579,7 +593,7 @@
     <incident
         id="GradleDependency"
         severity="warning"
-        message="A newer version of androidx.camera:camera-view than 1.1.0-beta03 is available: 1.5.2">
+        message="A newer version of androidx.camera:camera-view than 1.1.0-beta03 is available: 1.3.1">
         <location
             file="${:app*projectDir}/build.gradle"
             line="102"
@@ -593,12 +607,12 @@
     <incident
         id="GradleDependency"
         severity="warning"
-        message="A newer version of androidx.window:window than 1.0.0-alpha09 is available: 1.5.1">
+        message="A newer version of androidx.window:window than 1.0.0-alpha09 is available: 1.0.0">
         <fix-replace
-            description="Change to 1.5.1"
+            description="Change to 1.0.0"
             family="Update versions"
             oldString="1.0.0-alpha09"
-            replacement="1.5.1"
+            replacement="1.0.0"
             priority="0"/>
         <location
             file="${:app*projectDir}/build.gradle"
@@ -613,12 +627,12 @@
     <incident
         id="GradleDependency"
         severity="warning"
-        message="A newer version of androidx.test.ext:junit than 1.1.3 is available: 1.3.0">
+        message="A newer version of androidx.test.ext:junit than 1.1.3 is available: 1.1.5">
         <fix-replace
-            description="Change to 1.3.0"
+            description="Change to 1.1.5"
             family="Update versions"
             oldString="1.1.3"
-            replacement="1.3.0"
+            replacement="1.1.5"
             priority="0"/>
         <location
             file="${:app*projectDir}/build.gradle"
@@ -633,12 +647,12 @@
     <incident
         id="GradleDependency"
         severity="warning"
-        message="A newer version of androidx.test:rules than 1.4.0 is available: 1.7.0">
+        message="A newer version of androidx.test:rules than 1.4.0 is available: 1.5.0">
         <fix-replace
-            description="Change to 1.7.0"
+            description="Change to 1.5.0"
             family="Update versions"
             oldString="1.4.0"
-            replacement="1.7.0"
+            replacement="1.5.0"
             priority="0"/>
         <location
             file="${:app*projectDir}/build.gradle"
@@ -653,12 +667,12 @@
     <incident
         id="GradleDependency"
         severity="warning"
-        message="A newer version of androidx.test:runner than 1.4.0 is available: 1.7.0">
+        message="A newer version of androidx.test:runner than 1.4.0 is available: 1.5.2">
         <fix-replace
-            description="Change to 1.7.0"
+            description="Change to 1.5.2"
             family="Update versions"
             oldString="1.4.0"
-            replacement="1.7.0"
+            replacement="1.5.2"
             priority="0"/>
         <location
             file="${:app*projectDir}/build.gradle"
@@ -673,12 +687,12 @@
     <incident
         id="GradleDependency"
         severity="warning"
-        message="A newer version of androidx.test.espresso:espresso-core than 3.4.0 is available: 3.7.0">
+        message="A newer version of androidx.test.espresso:espresso-core than 3.4.0 is available: 3.5.1">
         <fix-replace
-            description="Change to 3.7.0"
+            description="Change to 3.5.1"
             family="Update versions"
             oldString="3.4.0"
-            replacement="3.7.0"
+            replacement="3.5.1"
             priority="0"/>
         <location
             file="${:app*projectDir}/build.gradle"
@@ -693,12 +707,12 @@
     <incident
         id="GradleDependency"
         severity="warning"
-        message="A newer version of androidx.test.ext:junit than 1.1.3 is available: 1.3.0">
+        message="A newer version of androidx.test.ext:junit than 1.1.3 is available: 1.1.5">
         <fix-replace
-            description="Change to 1.3.0"
+            description="Change to 1.1.5"
             family="Update versions"
             oldString="1.1.3"
-            replacement="1.3.0"
+            replacement="1.1.5"
             priority="0"/>
         <location
             file="${:app*projectDir}/build.gradle"
@@ -713,12 +727,12 @@
     <incident
         id="GradleDependency"
         severity="warning"
-        message="A newer version of androidx.test:core than 1.4.0 is available: 1.7.0">
+        message="A newer version of androidx.test:core than 1.4.0 is available: 1.5.0">
         <fix-replace
-            description="Change to 1.7.0"
+            description="Change to 1.5.0"
             family="Update versions"
             oldString="1.4.0"
-            replacement="1.7.0"
+            replacement="1.5.0"
             priority="0"/>
         <location
             file="${:app*projectDir}/build.gradle"
@@ -733,12 +747,12 @@
     <incident
         id="GradleDependency"
         severity="warning"
-        message="A newer version of androidx.test:rules than 1.4.0 is available: 1.7.0">
+        message="A newer version of androidx.test:rules than 1.4.0 is available: 1.5.0">
         <fix-replace
-            description="Change to 1.7.0"
+            description="Change to 1.5.0"
             family="Update versions"
             oldString="1.4.0"
-            replacement="1.7.0"
+            replacement="1.5.0"
             priority="0"/>
         <location
             file="${:app*projectDir}/build.gradle"
@@ -753,12 +767,12 @@
     <incident
         id="GradleDependency"
         severity="warning"
-        message="A newer version of androidx.test:runner than 1.4.0 is available: 1.7.0">
+        message="A newer version of androidx.test:runner than 1.4.0 is available: 1.5.2">
         <fix-replace
-            description="Change to 1.7.0"
+            description="Change to 1.5.2"
             family="Update versions"
             oldString="1.4.0"
-            replacement="1.7.0"
+            replacement="1.5.2"
             priority="0"/>
         <location
             file="${:app*projectDir}/build.gradle"
@@ -773,12 +787,12 @@
     <incident
         id="GradleDependency"
         severity="warning"
-        message="A newer version of androidx.test.espresso:espresso-core than 3.4.0 is available: 3.7.0">
+        message="A newer version of androidx.test.espresso:espresso-core than 3.4.0 is available: 3.5.1">
         <fix-replace
-            description="Change to 3.7.0"
+            description="Change to 3.5.1"
             family="Update versions"
             oldString="3.4.0"
-            replacement="3.7.0"
+            replacement="3.5.1"
             priority="0"/>
         <location
             file="${:app*projectDir}/build.gradle"
@@ -791,11 +805,43 @@
     </incident>
 
     <incident
-        id="IconLocation"
+        id="GradleDependency"
         severity="warning"
-        message="Found bitmap drawable `res/drawable/icn_chevron_up.png` in densityless folder">
+        message="A newer version of org.tensorflow:tensorflow-lite-task-vision than 0.4.0 is available: 0.4.4">
+        <fix-replace
+            description="Change to 0.4.4"
+            family="Update versions"
+            oldString="0.4.0"
+            replacement="0.4.4"
+            priority="0"/>
         <location
-            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/drawable/icn_chevron_up.png"/>
+            file="${:app*projectDir}/build.gradle"
+            line="121"
+            column="20"
+            startOffset="4209"
+            endLine="121"
+            endColumn="70"
+            endOffset="4259"/>
+    </incident>
+
+    <incident
+        id="GradleDependency"
+        severity="warning"
+        message="A newer version of org.tensorflow:tensorflow-lite-gpu than 2.9.0 is available: 2.12.0">
+        <fix-replace
+            description="Change to 2.12.0"
+            family="Update versions"
+            oldString="2.9.0"
+            replacement="2.12.0"
+            priority="0"/>
+        <location
+            file="${:app*projectDir}/build.gradle"
+            line="124"
+            column="20"
+            startOffset="4424"
+            endLine="124"
+            endColumn="62"
+            endOffset="4466"/>
     </incident>
 
     <incident
@@ -810,6 +856,14 @@
             endLine="21"
             endColumn="56"
             endOffset="1029"/>
+    </incident>
+
+    <incident
+        id="IconLocation"
+        severity="warning"
+        message="Found bitmap drawable `res/drawable/icn_chevron_up.png` in densityless folder">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/drawable/icn_chevron_up.png"/>
     </incident>
 
 </incidents>

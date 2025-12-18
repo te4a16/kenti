@@ -6,7 +6,7 @@
     debuggable="true"
     mergedManifest="build\intermediates\merged_manifest\debug\processDebugMainManifest\AndroidManifest.xml"
     partialResultsDir="build\intermediates\android_test_lint_partial_results\debug\lintAnalyzeDebugAndroidTest\out"
-    desugaredMethodsFiles="C:\Users\any3r\.gradle\caches\8.14.3\transforms\09057d5587fda8f5ab2aaa7f7e2d1fd2\transformed\D8BackportedDesugaredMethods.txt">
+    desugaredMethodsFiles="C:\Users\220570\.gradle\caches\8.14.3\transforms\09057d5587fda8f5ab2aaa7f7e2d1fd2\transformed\D8BackportedDesugaredMethods.txt">
   <buildFeatures
       viewBinding="true"
       namespacing="REQUIRED"/>
@@ -26,6 +26,6 @@
       type="INSTRUMENTATION_TEST"
       applicationId="org.tensorflow.lite.examples.objectdetection.test"
       generatedResourceFolders="build\generated\res\resValues\androidTest\debug"
-      desugaredMethodsFiles="C:\Users\any3r\.gradle\caches\8.14.3\transforms\09057d5587fda8f5ab2aaa7f7e2d1fd2\transformed\D8BackportedDesugaredMethods.txt">
+      desugaredMethodsFiles="C:\Users\220570\.gradle\caches\8.14.3\transforms\09057d5587fda8f5ab2aaa7f7e2d1fd2\transformed\D8BackportedDesugaredMethods.txt">
   </artifact>
 </variant>

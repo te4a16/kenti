@@ -38,6 +38,17 @@ class OverlayView(context: Context?, attrs: AttributeSet?) : View(context, attrs
     // 検出結果リスト
     private var results: List<Detection> = LinkedList<Detection>()
 
+        /**
+     * 距離情報を外部（Fragmentなど）に通知するためのリスナー
+     */
+    interface DistanceAlertListener {
+        fun onDistanceUpdated(distanceMeters: Float, className: String)
+    }
+
+    // 距離通知用リスナー
+    var distanceAlertListener: DistanceAlertListener? = null
+
+
     // ボックス・テキスト背景・文字の描画に使用する Paint
     private var boxPaint = Paint()
     private var textBackgroundPaint = Paint()
@@ -132,6 +143,11 @@ class OverlayView(context: Context?, attrs: AttributeSet?) : View(context, attrs
             } else {
                 0.0f
             }
+
+            // ---【追加】距離とクラス名を外部へ通知 ---
+            val className = result.categories[0].label
+            distanceAlertListener?.onDistanceUpdated(distanceMeters, className)
+
 
             // --- 【ここまで】距離計算ロジック ---
 

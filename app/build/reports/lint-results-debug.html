@@ -177,17 +177,17 @@ document.getElementById(id).style.display = 'none';
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
   <header class="mdl-layout__header">
     <div class="mdl-layout__header-row">
-      <span class="mdl-layout-title">Lint Report: 63 warnings</span>
+      <span class="mdl-layout-title">Lint Report: 66 warnings</span>
       <div class="mdl-layout-spacer"></div>
-      <nav class="mdl-navigation mdl-layout--large-screen-only">Check performed at Thu Dec 18 02:51:28 JST 2025 by AGP (8.5.1)</nav>
+      <nav class="mdl-navigation mdl-layout--large-screen-only">Check performed at Thu Dec 18 11:00:09 JST 2025 by AGP (8.5.1)</nav>
     </div>
   </header>
   <div class="mdl-layout__drawer">
     <span class="mdl-layout-title">Issue Types</span>
     <nav class="mdl-navigation">
       <a class="mdl-navigation__link" href="#overview"><i class="material-icons">dashboard</i>Overview</a>
-      <a class="mdl-navigation__link" href="#DefaultLocale"><i class="material-icons warning-icon">warning</i>Implied default locale in case conversion (10)</a>
-      <a class="mdl-navigation__link" href="#GradleDependency"><i class="material-icons warning-icon">warning</i>Obsolete Gradle Dependency (24)</a>
+      <a class="mdl-navigation__link" href="#DefaultLocale"><i class="material-icons warning-icon">warning</i>Implied default locale in case conversion (11)</a>
+      <a class="mdl-navigation__link" href="#GradleDependency"><i class="material-icons warning-icon">warning</i>Obsolete Gradle Dependency (26)</a>
       <a class="mdl-navigation__link" href="#Typos"><i class="material-icons warning-icon">warning</i>Spelling error (1)</a>
       <a class="mdl-navigation__link" href="#Overdraw"><i class="material-icons warning-icon">warning</i>Overdraw: Painting regions more than once (1)</a>
       <a class="mdl-navigation__link" href="#UnusedResources"><i class="material-icons warning-icon">warning</i>Unused resources (8)</a>
@@ -213,10 +213,10 @@ document.getElementById(id).style.display = 'none';
 <tr><td class="countColumn"></td><td class="categoryColumn"><a href="#Correctness">Correctness</a>
 </td></tr>
 <tr>
-<td class="countColumn">10</td><td class="issueColumn"><i class="material-icons warning-icon">warning</i>
+<td class="countColumn">11</td><td class="issueColumn"><i class="material-icons warning-icon">warning</i>
 <a href="#DefaultLocale">DefaultLocale</a>: Implied default locale in case conversion</td></tr>
 <tr>
-<td class="countColumn">24</td><td class="issueColumn"><i class="material-icons warning-icon">warning</i>
+<td class="countColumn">26</td><td class="issueColumn"><i class="material-icons warning-icon">warning</i>
 <a href="#GradleDependency">GradleDependency</a>: Obsolete Gradle Dependency</td></tr>
 <tr><td class="countColumn"></td><td class="categoryColumn"><a href="#Correctness:Messages">Correctness:Messages</a>
 </td></tr>
@@ -281,99 +281,109 @@ Dismiss</button>            </div>
               <div class="mdl-card__supporting-text">
 <div class="issue">
 <div class="warningslist">
-<span class="location"><a href="../../src/main/java/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt">../../src/main/java/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt</a>:291</span>: <span class="message">Implicitly using the default locale is a common source of bugs: Use <code>String.format(Locale, ...)</code> instead</span><br /><pre class="errorlines">
-<span class="lineno"> 288 </span>        fragmentCameraBinding.bottomSheetLayout.maxResultsValue.text =
-<span class="lineno"> 289 </span>            objectDetectorHelper.maxResults.toString()
-<span class="lineno"> 290 </span>        fragmentCameraBinding.bottomSheetLayout.thresholdValue.text =
-<span class="caretline"><span class="lineno"> 291 </span>            <span class="warning">String.format(<span class="string">"%.2f"</span>, objectDetectorHelper.threshold)</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-<span class="lineno"> 292 </span>        fragmentCameraBinding.bottomSheetLayout.threadsValue.text =
-<span class="lineno"> 293 </span>            objectDetectorHelper.numThreads.toString()
+<span class="location"><a href="../../src/main/java/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt">../../src/main/java/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt</a>:316</span>: <span class="message">Implicitly using the default locale is a common source of bugs: Use <code>String.format(Locale, ...)</code> instead</span><br /><pre class="errorlines">
+<span class="lineno"> 313 </span>        fragmentCameraBinding.bottomSheetLayout.maxResultsValue.text =
+<span class="lineno"> 314 </span>            objectDetectorHelper.maxResults.toString()
+<span class="lineno"> 315 </span>        fragmentCameraBinding.bottomSheetLayout.thresholdValue.text =
+<span class="caretline"><span class="lineno"> 316 </span>            <span class="warning">String.format(<span class="string">"%.2f"</span>, objectDetectorHelper.threshold)</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+<span class="lineno"> 317 </span>        fragmentCameraBinding.bottomSheetLayout.threadsValue.text =
+<span class="lineno"> 318 </span>            objectDetectorHelper.numThreads.toString()
 </pre>
 
-<span class="location"><a href="../../src/main/java/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt">../../src/main/java/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt</a>:291</span>: <span class="message">Implicitly using the default locale is a common source of bugs: Use <code>String.format(Locale, ...)</code> instead</span><br /><pre class="errorlines">
-<span class="lineno"> 288 </span>        fragmentCameraBinding.bottomSheetLayout.maxResultsValue.text =
-<span class="lineno"> 289 </span>            objectDetectorHelper.maxResults.toString()
-<span class="lineno"> 290 </span>        fragmentCameraBinding.bottomSheetLayout.thresholdValue.text =
-<span class="caretline"><span class="lineno"> 291 </span>            <span class="warning">String.format(<span class="string">"%.2f"</span>, objectDetectorHelper.threshold)</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-<span class="lineno"> 292 </span>        fragmentCameraBinding.bottomSheetLayout.threadsValue.text =
-<span class="lineno"> 293 </span>            objectDetectorHelper.numThreads.toString()
+<span class="location"><a href="../../src/main/java/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt">../../src/main/java/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt</a>:316</span>: <span class="message">Implicitly using the default locale is a common source of bugs: Use <code>String.format(Locale, ...)</code> instead</span><br /><pre class="errorlines">
+<span class="lineno"> 313 </span>        fragmentCameraBinding.bottomSheetLayout.maxResultsValue.text =
+<span class="lineno"> 314 </span>            objectDetectorHelper.maxResults.toString()
+<span class="lineno"> 315 </span>        fragmentCameraBinding.bottomSheetLayout.thresholdValue.text =
+<span class="caretline"><span class="lineno"> 316 </span>            <span class="warning">String.format(<span class="string">"%.2f"</span>, objectDetectorHelper.threshold)</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+<span class="lineno"> 317 </span>        fragmentCameraBinding.bottomSheetLayout.threadsValue.text =
+<span class="lineno"> 318 </span>            objectDetectorHelper.numThreads.toString()
 </pre>
 
-<span class="location"><a href="../../src/main/java/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt">../../src/main/java/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt</a>:412</span>: <span class="message">Implicitly using the default locale is a common source of bugs: Use <code>String.format(Locale, ...)</code> instead</span><br /><pre class="errorlines">
-<span class="lineno"> 409 </span>        activity?.runOnUiThread {
-<span class="lineno"> 410 </span>            <span class="comment">//推論時間表示</span>
-<span class="lineno"> 411 </span>            fragmentCameraBinding.bottomSheetLayout.inferenceTimeVal.text =
-<span class="caretline"><span class="lineno"> 412 </span>                            <span class="warning">String.format(<span class="string">"%d ms"</span>, inferenceTime)</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-<span class="lineno"> 413 </span>
-<span class="lineno"> 414 </span>            <span class="comment">// 必要な情報をOverlayViewに渡してキャンバス上に描画する</span>
-<span class="lineno"> 415 </span>            <span class="comment">//検出結果を OverlayView に渡す</span></pre>
+<span class="location"><a href="../../src/main/java/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt">../../src/main/java/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt</a>:437</span>: <span class="message">Implicitly using the default locale is a common source of bugs: Use <code>String.format(Locale, ...)</code> instead</span><br /><pre class="errorlines">
+<span class="lineno"> 434 </span>        activity?.runOnUiThread {
+<span class="lineno"> 435 </span>            <span class="comment">//推論時間表示</span>
+<span class="lineno"> 436 </span>            fragmentCameraBinding.bottomSheetLayout.inferenceTimeVal.text =
+<span class="caretline"><span class="lineno"> 437 </span>                            <span class="warning">String.format(<span class="string">"%d ms"</span>, inferenceTime)</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+<span class="lineno"> 438 </span>
+<span class="lineno"> 439 </span>            <span class="comment">// 必要な情報をOverlayViewに渡してキャンバス上に描画する</span>
+<span class="lineno"> 440 </span>            <span class="comment">//検出結果を OverlayView に渡す</span></pre>
 
-<span class="location"><a href="../../src/main/java/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt">../../src/main/java/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt</a>:412</span>: <span class="message">Implicitly using the default locale is a common source of bugs: Use <code>String.format(Locale, ...)</code> instead</span><br /><pre class="errorlines">
-<span class="lineno"> 409 </span>        activity?.runOnUiThread {
-<span class="lineno"> 410 </span>            <span class="comment">//推論時間表示</span>
-<span class="lineno"> 411 </span>            fragmentCameraBinding.bottomSheetLayout.inferenceTimeVal.text =
-<span class="caretline"><span class="lineno"> 412 </span>                            <span class="warning">String.format(<span class="string">"%d ms"</span>, inferenceTime)</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-<span class="lineno"> 413 </span>
-<span class="lineno"> 414 </span>            <span class="comment">// 必要な情報をOverlayViewに渡してキャンバス上に描画する</span>
-<span class="lineno"> 415 </span>            <span class="comment">//検出結果を OverlayView に渡す</span></pre>
+<span class="location"><a href="../../src/main/java/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt">../../src/main/java/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt</a>:437</span>: <span class="message">Implicitly using the default locale is a common source of bugs: Use <code>String.format(Locale, ...)</code> instead</span><br /><pre class="errorlines">
+<span class="lineno"> 434 </span>        activity?.runOnUiThread {
+<span class="lineno"> 435 </span>            <span class="comment">//推論時間表示</span>
+<span class="lineno"> 436 </span>            fragmentCameraBinding.bottomSheetLayout.inferenceTimeVal.text =
+<span class="caretline"><span class="lineno"> 437 </span>                            <span class="warning">String.format(<span class="string">"%d ms"</span>, inferenceTime)</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+<span class="lineno"> 438 </span>
+<span class="lineno"> 439 </span>            <span class="comment">// 必要な情報をOverlayViewに渡してキャンバス上に描画する</span>
+<span class="lineno"> 440 </span>            <span class="comment">//検出結果を OverlayView に渡す</span></pre>
 
-<span class="location"><a href="../../src/main/java/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt">../../src/main/java/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt</a>:443</span>: <span class="message">Implicitly using the default locale is a common source of bugs: Use <code>String.format(Locale, ...)</code> instead</span><br /><pre class="errorlines">
-<span class="lineno"> 440 </span>  <span class="keyword">val</span> distanceMeters = (DistanceConstants.VIRTUAL_FOCAL_LENGTH_F * DistanceConstants.TARGET_REAL_WIDTH_M) / pixelWidth
-<span class="lineno"> 441 </span>  
-<span class="lineno"> 442 </span>  <span class="keyword">val</span> label = closestDetection.categories.firstOrNull()?.label ?: <span class="string">"Object"</span>
-<span class="caretline"><span class="lineno"> 443 </span>  <span class="keyword">val</span> score = <span class="warning">String.format(<span class="string">"%.0f%%"</span>, (closestDetection.categories.firstOrNull()?.score ?: <span class="number">0f</span>) * <span class="number">100</span>)</span></span>
-<span class="lineno"> 444 </span>  
-<span class="lineno"> 445 </span>  notificationTitle = <span class="string">"Object Detected!"</span>
-<span class="lineno"> 446 </span>  notificationMessage = <span class="string">"$label is at ${</span>String.format(<span class="string">"%.2f m"</span>, distanceMeters)<span class="string">}. Confidence: $score"</span></pre>
+<span class="location"><a href="../../src/main/java/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt">../../src/main/java/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt</a>:468</span>: <span class="message">Implicitly using the default locale is a common source of bugs: Use <code>String.format(Locale, ...)</code> instead</span><br /><pre class="errorlines">
+<span class="lineno"> 465 </span>  <span class="keyword">val</span> distanceMeters = (DistanceConstants.VIRTUAL_FOCAL_LENGTH_F * DistanceConstants.TARGET_REAL_WIDTH_M) / pixelWidth
+<span class="lineno"> 466 </span>  
+<span class="lineno"> 467 </span>  <span class="keyword">val</span> label = closestDetection.categories.firstOrNull()?.label ?: <span class="string">"Object"</span>
+<span class="caretline"><span class="lineno"> 468 </span>  <span class="keyword">val</span> score = <span class="warning">String.format(<span class="string">"%.0f%%"</span>, (closestDetection.categories.firstOrNull()?.score ?: <span class="number">0f</span>) * <span class="number">100</span>)</span></span>
+<span class="lineno"> 469 </span>  
+<span class="lineno"> 470 </span>  notificationTitle = <span class="string">"Object Detected!"</span>
+<span class="lineno"> 471 </span>  notificationMessage = <span class="string">"$label is at ${</span>String.format(<span class="string">"%.2f m"</span>, distanceMeters)<span class="string">}. Confidence: $score"</span></pre>
 
-<button class="mdl-button mdl-js-button mdl-button--primary" id="DefaultLocaleDivLink" onclick="reveal('DefaultLocaleDiv');" />+ 5 More Occurrences...</button>
+<button class="mdl-button mdl-js-button mdl-button--primary" id="DefaultLocaleDivLink" onclick="reveal('DefaultLocaleDiv');" />+ 6 More Occurrences...</button>
 <div id="DefaultLocaleDiv" style="display: none">
-<span class="location"><a href="../../src/main/java/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt">../../src/main/java/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt</a>:446</span>: <span class="message">Implicitly using the default locale is a common source of bugs: Use <code>String.format(Locale, ...)</code> instead</span><br /><pre class="errorlines">
-<span class="lineno"> 443 </span>  <span class="keyword">val</span> score = String.format(<span class="string">"%.0f%%"</span>, (closestDetection.categories.firstOrNull()?.score ?: <span class="number">0f</span>) * <span class="number">100</span>)
-<span class="lineno"> 444 </span>  
-<span class="lineno"> 445 </span>  notificationTitle = <span class="string">"Object Detected!"</span>
-<span class="caretline"><span class="lineno"> 446 </span>  notificationMessage = <span class="string">"$label is at ${</span><span class="warning">String.format(<span class="string">"%.2f m"</span>, distanceMeters)</span><span class="string">}. Confidence: $score"</span></span>
-<span class="lineno"> 447 </span>
-<span class="lineno"> 448 </span>  <span class="comment">// 4メートル以内かチェック</span>
-<span class="lineno"> 449 </span>  <span class="keyword">if</span> (distanceMeters &lt;= ALERT_DISTANCE_M) {
+<span class="location"><a href="../../src/main/java/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt">../../src/main/java/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt</a>:471</span>: <span class="message">Implicitly using the default locale is a common source of bugs: Use <code>String.format(Locale, ...)</code> instead</span><br /><pre class="errorlines">
+<span class="lineno"> 468 </span>  <span class="keyword">val</span> score = String.format(<span class="string">"%.0f%%"</span>, (closestDetection.categories.firstOrNull()?.score ?: <span class="number">0f</span>) * <span class="number">100</span>)
+<span class="lineno"> 469 </span>  
+<span class="lineno"> 470 </span>  notificationTitle = <span class="string">"Object Detected!"</span>
+<span class="caretline"><span class="lineno"> 471 </span>  notificationMessage = <span class="string">"$label is at ${</span><span class="warning">String.format(<span class="string">"%.2f m"</span>, distanceMeters)</span><span class="string">}. Confidence: $score"</span></span>
+<span class="lineno"> 472 </span>
+<span class="lineno"> 473 </span>  <span class="comment">// 4メートル以内かチェック</span>
+<span class="lineno"> 474 </span>  <span class="keyword">if</span> (distanceMeters &lt;= ALERT_DISTANCE_M) {
 </pre>
 
-<span class="location"><a href="../../src/main/java/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt">../../src/main/java/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt</a>:453</span>: <span class="message">Implicitly using the default locale is a common source of bugs: Use <code>String.format(Locale, ...)</code> instead</span><br /><pre class="errorlines">
-<span class="lineno"> 450 </span>  <span class="keyword">if</span> (!isNotificationSent) {
-<span class="lineno"> 451 </span>      <span class="comment">// 4m 圏内に入った瞬間で、まだ通知を送っていない場合</span>
-<span class="lineno"> 452 </span>      notificationTitle = <span class="string">"🚨 ALERT: $label が近づいています。注意してください"</span>
-<span class="caretline"><span class="lineno"> 453 </span>      notificationMessage = <span class="string">"Distance: ${</span><span class="warning">String.format(<span class="string">"%.2f m"</span>, distanceMeters)</span><span class="string">} (within 4.00 m)"</span></span>
-<span class="lineno"> 454 </span>      shouldNotify = <span class="keyword">true</span>
-<span class="lineno"> 455 </span>      isNotificationSent = <span class="keyword">true</span> <span class="comment">// 通知済みフラグをON</span>
-<span class="lineno"> 456 </span>  }
+<span class="location"><a href="../../src/main/java/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt">../../src/main/java/org/tensorflow/lite/examples/objectdetection/fragments/CameraFragment.kt</a>:478</span>: <span class="message">Implicitly using the default locale is a common source of bugs: Use <code>String.format(Locale, ...)</code> instead</span><br /><pre class="errorlines">
+<span class="lineno"> 475 </span>  <span class="keyword">if</span> (!isNotificationSent) {
+<span class="lineno"> 476 </span>      <span class="comment">// 4m 圏内に入った瞬間で、まだ通知を送っていない場合</span>
+<span class="lineno"> 477 </span>      notificationTitle = <span class="string">"🚨 ALERT: $label が近づいています。注意してください"</span>
+<span class="caretline"><span class="lineno"> 478 </span>      notificationMessage = <span class="string">"Distance: ${</span><span class="warning">String.format(<span class="string">"%.2f m"</span>, distanceMeters)</span><span class="string">} (within 4.00 m)"</span></span>
+<span class="lineno"> 479 </span>      shouldNotify = <span class="keyword">true</span>
+<span class="lineno"> 480 </span>      isNotificationSent = <span class="keyword">true</span> <span class="comment">// 通知済みフラグをON</span>
+<span class="lineno"> 481 </span>  }
 </pre>
 
-<span class="location"><a href="../../src/main/java/org/tensorflow/lite/examples/objectdetection/OverlayView.kt">../../src/main/java/org/tensorflow/lite/examples/objectdetection/OverlayView.kt</a>:149</span>: <span class="message">Implicitly using the default locale is a common source of bugs: Use <code>String.format(Locale, ...)</code> instead</span><br /><pre class="errorlines">
-<span class="lineno"> 146 </span><span class="comment">                        String.format("%.2f", result.categories[0].score)
-</span><span class="lineno"> 147 </span><span class="comment">            */</span>
-<span class="lineno"> 148 </span>            <span class="keyword">val</span> label = result.categories[<span class="number">0</span>].label
-<span class="caretline"><span class="lineno"> 149 </span>            <span class="keyword">val</span> score = <span class="warning">String.format(<span class="string">"%.2f"</span>, result.categories[<span class="number">0</span>].score)</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-<span class="lineno"> 150 </span>            <span class="keyword">val</span> distanceText = String.format(<span class="string">" (%.2f m)"</span>, distanceMeters)
-<span class="lineno"> 151 </span>            <span class="comment">// リアルタイムのピクセル幅を表示</span>
-<span class="lineno"> 152 </span>            <span class="keyword">val</span> pixelWidthText = String.format(<span class="string">" | W: %d px"</span>, pixelWidth.toInt())
+<span class="location"><a href="../../src/main/java/org/tensorflow/lite/examples/objectdetection/DistanceAlertManager.kt">../../src/main/java/org/tensorflow/lite/examples/objectdetection/DistanceAlertManager.kt</a>:59</span>: <span class="message">Implicitly using the default locale is a common source of bugs: Use <code>String.format(Locale, ...)</code> instead</span><br /><pre class="errorlines">
+<span class="lineno">  56 </span>
+<span class="lineno">  57 </span>        <span class="comment">// 「〇メートル先です」と喋る用テキスト</span>
+<span class="lineno">  58 </span>        <span class="keyword">val</span> distanceMessage =
+<span class="caretline"><span class="lineno">  59 </span>            <span class="warning">String.format(<span class="string">"危険です。%.1fメートル先に人がいます。"</span>, distanceMeters)</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+<span class="lineno">  60 </span>
+<span class="lineno">  61 </span>        <span class="keyword">when</span> {
+<span class="lineno">  62 </span>            distanceMeters &lt;= ALERT_DISTANCE_1M -> {
 </pre>
 
-<span class="location"><a href="../../src/main/java/org/tensorflow/lite/examples/objectdetection/OverlayView.kt">../../src/main/java/org/tensorflow/lite/examples/objectdetection/OverlayView.kt</a>:150</span>: <span class="message">Implicitly using the default locale is a common source of bugs: Use <code>String.format(Locale, ...)</code> instead</span><br /><pre class="errorlines">
-<span class="lineno"> 147 </span><span class="comment">            */</span>
-<span class="lineno"> 148 </span>            <span class="keyword">val</span> label = result.categories[<span class="number">0</span>].label
-<span class="lineno"> 149 </span>            <span class="keyword">val</span> score = String.format(<span class="string">"%.2f"</span>, result.categories[<span class="number">0</span>].score)
-<span class="caretline"><span class="lineno"> 150 </span>            <span class="keyword">val</span> distanceText = <span class="warning">String.format(<span class="string">" (%.2f m)"</span>, distanceMeters)</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-<span class="lineno"> 151 </span>            <span class="comment">// リアルタイムのピクセル幅を表示</span>
-<span class="lineno"> 152 </span>            <span class="keyword">val</span> pixelWidthText = String.format(<span class="string">" | W: %d px"</span>, pixelWidth.toInt())
+<span class="location"><a href="../../src/main/java/org/tensorflow/lite/examples/objectdetection/OverlayView.kt">../../src/main/java/org/tensorflow/lite/examples/objectdetection/OverlayView.kt</a>:165</span>: <span class="message">Implicitly using the default locale is a common source of bugs: Use <code>String.format(Locale, ...)</code> instead</span><br /><pre class="errorlines">
+<span class="lineno"> 162 </span><span class="comment">                        String.format("%.2f", result.categories[0].score)
+</span><span class="lineno"> 163 </span><span class="comment">            */</span>
+<span class="lineno"> 164 </span>            <span class="keyword">val</span> label = result.categories[<span class="number">0</span>].label
+<span class="caretline"><span class="lineno"> 165 </span>            <span class="keyword">val</span> score = <span class="warning">String.format(<span class="string">"%.2f"</span>, result.categories[<span class="number">0</span>].score)</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+<span class="lineno"> 166 </span>            <span class="keyword">val</span> distanceText = String.format(<span class="string">" (%.2f m)"</span>, distanceMeters)
+<span class="lineno"> 167 </span>            <span class="comment">// リアルタイムのピクセル幅を表示</span>
+<span class="lineno"> 168 </span>            <span class="keyword">val</span> pixelWidthText = String.format(<span class="string">" | W: %d px"</span>, pixelWidth.toInt())
 </pre>
 
-<span class="location"><a href="../../src/main/java/org/tensorflow/lite/examples/objectdetection/OverlayView.kt">../../src/main/java/org/tensorflow/lite/examples/objectdetection/OverlayView.kt</a>:152</span>: <span class="message">Implicitly using the default locale is a common source of bugs: Use <code>String.format(Locale, ...)</code> instead</span><br /><pre class="errorlines">
-<span class="lineno"> 149 </span>            <span class="keyword">val</span> score = String.format(<span class="string">"%.2f"</span>, result.categories[<span class="number">0</span>].score)
-<span class="lineno"> 150 </span>            <span class="keyword">val</span> distanceText = String.format(<span class="string">" (%.2f m)"</span>, distanceMeters)
-<span class="lineno"> 151 </span>            <span class="comment">// リアルタイムのピクセル幅を表示</span>
-<span class="caretline"><span class="lineno"> 152 </span>            <span class="keyword">val</span> pixelWidthText = <span class="warning">String.format(<span class="string">" | W: %d px"</span>, pixelWidth.toInt())</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-<span class="lineno"> 153 </span>
-<span class="lineno"> 154 </span>            <span class="keyword">val</span> drawableText = <span class="string">"${</span>label<span class="string">} ${</span>score<span class="string">}${</span>distanceText<span class="string">} ${</span>pixelWidthText<span class="string">}"</span>
+<span class="location"><a href="../../src/main/java/org/tensorflow/lite/examples/objectdetection/OverlayView.kt">../../src/main/java/org/tensorflow/lite/examples/objectdetection/OverlayView.kt</a>:166</span>: <span class="message">Implicitly using the default locale is a common source of bugs: Use <code>String.format(Locale, ...)</code> instead</span><br /><pre class="errorlines">
+<span class="lineno"> 163 </span><span class="comment">            */</span>
+<span class="lineno"> 164 </span>            <span class="keyword">val</span> label = result.categories[<span class="number">0</span>].label
+<span class="lineno"> 165 </span>            <span class="keyword">val</span> score = String.format(<span class="string">"%.2f"</span>, result.categories[<span class="number">0</span>].score)
+<span class="caretline"><span class="lineno"> 166 </span>            <span class="keyword">val</span> distanceText = <span class="warning">String.format(<span class="string">" (%.2f m)"</span>, distanceMeters)</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+<span class="lineno"> 167 </span>            <span class="comment">// リアルタイムのピクセル幅を表示</span>
+<span class="lineno"> 168 </span>            <span class="keyword">val</span> pixelWidthText = String.format(<span class="string">" | W: %d px"</span>, pixelWidth.toInt())
+</pre>
+
+<span class="location"><a href="../../src/main/java/org/tensorflow/lite/examples/objectdetection/OverlayView.kt">../../src/main/java/org/tensorflow/lite/examples/objectdetection/OverlayView.kt</a>:168</span>: <span class="message">Implicitly using the default locale is a common source of bugs: Use <code>String.format(Locale, ...)</code> instead</span><br /><pre class="errorlines">
+<span class="lineno"> 165 </span>            <span class="keyword">val</span> score = String.format(<span class="string">"%.2f"</span>, result.categories[<span class="number">0</span>].score)
+<span class="lineno"> 166 </span>            <span class="keyword">val</span> distanceText = String.format(<span class="string">" (%.2f m)"</span>, distanceMeters)
+<span class="lineno"> 167 </span>            <span class="comment">// リアルタイムのピクセル幅を表示</span>
+<span class="caretline"><span class="lineno"> 168 </span>            <span class="keyword">val</span> pixelWidthText = <span class="warning">String.format(<span class="string">" | W: %d px"</span>, pixelWidth.toInt())</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+<span class="lineno"> 169 </span>
+<span class="lineno"> 170 </span>            <span class="keyword">val</span> drawableText = <span class="string">"${</span>label<span class="string">} ${</span>score<span class="string">}${</span>distanceText<span class="string">} ${</span>pixelWidthText<span class="string">}"</span>
 </pre>
 
 </div>
@@ -426,7 +436,7 @@ Dismiss</button>            </div>
 <span class="lineno">  27 </span>        applicationId <span class="string">"org.tensorflow.lite.examples.objectdetection"</span>
 </pre>
 
-<span class="location"><a href="../../build.gradle">../../build.gradle</a>:75</span>: <span class="message">A newer version of androidx.core:core-ktx than 1.6.0 is available: 1.17.0</span><br /><pre class="errorlines">
+<span class="location"><a href="../../build.gradle">../../build.gradle</a>:75</span>: <span class="message">A newer version of androidx.core:core-ktx than 1.6.0 is available: 1.12.0</span><br /><pre class="errorlines">
 <span class="lineno">  72 </span>
 <span class="lineno">  73 </span>dependencies {
 <span class="lineno">  74 </span>    <span class="comment">// Kotlin lang</span>
@@ -446,7 +456,7 @@ Dismiss</button>            </div>
 <span class="lineno">  80 </span>    implementation <span class="string">'androidx.appcompat:appcompat:1.3.1'</span>
 </pre>
 
-<span class="location"><a href="../../build.gradle">../../build.gradle</a>:80</span>: <span class="message">A newer version of androidx.appcompat:appcompat than 1.3.1 is available: 1.7.1</span><br /><pre class="errorlines">
+<span class="location"><a href="../../build.gradle">../../build.gradle</a>:80</span>: <span class="message">A newer version of androidx.appcompat:appcompat than 1.3.1 is available: 1.6.1</span><br /><pre class="errorlines">
 <span class="lineno">  77 </span>    implementation <span class="string">'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0'</span>
 <span class="lineno">  78 </span>
 <span class="lineno">  79 </span>    <span class="comment">// App compat and UI things</span>
@@ -456,7 +466,7 @@ Dismiss</button>            </div>
 <span class="lineno">  83 </span>    implementation <span class="string">'com.google.android.material:material:1.0.0'</span>
 </pre>
 
-<span class="location"><a href="../../build.gradle">../../build.gradle</a>:81</span>: <span class="message">A newer version of androidx.lifecycle:lifecycle-runtime-ktx than 2.3.1 is available: 2.10.0</span><br /><pre class="errorlines">
+<span class="location"><a href="../../build.gradle">../../build.gradle</a>:81</span>: <span class="message">A newer version of androidx.lifecycle:lifecycle-runtime-ktx than 2.3.1 is available: 2.6.1</span><br /><pre class="errorlines">
 <span class="lineno">  78 </span>
 <span class="lineno">  79 </span>    <span class="comment">// App compat and UI things</span>
 <span class="lineno">  80 </span>    implementation <span class="string">'androidx.appcompat:appcompat:1.3.1'</span>
@@ -466,9 +476,9 @@ Dismiss</button>            </div>
 <span class="lineno">  84 </span>    implementation <span class="string">'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'</span>
 </pre>
 
-<button class="mdl-button mdl-js-button mdl-button--primary" id="GradleDependencyDivLink" onclick="reveal('GradleDependencyDiv');" />+ 19 More Occurrences...</button>
+<button class="mdl-button mdl-js-button mdl-button--primary" id="GradleDependencyDivLink" onclick="reveal('GradleDependencyDiv');" />+ 21 More Occurrences...</button>
 <div id="GradleDependencyDiv" style="display: none">
-<span class="location"><a href="../../build.gradle">../../build.gradle</a>:82</span>: <span class="message">A newer version of androidx.constraintlayout:constraintlayout than 2.0.4 is available: 2.2.1</span><br /><pre class="errorlines">
+<span class="location"><a href="../../build.gradle">../../build.gradle</a>:82</span>: <span class="message">A newer version of androidx.constraintlayout:constraintlayout than 2.0.4 is available: 2.1.4</span><br /><pre class="errorlines">
 <span class="lineno">  79 </span>    <span class="comment">// App compat and UI things</span>
 <span class="lineno">  80 </span>    implementation <span class="string">'androidx.appcompat:appcompat:1.3.1'</span>
 <span class="lineno">  81 </span>    implementation <span class="string">'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'</span>
@@ -478,7 +488,7 @@ Dismiss</button>            </div>
 <span class="lineno">  85 </span>
 </pre>
 
-<span class="location"><a href="../../build.gradle">../../build.gradle</a>:83</span>: <span class="message">A newer version of com.google.android.material:material than 1.0.0 is available: 1.13.0</span><br /><pre class="errorlines">
+<span class="location"><a href="../../build.gradle">../../build.gradle</a>:83</span>: <span class="message">A newer version of com.google.android.material:material than 1.0.0 is available: 1.10.0</span><br /><pre class="errorlines">
 <span class="lineno">  80 </span>    implementation <span class="string">'androidx.appcompat:appcompat:1.3.1'</span>
 <span class="lineno">  81 </span>    implementation <span class="string">'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'</span>
 <span class="lineno">  82 </span>    implementation <span class="string">'androidx.constraintlayout:constraintlayout:2.0.4'</span>
@@ -497,7 +507,7 @@ Dismiss</button>            </div>
 <span class="lineno">  87 </span>    <span class="keyword">def</span> nav_version = <span class="string">"2.3.5"</span>
 </pre>
 
-<span class="location"><a href="../../build.gradle">../../build.gradle</a>:88</span>: <span class="message">A newer version of androidx.navigation:navigation-fragment-ktx than 2.3.5 is available: 2.9.6</span><br /><pre class="errorlines">
+<span class="location"><a href="../../build.gradle">../../build.gradle</a>:88</span>: <span class="message">A newer version of androidx.navigation:navigation-fragment-ktx than 2.3.5 is available: 2.6.0</span><br /><pre class="errorlines">
 <span class="lineno">  85 </span>
 <span class="lineno">  86 </span>    <span class="comment">// Navigation library</span>
 <span class="lineno">  87 </span>    <span class="keyword">def</span> nav_version = <span class="string">"2.3.5"</span>
@@ -506,7 +516,7 @@ Dismiss</button>            </div>
 <span class="lineno">  90 </span>
 <span class="lineno">  91 </span>    <span class="comment">// CameraX core library</span></pre>
 
-<span class="location"><a href="../../build.gradle">../../build.gradle</a>:89</span>: <span class="message">A newer version of androidx.navigation:navigation-ui-ktx than 2.3.5 is available: 2.9.6</span><br /><pre class="errorlines">
+<span class="location"><a href="../../build.gradle">../../build.gradle</a>:89</span>: <span class="message">A newer version of androidx.navigation:navigation-ui-ktx than 2.3.5 is available: 2.6.0</span><br /><pre class="errorlines">
 <span class="lineno">  86 </span>    <span class="comment">// Navigation library</span>
 <span class="lineno">  87 </span>    <span class="keyword">def</span> nav_version = <span class="string">"2.3.5"</span>
 <span class="lineno">  88 </span>    implementation <span class="string">"androidx.navigation:navigation-fragment-ktx:$nav_version"</span>
@@ -516,7 +526,7 @@ Dismiss</button>            </div>
 <span class="lineno">  92 </span>    <span class="keyword">def</span> camerax_version = <span class="string">'1.1.0-beta03'</span>
 </pre>
 
-<span class="location"><a href="../../build.gradle">../../build.gradle</a>:93</span>: <span class="message">A newer version of androidx.camera:camera-core than 1.1.0-beta03 is available: 1.5.2</span><br /><pre class="errorlines">
+<span class="location"><a href="../../build.gradle">../../build.gradle</a>:93</span>: <span class="message">A newer version of androidx.camera:camera-core than 1.1.0-beta03 is available: 1.3.1</span><br /><pre class="errorlines">
 <span class="lineno">  90 </span>
 <span class="lineno">  91 </span>    <span class="comment">// CameraX core library</span>
 <span class="lineno">  92 </span>    <span class="keyword">def</span> camerax_version = <span class="string">'1.1.0-beta03'</span>
@@ -526,7 +536,7 @@ Dismiss</button>            </div>
 <span class="lineno">  96 </span>    implementation <span class="string">"androidx.camera:camera-camera2:$camerax_version"</span>
 </pre>
 
-<span class="location"><a href="../../build.gradle">../../build.gradle</a>:96</span>: <span class="message">A newer version of androidx.camera:camera-camera2 than 1.1.0-beta03 is available: 1.5.2</span><br /><pre class="errorlines">
+<span class="location"><a href="../../build.gradle">../../build.gradle</a>:96</span>: <span class="message">A newer version of androidx.camera:camera-camera2 than 1.1.0-beta03 is available: 1.3.1</span><br /><pre class="errorlines">
 <span class="lineno">  93 </span>    implementation <span class="string">"androidx.camera:camera-core:$camerax_version"</span>
 <span class="lineno">  94 </span>
 <span class="lineno">  95 </span>    <span class="comment">// CameraX Camera2 extensions</span>
@@ -536,7 +546,7 @@ Dismiss</button>            </div>
 <span class="lineno">  99 </span>    implementation <span class="string">"androidx.camera:camera-lifecycle:$camerax_version"</span>
 </pre>
 
-<span class="location"><a href="../../build.gradle">../../build.gradle</a>:99</span>: <span class="message">A newer version of androidx.camera:camera-lifecycle than 1.1.0-beta03 is available: 1.5.2</span><br /><pre class="errorlines">
+<span class="location"><a href="../../build.gradle">../../build.gradle</a>:99</span>: <span class="message">A newer version of androidx.camera:camera-lifecycle than 1.1.0-beta03 is available: 1.3.1</span><br /><pre class="errorlines">
 <span class="lineno">  96 </span>    implementation <span class="string">"androidx.camera:camera-camera2:$camerax_version"</span>
 <span class="lineno">  97 </span>
 <span class="lineno">  98 </span>    <span class="comment">// CameraX Lifecycle library</span>
@@ -546,7 +556,7 @@ Dismiss</button>            </div>
 <span class="lineno"> 102 </span>    implementation <span class="string">"androidx.camera:camera-view:$camerax_version"</span>
 </pre>
 
-<span class="location"><a href="../../build.gradle">../../build.gradle</a>:102</span>: <span class="message">A newer version of androidx.camera:camera-view than 1.1.0-beta03 is available: 1.5.2</span><br /><pre class="errorlines">
+<span class="location"><a href="../../build.gradle">../../build.gradle</a>:102</span>: <span class="message">A newer version of androidx.camera:camera-view than 1.1.0-beta03 is available: 1.3.1</span><br /><pre class="errorlines">
 <span class="lineno">  99 </span>    implementation <span class="string">"androidx.camera:camera-lifecycle:$camerax_version"</span>
 <span class="lineno"> 100 </span>
 <span class="lineno"> 101 </span>    <span class="comment">// CameraX View class</span>
@@ -556,7 +566,7 @@ Dismiss</button>            </div>
 <span class="lineno"> 105 </span>    implementation <span class="string">'androidx.window:window:1.0.0-alpha09'</span>
 </pre>
 
-<span class="location"><a href="../../build.gradle">../../build.gradle</a>:105</span>: <span class="message">A newer version of androidx.window:window than 1.0.0-alpha09 is available: 1.5.1</span><br /><pre class="errorlines">
+<span class="location"><a href="../../build.gradle">../../build.gradle</a>:105</span>: <span class="message">A newer version of androidx.window:window than 1.0.0-alpha09 is available: 1.0.0</span><br /><pre class="errorlines">
 <span class="lineno"> 102 </span>    implementation <span class="string">"androidx.camera:camera-view:$camerax_version"</span>
 <span class="lineno"> 103 </span>
 <span class="lineno"> 104 </span>    <span class="comment">//WindowManager</span>
@@ -566,7 +576,7 @@ Dismiss</button>            </div>
 <span class="lineno"> 108 </span>    testImplementation <span class="string">'androidx.test.ext:junit:1.1.3'</span>
 </pre>
 
-<span class="location"><a href="../../build.gradle">../../build.gradle</a>:108</span>: <span class="message">A newer version of androidx.test.ext:junit than 1.1.3 is available: 1.3.0</span><br /><pre class="errorlines">
+<span class="location"><a href="../../build.gradle">../../build.gradle</a>:108</span>: <span class="message">A newer version of androidx.test.ext:junit than 1.1.3 is available: 1.1.5</span><br /><pre class="errorlines">
 <span class="lineno"> 105 </span>    implementation <span class="string">'androidx.window:window:1.0.0-alpha09'</span>
 <span class="lineno"> 106 </span>
 <span class="lineno"> 107 </span>    <span class="comment">// Unit testing</span>
@@ -576,7 +586,7 @@ Dismiss</button>            </div>
 <span class="lineno"> 111 </span>    testImplementation <span class="string">'androidx.test.espresso:espresso-core:3.4.0'</span>
 </pre>
 
-<span class="location"><a href="../../build.gradle">../../build.gradle</a>:109</span>: <span class="message">A newer version of androidx.test:rules than 1.4.0 is available: 1.7.0</span><br /><pre class="errorlines">
+<span class="location"><a href="../../build.gradle">../../build.gradle</a>:109</span>: <span class="message">A newer version of androidx.test:rules than 1.4.0 is available: 1.5.0</span><br /><pre class="errorlines">
 <span class="lineno"> 106 </span>
 <span class="lineno"> 107 </span>    <span class="comment">// Unit testing</span>
 <span class="lineno"> 108 </span>    testImplementation <span class="string">'androidx.test.ext:junit:1.1.3'</span>
@@ -586,7 +596,7 @@ Dismiss</button>            </div>
 <span class="lineno"> 112 </span>    testImplementation <span class="string">'org.robolectric:robolectric:4.4'</span>
 </pre>
 
-<span class="location"><a href="../../build.gradle">../../build.gradle</a>:110</span>: <span class="message">A newer version of androidx.test:runner than 1.4.0 is available: 1.7.0</span><br /><pre class="errorlines">
+<span class="location"><a href="../../build.gradle">../../build.gradle</a>:110</span>: <span class="message">A newer version of androidx.test:runner than 1.4.0 is available: 1.5.2</span><br /><pre class="errorlines">
 <span class="lineno"> 107 </span>    <span class="comment">// Unit testing</span>
 <span class="lineno"> 108 </span>    testImplementation <span class="string">'androidx.test.ext:junit:1.1.3'</span>
 <span class="lineno"> 109 </span>    testImplementation <span class="string">'androidx.test:rules:1.4.0'</span>
@@ -596,7 +606,7 @@ Dismiss</button>            </div>
 <span class="lineno"> 113 </span>
 </pre>
 
-<span class="location"><a href="../../build.gradle">../../build.gradle</a>:111</span>: <span class="message">A newer version of androidx.test.espresso:espresso-core than 3.4.0 is available: 3.7.0</span><br /><pre class="errorlines">
+<span class="location"><a href="../../build.gradle">../../build.gradle</a>:111</span>: <span class="message">A newer version of androidx.test.espresso:espresso-core than 3.4.0 is available: 3.5.1</span><br /><pre class="errorlines">
 <span class="lineno"> 108 </span>    testImplementation <span class="string">'androidx.test.ext:junit:1.1.3'</span>
 <span class="lineno"> 109 </span>    testImplementation <span class="string">'androidx.test:rules:1.4.0'</span>
 <span class="lineno"> 110 </span>    testImplementation <span class="string">'androidx.test:runner:1.4.0'</span>
@@ -605,7 +615,7 @@ Dismiss</button>            </div>
 <span class="lineno"> 113 </span>
 <span class="lineno"> 114 </span>    <span class="comment">// Instrumented testing</span></pre>
 
-<span class="location"><a href="../../build.gradle">../../build.gradle</a>:115</span>: <span class="message">A newer version of androidx.test.ext:junit than 1.1.3 is available: 1.3.0</span><br /><pre class="errorlines">
+<span class="location"><a href="../../build.gradle">../../build.gradle</a>:115</span>: <span class="message">A newer version of androidx.test.ext:junit than 1.1.3 is available: 1.1.5</span><br /><pre class="errorlines">
 <span class="lineno"> 112 </span>    testImplementation <span class="string">'org.robolectric:robolectric:4.4'</span>
 <span class="lineno"> 113 </span>
 <span class="lineno"> 114 </span>    <span class="comment">// Instrumented testing</span>
@@ -615,7 +625,7 @@ Dismiss</button>            </div>
 <span class="lineno"> 118 </span>    androidTestImplementation <span class="string">"androidx.test:runner:1.4.0"</span>
 </pre>
 
-<span class="location"><a href="../../build.gradle">../../build.gradle</a>:116</span>: <span class="message">A newer version of androidx.test:core than 1.4.0 is available: 1.7.0</span><br /><pre class="errorlines">
+<span class="location"><a href="../../build.gradle">../../build.gradle</a>:116</span>: <span class="message">A newer version of androidx.test:core than 1.4.0 is available: 1.5.0</span><br /><pre class="errorlines">
 <span class="lineno"> 113 </span>
 <span class="lineno"> 114 </span>    <span class="comment">// Instrumented testing</span>
 <span class="lineno"> 115 </span>    androidTestImplementation <span class="string">"androidx.test.ext:junit:1.1.3"</span>
@@ -625,7 +635,7 @@ Dismiss</button>            </div>
 <span class="lineno"> 119 </span>    androidTestImplementation <span class="string">"androidx.test.espresso:espresso-core:3.4.0"</span>
 </pre>
 
-<span class="location"><a href="../../build.gradle">../../build.gradle</a>:117</span>: <span class="message">A newer version of androidx.test:rules than 1.4.0 is available: 1.7.0</span><br /><pre class="errorlines">
+<span class="location"><a href="../../build.gradle">../../build.gradle</a>:117</span>: <span class="message">A newer version of androidx.test:rules than 1.4.0 is available: 1.5.0</span><br /><pre class="errorlines">
 <span class="lineno"> 114 </span>    <span class="comment">// Instrumented testing</span>
 <span class="lineno"> 115 </span>    androidTestImplementation <span class="string">"androidx.test.ext:junit:1.1.3"</span>
 <span class="lineno"> 116 </span>    androidTestImplementation <span class="string">"androidx.test:core:1.4.0"</span>
@@ -635,7 +645,7 @@ Dismiss</button>            </div>
 <span class="lineno"> 120 </span>
 </pre>
 
-<span class="location"><a href="../../build.gradle">../../build.gradle</a>:118</span>: <span class="message">A newer version of androidx.test:runner than 1.4.0 is available: 1.7.0</span><br /><pre class="errorlines">
+<span class="location"><a href="../../build.gradle">../../build.gradle</a>:118</span>: <span class="message">A newer version of androidx.test:runner than 1.4.0 is available: 1.5.2</span><br /><pre class="errorlines">
 <span class="lineno"> 115 </span>    androidTestImplementation <span class="string">"androidx.test.ext:junit:1.1.3"</span>
 <span class="lineno"> 116 </span>    androidTestImplementation <span class="string">"androidx.test:core:1.4.0"</span>
 <span class="lineno"> 117 </span>    androidTestImplementation <span class="string">"androidx.test:rules:1.4.0"</span>
@@ -645,7 +655,7 @@ Dismiss</button>            </div>
 <span class="lineno"> 121 </span>    implementation <span class="string">'org.tensorflow:tensorflow-lite-task-vision:0.4.0'</span>
 </pre>
 
-<span class="location"><a href="../../build.gradle">../../build.gradle</a>:119</span>: <span class="message">A newer version of androidx.test.espresso:espresso-core than 3.4.0 is available: 3.7.0</span><br /><pre class="errorlines">
+<span class="location"><a href="../../build.gradle">../../build.gradle</a>:119</span>: <span class="message">A newer version of androidx.test.espresso:espresso-core than 3.4.0 is available: 3.5.1</span><br /><pre class="errorlines">
 <span class="lineno"> 116 </span>    androidTestImplementation <span class="string">"androidx.test:core:1.4.0"</span>
 <span class="lineno"> 117 </span>    androidTestImplementation <span class="string">"androidx.test:rules:1.4.0"</span>
 <span class="lineno"> 118 </span>    androidTestImplementation <span class="string">"androidx.test:runner:1.4.0"</span>
@@ -653,6 +663,24 @@ Dismiss</button>            </div>
 <span class="lineno"> 120 </span>
 <span class="lineno"> 121 </span>    implementation <span class="string">'org.tensorflow:tensorflow-lite-task-vision:0.4.0'</span>
 <span class="lineno"> 122 </span>    <span class="comment">// Import the GPU delegate plugin Library for GPU inference</span></pre>
+
+<span class="location"><a href="../../build.gradle">../../build.gradle</a>:121</span>: <span class="message">A newer version of org.tensorflow:tensorflow-lite-task-vision than 0.4.0 is available: 0.4.4</span><br /><pre class="errorlines">
+<span class="lineno"> 118 </span>    androidTestImplementation <span class="string">"androidx.test:runner:1.4.0"</span>
+<span class="lineno"> 119 </span>    androidTestImplementation <span class="string">"androidx.test.espresso:espresso-core:3.4.0"</span>
+<span class="lineno"> 120 </span>
+<span class="caretline"><span class="lineno"> 121 </span>    implementation <span class="warning"><span class="string">'org.tensorflow:tensorflow-lite-task-vision:0.4.0'</span></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+<span class="lineno"> 122 </span>    <span class="comment">// Import the GPU delegate plugin Library for GPU inference</span>
+<span class="lineno"> 123 </span>    implementation <span class="string">'org.tensorflow:tensorflow-lite-gpu-delegate-plugin:0.4.0'</span>
+<span class="lineno"> 124 </span>    implementation <span class="string">'org.tensorflow:tensorflow-lite-gpu:2.9.0'</span>
+</pre>
+
+<span class="location"><a href="../../build.gradle">../../build.gradle</a>:124</span>: <span class="message">A newer version of org.tensorflow:tensorflow-lite-gpu than 2.9.0 is available: 2.12.0</span><br /><pre class="errorlines">
+<span class="lineno"> 121 </span>    implementation <span class="string">'org.tensorflow:tensorflow-lite-task-vision:0.4.0'</span>
+<span class="lineno"> 122 </span>    <span class="comment">// Import the GPU delegate plugin Library for GPU inference</span>
+<span class="lineno"> 123 </span>    implementation <span class="string">'org.tensorflow:tensorflow-lite-gpu-delegate-plugin:0.4.0'</span>
+<span class="caretline"><span class="lineno"> 124 </span>    implementation <span class="warning"><span class="string">'org.tensorflow:tensorflow-lite-gpu:2.9.0'</span></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+<span class="lineno"> 125 </span>}
+</pre>
 
 </div>
 </div>
@@ -1011,14 +1039,14 @@ Dismiss</button>            </div>
               <div class="mdl-card__supporting-text">
 <div class="issue">
 <div class="warningslist">
-<span class="location"><a href="../../src/main/res/layout/activity_main.xml">../../src/main/res/layout/activity_main.xml</a>:49</span>: <span class="message">Missing <code>contentDescription</code> attribute on image</span><br /><pre class="errorlines">
-<span class="lineno"> 46 </span>            <span class="prefix">android:</span><span class="attribute">layout_alignParentTop</span>=<span class="value">"true"</span>
-<span class="lineno"> 47 </span>            <span class="prefix">android:</span><span class="attribute">background</span>=<span class="value">"@color/toolbar_background"</span>>
-<span class="lineno"> 48 </span>
-<span class="caretline"><span class="lineno"> 49 </span>            <span class="tag">&lt;</span><span class="warning"><span class="tag">ImageView</span></span><span class="attribute"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="attribute">
-</span><span class="lineno"> 50 </span><span class="attribute">                </span><span class="prefix">android:</span><span class="attribute">layout_width</span>=<span class="value">"wrap_content"</span>
-<span class="lineno"> 51 </span>                <span class="prefix">android:</span><span class="attribute">layout_height</span>=<span class="value">"wrap_content"</span>
-<span class="lineno"> 52 </span>                <span class="prefix">android:</span><span class="attribute">src</span>=<span class="value">"@drawable/tfl_logo"</span> />
+<span class="location"><a href="../../src/main/res/layout/activity_main.xml">../../src/main/res/layout/activity_main.xml</a>:48</span>: <span class="message">Missing <code>contentDescription</code> attribute on image</span><br /><pre class="errorlines">
+<span class="lineno"> 45 </span>            <span class="prefix">android:</span><span class="attribute">layout_alignParentTop</span>=<span class="value">"true"</span>
+<span class="lineno"> 46 </span>            <span class="prefix">android:</span><span class="attribute">background</span>=<span class="value">"@color/toolbar_background"</span>>
+<span class="lineno"> 47 </span>
+<span class="caretline"><span class="lineno"> 48 </span>            <span class="tag">&lt;</span><span class="warning"><span class="tag">ImageView</span></span><span class="attribute"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="attribute">
+</span><span class="lineno"> 49 </span><span class="attribute">                </span><span class="prefix">android:</span><span class="attribute">layout_width</span>=<span class="value">"wrap_content"</span>
+<span class="lineno"> 50 </span>                <span class="prefix">android:</span><span class="attribute">layout_height</span>=<span class="value">"wrap_content"</span>
+<span class="lineno"> 51 </span>                <span class="prefix">android:</span><span class="attribute">src</span>=<span class="value">"@drawable/tfl_logo"</span> />
 </pre>
 
 </div>
