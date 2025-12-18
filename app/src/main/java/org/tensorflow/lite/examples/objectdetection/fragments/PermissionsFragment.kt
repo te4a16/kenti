@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+ //端末の権限関係
+
 package org.tensorflow.lite.examples.objectdetection.fragments
 
 import android.Manifest
