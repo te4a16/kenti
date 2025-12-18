@@ -61,12 +61,16 @@ class ObjectDetectorHelper(
     //で使用する必要があります。
     // 現在の設定に基づいて ObjectDetector を初期化
     fun setupObjectDetector() {
+
         // 検出器の基本オプションを作成し、最大結果数とスコア閾値を指定する
         // モデルへの基本設定（閾値・結果数）
         val optionsBuilder =
             ObjectDetector.ObjectDetectorOptions.builder()
                 .setScoreThreshold(threshold)
                 .setMaxResults(maxResults)
+                // ⭐ ラベルのホワイトリストを設定 ⭐
+                // このリストに含まれないラベルの結果は、検出器から返されません。
+                .setLabelAllowList(ALLOWED_LABELS)
 
         // BaseOptions：スレッド数や delegate 設定を行う
         val baseOptionsBuilder = BaseOptions.builder().setNumThreads(numThreads)
@@ -106,12 +110,15 @@ class ObjectDetectorHelper(
         try {
             objectDetector =
                 ObjectDetector.createFromFileAndOptions(context, modelName, optionsBuilder.build())
+
         } catch (e: IllegalStateException) {
             // 初期化に失敗した場合
             objectDetectorListener?.onError(
                 "Object detector failed to initialize. See error logs for details"
             )
             Log.e("Test", "TFLite failed to load model with error: " + e.message)
+        } catch (e: Exception) {
+            Log.e("ObjectDetectorError", "TFLite failed to load model: ${e.message}")
         }
     }
 
@@ -165,6 +172,7 @@ class ObjectDetectorHelper(
         )
     }
 
+    //クラスを読み込んだ時点で作成される
     companion object {
         // Delegate 種類
         const val DELEGATE_CPU = 0
@@ -175,5 +183,13 @@ class ObjectDetectorHelper(
         const val MODEL_EFFICIENTDETV0 = 1
         const val MODEL_EFFICIENTDETV1 = 2
         const val MODEL_EFFICIENTDETV2 = 3
+
+        // 検出を許可するラベル（ホワイトリスト）を定義
+        private val ALLOWED_LABELS = listOf("person", "bicycle", "car", "motorcycle", "bus",
+            "truck", "traffic light", "fire hydrant", "stop sign", "bench", "cat", "dog",
+            "horse", "cow", "bear", "umbrella", "suitcase", "sports ball", "bottle","chair",
+            "potted plant")
+
     }
+
 }
