@@ -57,6 +57,7 @@ import java.util.concurrent.TimeUnit
 //音声通知
 import org.tensorflow.lite.examples.objectdetection.DistanceAlertManager
 import org.tensorflow.lite.examples.objectdetection.OverlayView
+import org.tensorflow.lite.examples.objectdetection.AvoidanceNavigationManager
 
 import org.tensorflow.lite.examples.objectdetection.DistanceConstants
 
@@ -102,6 +103,9 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
     private var previewWidth = 0
     private var previewHeight = 0
     private var scaleFactor = 1f
+
+    //回避通知
+    private val avoidanceManager = AvoidanceNavigationManager()
 
     override fun onResume() {
         super.onResume()
@@ -428,78 +432,61 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
     //OverlayViewを通じてバウンディングボックスを適切にスケーリング・配置する。
     // 物体検出結果を UI に反映
     override fun onResults(
-      results: MutableList<Detection>?,
-      inferenceTime: Long,
-      imageHeight: Int,
-      imageWidth: Int
+        results: MutableList<Detection>?,
+        inferenceTime: Long,
+        imageHeight: Int,
+        imageWidth: Int
     ) {
         activity?.runOnUiThread {
-            //推論時間表示
-            fragmentCameraBinding.bottomSheetLayout.inferenceTimeVal.text =
-                            String.format("%d ms", inferenceTime)
+            // OverlayView に結果を反映
+            results?.let {
+                fragmentCameraBinding.overlay.setResults(it, imageHeight, imageWidth)
+            }
 
-            // 必要な情報をOverlayViewに渡してキャンバス上に描画する
-            //検出結果を OverlayView に渡す
-            fragmentCameraBinding.overlay.setResults(
-                results ?: LinkedList<Detection>(),
-                imageHeight,
-                imageWidth
-            )
+            // 通知用の変数
+            var finalShouldNotify = false
+            var finalNotificationTitle = ""
+            var finalNotificationMessage = ""
 
-            // -------------------------------------------------------------
-            var shouldNotify = false
-            var notificationTitle = "No Object Detected"
-            var notificationMessage = "Ready for detection."
-            
-            val detectedObjectCount = results?.size ?: 0
-            
-            if (detectedObjectCount > 0) {
-                // 最も近いオブジェクトの距離を計算し、通知の対象とする
-                val closestDetection = results!!.minByOrNull { detection ->
-                    val pixelWidth = detection.boundingBox.width()
-                    // 距離を計算: D = (F * R_W) / P_W
-                    val distanceMeters = (DistanceConstants.VIRTUAL_FOCAL_LENGTH_F * DistanceConstants.TARGET_REAL_WIDTH_M) / pixelWidth
-                    distanceMeters
-                }
-                
-                if (closestDetection != null) {
-                    val pixelWidth = closestDetection.boundingBox.width()
-                    val distanceMeters = (DistanceConstants.VIRTUAL_FOCAL_LENGTH_F * DistanceConstants.TARGET_REAL_WIDTH_M) / pixelWidth
-                    
-                    val label = closestDetection.categories.firstOrNull()?.label ?: "Object"
-                    val score = String.format("%.0f%%", (closestDetection.categories.firstOrNull()?.score ?: 0f) * 100)
-                    
-                    notificationTitle = "Object Detected!"
-                    notificationMessage = "$label is at ${String.format("%.2f m", distanceMeters)}. Confidence: $score"
+            if (results != null) {
+                for (detection in results) {
+                    val label = detection.categories[0].label
+                    val score = detection.categories[0].score
 
-                    // 4メートル以内かチェック
-                    if (distanceMeters <= ALERT_DISTANCE_M) {
-                        if (!isNotificationSent) {
-                            // 4m 圏内に入った瞬間で、まだ通知を送っていない場合
-                            notificationTitle = "🚨 ALERT: $label が近づいています。注意してください"
-                            notificationMessage = "Distance: ${String.format("%.2f m", distanceMeters)} (within 4.00 m)"
-                            shouldNotify = true
-                            isNotificationSent = true // 通知済みフラグをON
+                    // 「人」かつスコアが一定以上の場合
+                    if (label == "person" && score >= 0.5f) {
+                        val boundingBox = detection.boundingBox
+                        val pixelWidth = boundingBox.width()
+                        val distanceMeters = (DistanceConstants.TARGET_REAL_WIDTH_M * DistanceConstants.VIRTUAL_FOCAL_LENGTH_F) / pixelWidth
+
+                        // 4メートル以内の場合
+                        if (distanceMeters <= ALERT_DISTANCE_M) {
+                            if (!isNotificationSent) {
+                                // 回避方向を判定
+                                finalNotificationTitle = avoidanceManager.getAvoidanceMessage(boundingBox, imageWidth)
+                                finalNotificationMessage = "前方 ${String.format("%.2f m", distanceMeters)} に人がいます"
+                                
+                                finalShouldNotify = true
+                                isNotificationSent = true // 通知済みフラグをON
+                            }
+                        } else {
+                            // 4メートルより離れたらフラグをリセット
+                            isNotificationSent = false
                         }
-                    } else {
-                        // 4m 圏外に出た場合、フラグをリセットし、次回4m圏内に入ったときに通知可能にする
-                        isNotificationSent = false
                     }
                 }
             } else {
-                // 検出物が無い場合、フラグをリセット
+                // 検出結果が空ならフラグをリセット
                 isNotificationSent = false
             }
 
-            // 通知の実行
-            if (shouldNotify) {
-                notificationHelper.showNotification(notificationTitle, notificationMessage)
+            // 通知の実行 (ループの外で1回だけ判定)
+            if (finalShouldNotify) {
+                notificationHelper.showNotification(finalNotificationTitle, finalNotificationMessage)
             }
-            // -------------------------------------------------------------
-
-            //再描画
-            fragmentCameraBinding.overlay.invalidate()
             
+            // 再描画
+            fragmentCameraBinding.overlay.invalidate()
         }
     }
 
