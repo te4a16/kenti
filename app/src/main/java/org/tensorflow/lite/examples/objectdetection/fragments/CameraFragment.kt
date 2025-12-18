@@ -54,6 +54,10 @@ import android.os.Looper
 import org.tensorflow.lite.examples.objectdetection.NotificationHelper
 import java.util.concurrent.TimeUnit
 
+//音声通知
+import org.tensorflow.lite.examples.objectdetection.DistanceAlertManager
+import org.tensorflow.lite.examples.objectdetection.OverlayView
+
 import org.tensorflow.lite.examples.objectdetection.DistanceConstants
 
 //PiP
@@ -86,6 +90,9 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
 
     // 通知ヘルパー
     private lateinit var notificationHelper: NotificationHelper
+
+    // 音声通知ヘルパー
+    private lateinit var distanceAlertManager: DistanceAlertManager
 
     // 距離ベースの通知制御用変数
     private var isNotificationSent = false // 通知が送信済みかどうか (4m圏内に入った時)
@@ -155,8 +162,13 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
     private fun isChangingConfigurations() = activity?.isChangingConfigurations ?: false
 
     override fun onDestroyView() {
-        _fragmentCameraBinding = null
         super.onDestroyView()
+
+        //音声・バイブ・Handler 解放
+        distanceAlertManager.shutdown()
+
+        _fragmentCameraBinding = null
+        //super.onDestroyView()
 
         //バックグラウンドスレッド停止
         cameraExecutor.shutdown()
@@ -184,6 +196,21 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
         objectDetectorHelper = ObjectDetectorHelper(
             context = requireContext(),
             objectDetectorListener = this)
+
+        // 音声アラート関係
+        distanceAlertManager = DistanceAlertManager(requireContext())
+
+        // OverlayView と DistanceAlertManager を接続
+            fragmentCameraBinding.overlay.distanceAlertListener =
+                object : OverlayView.DistanceAlertListener {
+                    override fun onDistanceUpdated(
+                    distanceMeters: Float,
+                    className: String
+                ) {
+                    // 距離とクラス名を DistanceAlertManager に渡す
+                    distanceAlertManager.checkAndAlert(distanceMeters, className)
+                }
+            }
 
         //バックグラウンド実行者を初期化する
         //バックグラウンドスレッド開始
