@@ -53,6 +53,7 @@ import android.os.Handler
 import android.os.Looper
 import org.tensorflow.lite.examples.objectdetection.NotificationHelper
 import java.util.concurrent.TimeUnit
+import android.graphics.RectF
 
 //音声通知
 import org.tensorflow.lite.examples.objectdetection.DistanceAlertManager
@@ -438,49 +439,58 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
         imageWidth: Int
     ) {
         activity?.runOnUiThread {
-            // OverlayView に結果を反映
+            // OverlayViewに結果を表示
             results?.let {
                 fragmentCameraBinding.overlay.setResults(it, imageHeight, imageWidth)
             }
 
-            // 通知用の変数
+            // --- 通知判定ロジック ---
             var finalShouldNotify = false
             var finalNotificationTitle = ""
             var finalNotificationMessage = ""
+            
+            var nearestDistance = Float.MAX_VALUE
+            var nearestPersonBox: RectF? = null
 
             if (results != null) {
                 for (detection in results) {
                     val label = detection.categories[0].label
                     val score = detection.categories[0].score
 
-                    // 「人」かつスコアが一定以上の場合
+                    // 「人」かつ信頼度50%以上
                     if (label == "person" && score >= 0.5f) {
                         val boundingBox = detection.boundingBox
                         val pixelWidth = boundingBox.width()
+                        // 距離計算
                         val distanceMeters = (DistanceConstants.TARGET_REAL_WIDTH_M * DistanceConstants.VIRTUAL_FOCAL_LENGTH_F) / pixelWidth
 
-                        // 4メートル以内の場合
-                        if (distanceMeters <= ALERT_DISTANCE_M) {
-                            if (!isNotificationSent) {
-                                // 回避方向を判定
-                                finalNotificationTitle = avoidanceManager.getAvoidanceMessage(boundingBox, imageWidth)
-                                finalNotificationMessage = "前方 ${String.format("%.2f m", distanceMeters)} に人がいます"
-                                
-                                finalShouldNotify = true
-                                isNotificationSent = true // 通知済みフラグをON
-                            }
-                        } else {
-                            // 4メートルより離れたらフラグをリセット
-                            isNotificationSent = false
+                        // 全員の中で「一番近い人」を保持
+                        if (distanceMeters < nearestDistance) {
+                            nearestDistance = distanceMeters
+                            nearestPersonBox = boundingBox
                         }
                     }
                 }
+            }
+
+            // 一番近い人が4m以内にいるか判定
+            if (nearestPersonBox != null && nearestDistance <= ALERT_DISTANCE_M) {
+                if (!isNotificationSent) {
+                    // 回避方向を判定 (AvoidanceNavigationManagerを使用)
+                    val directionGuide = avoidanceManager.getAvoidanceMessage(nearestPersonBox!!, imageWidth)
+                    
+                    finalNotificationTitle = directionGuide
+                    finalNotificationMessage = "前 ${String.format("%.2f m", nearestDistance)} に人がいます"
+                    
+                    finalShouldNotify = true
+                    isNotificationSent = true
+                }
             } else {
-                // 検出結果が空ならフラグをリセット
+                // 誰もいない、または4mより遠ければリセット
                 isNotificationSent = false
             }
 
-            // 通知の実行 (ループの外で1回だけ判定)
+            // 通知の実行（変数が定義されているこのスコープ内で呼ぶ）
             if (finalShouldNotify) {
                 notificationHelper.showNotification(finalNotificationTitle, finalNotificationMessage)
             }
