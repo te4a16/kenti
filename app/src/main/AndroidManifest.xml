@@ -40,13 +40,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:label="@string/app_name"
         android:allowBackup="true"
+        android:theme="@style/AppTheme"
         android:taskAffinity=""
         tools:ignore="AllowBackup">
 
         <activity
             android:name=".MainActivity"
             android:clearTaskOnLaunch="true"
-            android:theme="@style/AppTheme"
             android:exported="true"
             android:icon="@mipmap/ic_launcher"
             android:rotationAnimation="seamless"
@@ -65,6 +65,12 @@
             <meta-data android:name="android.notch_support" android:value="true"/>
 
         </activity>
+
+        <activity
+            android:name=".SettingsActivity"
+            android:parentActivityName=".MainActivity" 
+            android:exported="false"
+            android:theme="@style/AppTheme" />
 
     </application>
 
