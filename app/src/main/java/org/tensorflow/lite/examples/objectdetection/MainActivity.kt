@@ -16,11 +16,13 @@
 
 package org.tensorflow.lite.examples.objectdetection
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import org.tensorflow.lite.examples.objectdetection.databinding.ActivityMainBinding
 import android.content.res.Configuration//PIP
+import androidx.activity.OnBackPressedCallback
 
 /**
  * Main entry point into our app. This app follows the single-activity pattern, and all
@@ -39,6 +41,21 @@ class MainActivity : AppCompatActivity() {
 
         // アクティビティの表示内容としてセット
         setContentView(activityMainBinding.root)
+
+        // 1. 設定ボタンのリスナー
+        activityMainBinding.settingsButton.setOnClickListener {
+            navigateToSettings()
+        }
+
+        // 2. Android 13以降推奨の戻る処理の登録（onBackPressedの代替）
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q) {
+            onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    finishAfterTransition()
+                }
+            })
+        }
+
     }
 
     //PiP
@@ -48,6 +65,12 @@ class MainActivity : AppCompatActivity() {
         // PiPモードがサポートされており、かつ現在 PiP モードではない場合、
         // PiPモードへの移行を試みるよう Fragment に促します。
         // 実際のPiP移行は CameraFragment 内で行われます。
+    }
+
+    //設定画面 (SettingsActivity) への遷移
+    private fun navigateToSettings() {
+        val intent = Intent(this, SettingsActivity::class.java)
+        startActivity(intent)
     }
 
     
