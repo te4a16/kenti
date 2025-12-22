@@ -7,56 +7,40 @@ import android.os.Vibrator
 import android.speech.tts.TextToSpeech
 import java.util.Locale
 
-/**
- * 距離に応じた警告（音声・バイブ）を管理するクラス
- *
- * 仕様：
- *  ・2m以内 → 音声通知
- *  ・1m以内 → 音声 + バイブ通知
- *  ・指定クラス（例：person）のみ警告対象
- */
 class DistanceAlertManager(private val context: Context) {
 
     private var tts: TextToSpeech? = null
-    private val vibrator =
-        context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-
-    // 連続通知防止用
+    private val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
     private var lastAlertTime = 0L
 
     companion object {
-        private const val ALERT_INTERVAL_MS = 3000L   // 3秒に1回まで
+        private const val ALERT_INTERVAL_MS = 3000L
         private const val ALERT_DISTANCE_2M = 2.0f
         private const val ALERT_DISTANCE_1M = 1.0f
-
-        // 警告対象とするクラス名（COCOラベル）
         private const val TARGET_CLASS = "person"
     }
 
     init {
-        // TextToSpeech 初期化
         tts = TextToSpeech(context) { status ->
             if (status == TextToSpeech.SUCCESS) {
-                tts?.language = Locale.JAPAN
-                tts?.setSpeechRate(1.1f)
+                tts?.language = Locale.JAPANESE
             }
         }
     }
 
     /**
-     * 距離とクラス名を受け取り、条件に応じて警告を行う
+     * @param topRatio 枠の上端の座標割合 (0.0〜1.0)
      */
-    fun checkAndAlert(distanceMeters: Float, className: String) {
-
-        // 対象クラス以外は無視
+    fun checkAndAlert(distanceMeters: Float, className: String, topRatio: Float) {
         if (className != TARGET_CLASS) return
+
+        // 【足元除外】枠のてっぺんが画面の下部3割(0.7以上)にあるなら無視
+        if (topRatio > 0.70f) return
 
         val currentTime = System.currentTimeMillis()
         if (currentTime - lastAlertTime < ALERT_INTERVAL_MS) return
 
-        // 「〇メートル先です」と喋る用テキスト
-        val distanceMessage =
-            String.format("危険です。%.1fメートル先に人がいます。", distanceMeters)
+        val distanceMessage = String.format("危険です。%.1fメートル先に人がいます。", distanceMeters)
 
         when {
             distanceMeters <= ALERT_DISTANCE_1M -> {
@@ -64,7 +48,6 @@ class DistanceAlertManager(private val context: Context) {
                 vibrate()
                 lastAlertTime = currentTime
             }
-
             distanceMeters <= ALERT_DISTANCE_2M -> {
                 speak(distanceMessage)
                 lastAlertTime = currentTime
@@ -72,29 +55,20 @@ class DistanceAlertManager(private val context: Context) {
         }
     }
 
-    // 音声読み上げ
     private fun speak(message: String) {
-        tts?.speak(
-            message,
-            TextToSpeech.QUEUE_FLUSH,
-            null,
-            "DISTANCE_ALERT"
-        )
+        tts?.speak(message, TextToSpeech.QUEUE_FLUSH, null, "DISTANCE_ALERT")
     }
 
-    // バイブレーション
     private fun vibrate() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            vibrator.vibrate(
-                VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE)
-            )
+            vibrator.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE))
         } else {
             @Suppress("DEPRECATION")
             vibrator.vibrate(500)
         }
     }
 
-    // 解放処理（必須）
+    // CameraFragmentのonDestroyViewから呼ばれる関数を追加
     fun shutdown() {
         tts?.stop()
         tts?.shutdown()
