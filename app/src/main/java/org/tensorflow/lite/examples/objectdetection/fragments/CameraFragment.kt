@@ -61,6 +61,7 @@ import org.tensorflow.lite.examples.objectdetection.OverlayView
 import org.tensorflow.lite.examples.objectdetection.AvoidanceNavigationManager
 
 import org.tensorflow.lite.examples.objectdetection.DistanceConstants
+import org.tensorflow.lite.examples.objectdetection.StepDetector
 
 //PiP
 import org.tensorflow.lite.examples.objectdetection.PipHelper
@@ -108,8 +109,15 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
     //回避通知
     private val avoidanceManager = AvoidanceNavigationManager()
 
+    //歩行検知
+    private lateinit var stepDetector: StepDetector
+
     override fun onResume() {
         super.onResume()
+
+        // 画面が表示されている間だけ歩行検知を開始
+        stepDetector.startListening()
+        
         //パーミッションが剥奪されていないか確認
         if (!PermissionsFragment.hasPermissions(requireContext())) {
             Navigation.findNavController(requireActivity(), R.id.fragment_container)
@@ -201,6 +209,12 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
         objectDetectorHelper = ObjectDetectorHelper(
             context = requireContext(),
             objectDetectorListener = this)
+        
+        //歩行検知の初期化
+        stepDetector = StepDetector(requireContext())
+        stepDetector.onStepDetected = {
+            // ここで通知の頻度を変えるなどの処理も将来的に可能です
+        }
 
         // 音声アラート関係
         distanceAlertManager = DistanceAlertManager(requireContext())
