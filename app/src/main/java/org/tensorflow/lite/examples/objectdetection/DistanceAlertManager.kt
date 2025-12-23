@@ -31,8 +31,14 @@ class DistanceAlertManager(private val context: Context) {
     /**
      * @param topRatio 枠の上端の座標割合 (0.0〜1.0)
      */
-    fun checkAndAlert(distanceMeters: Float, className: String, topRatio: Float) {
+     /**
+     * @param isWalking 追加：現在の歩行状態
+     */
+    fun checkAndAlert(distanceMeters: Float, className: String, topRatio: Float, isWalking: Boolean) {
         if (className != TARGET_CLASS) return
+
+        // 歩いていない場合は、警告処理（音声・バイブ）自体を行わない
+        if (!isWalking) return
 
         // 【足元除外】枠のてっぺんが画面の下部3割(0.7以上)にあるなら無視
         if (topRatio > 0.70f) return

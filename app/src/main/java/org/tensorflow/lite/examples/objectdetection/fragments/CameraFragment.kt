@@ -61,6 +61,7 @@ import org.tensorflow.lite.examples.objectdetection.OverlayView
 import org.tensorflow.lite.examples.objectdetection.AvoidanceNavigationManager
 
 import org.tensorflow.lite.examples.objectdetection.DistanceConstants
+import org.tensorflow.lite.examples.objectdetection.StepDetector
 
 //PiP
 import org.tensorflow.lite.examples.objectdetection.PipHelper
@@ -108,8 +109,15 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
     //回避通知
     private val avoidanceManager = AvoidanceNavigationManager()
 
+    //歩行検知
+    private lateinit var stepDetector: StepDetector
+
     override fun onResume() {
         super.onResume()
+
+        // 画面が表示されている間だけ歩行検知を開始
+        stepDetector.startListening()
+
         //パーミッションが剥奪されていないか確認
         if (!PermissionsFragment.hasPermissions(requireContext())) {
             Navigation.findNavController(requireActivity(), R.id.fragment_container)
@@ -201,6 +209,9 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
         objectDetectorHelper = ObjectDetectorHelper(
             context = requireContext(),
             objectDetectorListener = this)
+        
+        //歩行検知の初期化
+        stepDetector = StepDetector(requireContext())
 
         // 音声アラート関係
         distanceAlertManager = DistanceAlertManager(requireContext())
@@ -465,7 +476,7 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
                         val currentDistance = (DistanceConstants.TARGET_REAL_WIDTH_M * DistanceConstants.VIRTUAL_FOCAL_LENGTH_F) / pixelWidth
 
                         // 2. 音声警告マネージャーに座標も渡す（ここで足なら内部でreturnされる）
-                        distanceAlertManager.checkAndAlert(currentDistance, label, topPositionRatio)
+                        distanceAlertManager.checkAndAlert(currentDistance, label, topPositionRatio,stepDetector.isWalking)
 
                         // 3. 画面通知・判定用の足除外（上端が0.7より下なら足とみなして無視）
                         if (topPositionRatio > 0.70f) {
@@ -483,13 +494,18 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
 
             // 5. ヘッドアップ通知の判定（一番近い人が4m以内にいる場合）
             if (nearestPersonBox != null && nearestDistance <= ALERT_DISTANCE_M) {
-                if (!isNotificationSent) {
-                    val directionGuide = avoidanceManager.getAvoidanceMessage(nearestPersonBox!!, imageWidth)
-                    finalNotificationTitle = directionGuide
-                    // ここで nearestDistance を使うように修正（エラー箇所）
-                    finalNotificationMessage = "前 ${String.format("%.2f m", nearestDistance)} に人がいます"
-                    finalShouldNotify = true
-                    isNotificationSent = true
+                // --- 追加：歩いている時だけ通知処理へ進む ---
+                 if (stepDetector.isWalking) {
+                    if (!isNotificationSent) {
+                        val directionGuide = avoidanceManager.getAvoidanceMessage(nearestPersonBox!!, imageWidth)
+                        finalNotificationTitle = directionGuide
+                        // ここで nearestDistance を使うように修正（エラー箇所）
+                        finalNotificationMessage = "前 ${String.format("%.2f m", nearestDistance)} に人がいます"
+                        finalShouldNotify = true
+                        isNotificationSent = true
+                    }
+                } else {
+                    isNotificationSent = false
                 }
             } else {
                 isNotificationSent = false
