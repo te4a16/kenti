@@ -476,7 +476,7 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
                         val currentDistance = (DistanceConstants.TARGET_REAL_WIDTH_M * DistanceConstants.VIRTUAL_FOCAL_LENGTH_F) / pixelWidth
 
                         // 2. 音声警告マネージャーに座標も渡す（ここで足なら内部でreturnされる）
-                        distanceAlertManager.checkAndAlert(currentDistance, label, topPositionRatio,stepDetector.isWalking)
+                        distanceAlertManager.checkAndAlert(currentDistance, label, topPositionRatio,true)
 
                         // 3. 画面通知・判定用の足除外（上端が0.7より下なら足とみなして無視）
                         if (topPositionRatio > 0.70f) {
@@ -495,7 +495,7 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
             // 5. ヘッドアップ通知の判定（一番近い人が4m以内にいる場合）
             if (nearestPersonBox != null && nearestDistance <= ALERT_DISTANCE_M) {
                 // --- 追加：歩いている時だけ通知処理へ進む ---
-                 if (stepDetector.isWalking) {
+                 //if (stepDetector.isWalking) {
                     if (!isNotificationSent) {
                         val directionGuide = avoidanceManager.getAvoidanceMessage(nearestPersonBox!!, imageWidth)
                         finalNotificationTitle = directionGuide
@@ -504,9 +504,7 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
                         finalShouldNotify = true
                         isNotificationSent = true
                     }
-                } else {
-                    isNotificationSent = false
-                }
+                 //}
             } else {
                 isNotificationSent = false
             }
