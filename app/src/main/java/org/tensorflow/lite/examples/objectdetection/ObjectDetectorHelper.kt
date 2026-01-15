@@ -45,7 +45,7 @@ class ObjectDetectorHelper(
   var maxResults: Int = MAX_RESULTS_DEFAULT,      //返す最大検出数
   var currentDelegate: Int = DELEGATE_CPU, //使用するDelegate（CPU/GPU）
   var currentModel: Int = MODEL_EFFICIENTDETV0,    // 使用するモデルの種類
-  var runningMode: RunningMode = RunningMode.IMAGE,
+  var runningMode: RunningMode = RunningMode.LIVE_STREAM,
   val context: Context,
   val objectDetectorListener: DetectorListener? = null
 ) {
@@ -129,10 +129,21 @@ class ObjectDetectorHelper(
 
             // ⭐ ラベルのホワイトリストを設定 ⭐
             // このリストに含まれないラベルの結果は、検出器から返されません。
-            optionsBuilder.setCategoryAllowlist(ALLOWED_LABELS)
+            //optionsBuilder.setCategoryAllowlist(ALLOWED_LABELS)
 
             imageProcessingOptions = ImageProcessingOptions.builder()
                 .setRotationDegrees(imageRotation).build()
+
+            when (runningMode) {
+                RunningMode.IMAGE, RunningMode.VIDEO -> optionsBuilder.setRunningMode(
+                    runningMode
+                )
+
+                RunningMode.LIVE_STREAM -> optionsBuilder.setRunningMode(
+                    runningMode
+                ).setResultListener(this::returnLivestreamResult)
+                    .setErrorListener(this::returnLivestreamError)
+            }
 
             val options = optionsBuilder.build()
 
@@ -306,6 +317,7 @@ class ObjectDetectorHelper(
     fun detectAsync(mpImage: MPImage, frameTime: Long) {
         // As we're using running mode LIVE_STREAM, the detection result will be returned in
         // returnLivestreamResult function
+        //Log.d("MyDetector", "detectAsync called!")
         objectDetector?.detectAsync(mpImage, imageProcessingOptions, frameTime)
     }
 
@@ -315,6 +327,16 @@ class ObjectDetectorHelper(
     ) {
         val finishTimeMs = SystemClock.uptimeMillis()
         val inferenceTime = finishTimeMs - result.timestampMs()
+
+        // 以下のログを追加
+        //Log.d("MyDetector", "Result Callback! Detections: ${result.detections().size}")
+
+        // 中身がある場合はラベル名も出す
+        /*
+        result.detections().forEach {
+            Log.d("MyDetector", "Detected: ${it.categories().firstOrNull()?.categoryName()} score: ${it.categories().firstOrNull()?.score()}")
+        }
+         */
 
         objectDetectorListener?.onResults(
             ResultBundle(

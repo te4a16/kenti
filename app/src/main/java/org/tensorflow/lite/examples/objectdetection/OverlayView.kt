@@ -26,12 +26,11 @@ import android.util.AttributeSet
 import android.view.View
 import androidx.core.content.ContextCompat
 import com.google.mediapipe.tasks.vision.core.RunningMode
-import java.util.LinkedList
 // ⭐ MediaPipe の型に変更
 import com.google.mediapipe.tasks.vision.objectdetector.ObjectDetectorResult
-import com.google.mediapipe.tasks.components.containers.Detection
 import kotlin.math.max
 import kotlin.math.min
+import android.util.Log
 
 class OverlayView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
 
@@ -108,6 +107,7 @@ class OverlayView(context: Context?, attrs: AttributeSet?) : View(context, attrs
 
         //検出された各物体ごとに処理
         results?.detections()?.map {
+            Log.d("OverlayView", "Box Left: ${it.boundingBox().left}")
             //バウンディングボックスの座標
             val boxRect = RectF(
                 it.boundingBox().left,
@@ -133,8 +133,10 @@ class OverlayView(context: Context?, attrs: AttributeSet?) : View(context, attrs
             //作成した変換行列を実際の長方形データ（boxRect）に適用する
             matrix.mapRect(boxRect)
             boxRect
+
         }?.forEachIndexed { index, floats ->
 
+            Log.d("OverlayView", "View Width: $width, Scale: $scaleFactor")
             //座標のスケーリング（拡大・縮小）
             val top = floats.top * scaleFactor
             val bottom = floats.bottom * scaleFactor
