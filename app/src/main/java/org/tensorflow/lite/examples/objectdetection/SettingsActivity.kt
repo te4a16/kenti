@@ -1,5 +1,6 @@
 package org.tensorflow.lite.examples.objectdetection
 
+import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 // setting_page.xmlから自動生成されたBindingクラス（ファイル名から推測）
@@ -13,6 +14,9 @@ class SettingsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = SettingPageBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // SharedPreferences の取得（データの保存場所）
+        val prefs = getSharedPreferences("settings", Context.MODE_PRIVATE)
 
         // 戻るボタン（close_button）が押されたらこの画面を閉じる
         binding.closeButton.setOnClickListener {

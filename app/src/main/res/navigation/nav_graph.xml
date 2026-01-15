@@ -32,4 +32,10 @@
             app:popUpToInclusive="true"/>
 
     </fragment>
+
+    <fragment
+        android:id="@+id/gallery_fragment"
+        android:name="org.tensorflow.lite.examples.objectdetection.fragments.GalleryFragment"
+        android:label="GalleryFragment" />
+
 </navigation>

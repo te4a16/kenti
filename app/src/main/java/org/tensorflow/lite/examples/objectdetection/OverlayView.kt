@@ -21,22 +21,22 @@
 package org.tensorflow.lite.examples.objectdetection
 
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.Rect
-import android.graphics.RectF
+import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
 import androidx.core.content.ContextCompat
+import com.google.mediapipe.tasks.vision.core.RunningMode
 import java.util.LinkedList
+// ⭐ MediaPipe の型に変更
+import com.google.mediapipe.tasks.vision.objectdetector.ObjectDetectorResult
+import com.google.mediapipe.tasks.components.containers.Detection
 import kotlin.math.max
-import org.tensorflow.lite.task.vision.detector.Detection
+import kotlin.math.min
 
 class OverlayView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
 
     // 検出結果リスト
-    private var results: List<Detection> = LinkedList<Detection>()
+    private var results: ObjectDetectorResult? = null
 
     /**
      * 距離情報を外部（Fragmentなど）に通知するためのリスナー
@@ -59,6 +59,11 @@ class OverlayView(context: Context?, attrs: AttributeSet?) : View(context, attrs
     // テキスト描画時のサイズ取得用
     private var bounds = Rect()
 
+    private var outputWidth = 0
+    private var outputHeight = 0
+    private var outputRotate = 0
+    private var runningMode: RunningMode = RunningMode.IMAGE
+
     init {
         // 各 Paint の初期設定
         initPaints()
@@ -66,11 +71,16 @@ class OverlayView(context: Context?, attrs: AttributeSet?) : View(context, attrs
 
     //Viewをクリアして、Paintを初期状態に戻す
     fun clear() {
+        results = null
         textPaint.reset()
         textBackgroundPaint.reset()
         boxPaint.reset()
         invalidate()
         initPaints()
+    }
+
+    fun setRunningMode(runningMode: RunningMode) {
+        this.runningMode = runningMode
     }
 
     //バウンディングボックス描画用やテキスト描画用の Paint を初期化する
@@ -86,7 +96,7 @@ class OverlayView(context: Context?, attrs: AttributeSet?) : View(context, attrs
         textPaint.textSize = 50f
 
         // バウンディングボックスの設定（線色・太さ）
-        boxPaint.color = ContextCompat.getColor(context!!, R.color.bounding_box_color)
+        boxPaint.color = ContextCompat.getColor(context!!, R.color.mp_primary)
         boxPaint.strokeWidth = 8F
         boxPaint.style = Paint.Style.STROKE
     }
@@ -96,6 +106,79 @@ class OverlayView(context: Context?, attrs: AttributeSet?) : View(context, attrs
     override fun draw(canvas: Canvas) {
         super.draw(canvas)
 
+        //検出された各物体ごとに処理
+        results?.detections()?.map {
+            //バウンディングボックスの座標
+            val boxRect = RectF(
+                it.boundingBox().left,
+                it.boundingBox().top,
+                it.boundingBox().right,
+                it.boundingBox().bottom
+            )
+            //画像の中心を原点に設定する。画像の中心を軸に回転させるため。
+            val matrix = Matrix()
+            matrix.postTranslate(-outputWidth / 2f, -outputHeight / 2f)
+
+            // デバイスの向きに合わせて座標を回転させます。
+            matrix.postRotate(outputRotate.toFloat())
+
+            // 回転後、再び元の座標系（左上が0,0）に戻す。
+            // 90度または270度回転した場合、幅（Width）と高さ（Height）が入れ替わるため、
+            // 縦、横で画面の中心を変える
+            if (outputRotate == 90 || outputRotate == 270) {
+                matrix.postTranslate(outputHeight / 2f, outputWidth / 2f)
+            } else {
+                matrix.postTranslate(outputWidth / 2f, outputHeight / 2f)
+            }
+            //作成した変換行列を実際の長方形データ（boxRect）に適用する
+            matrix.mapRect(boxRect)
+            boxRect
+        }?.forEachIndexed { index, floats ->
+
+            //座標のスケーリング（拡大・縮小）
+            val top = floats.top * scaleFactor
+            val bottom = floats.bottom * scaleFactor
+            val left = floats.left * scaleFactor
+            val right = floats.right * scaleFactor
+
+            // バウンディングボックスの描画
+            val drawableRect = RectF(left, top, right, bottom)
+            canvas.drawRect(drawableRect, boxPaint)
+
+            // 表示テキスト（ラベルとスコア）の準備
+            val category = results?.detections()!![index].categories()[0]
+            val drawableText =
+                category.categoryName() + " " + String.format(
+                    "%.2f",
+                    category.score()
+                )
+
+            // テキスト背景の描画（読みやすくするため）
+            textBackgroundPaint.getTextBounds(
+                drawableText,
+                0,
+                drawableText.length,
+                bounds
+            )
+            val textWidth = bounds.width()
+            val textHeight = bounds.height()
+            canvas.drawRect(
+                left,
+                top,
+                left + textWidth + BOUNDING_RECT_TEXT_PADDING,
+                top + textHeight + BOUNDING_RECT_TEXT_PADDING,
+                textBackgroundPaint
+            )
+
+            // テキスト自体の描画
+            canvas.drawText(
+                drawableText,
+                left,
+                top + bounds.height(),
+                textPaint
+            )
+        }
+        /*
         // 描画が始まる前に、校正用のピクセル幅を画面上部の情報として表示する
         // --- 【追加】校正ピクセル幅の表示 ---
         val FOCAL_LENGTH = DistanceConstants.VIRTUAL_FOCAL_LENGTH_F
@@ -119,7 +202,7 @@ class OverlayView(context: Context?, attrs: AttributeSet?) : View(context, attrs
         // ------------------------------------
 
         for (result in results) {
-            val boundingBox = result.boundingBox
+            val boundingBox = result.boundingBox()
 
             // 検出結果の座標を View のスケールに合わせる
             val top = boundingBox.top * scaleFactor
@@ -144,7 +227,8 @@ class OverlayView(context: Context?, attrs: AttributeSet?) : View(context, attrs
             }
 
             // ---【追加】距離とクラス名を外部へ通知 ---
-            val className = result.categories[0].label
+            val category = result.categories()[0]
+            val className = category.categoryName()
             distanceAlertListener?.onDistanceUpdated(distanceMeters, className)
 
             // --- 【ここまで】距離計算ロジック ---
@@ -159,8 +243,8 @@ class OverlayView(context: Context?, attrs: AttributeSet?) : View(context, attrs
                 result.categories[0].label + " " +
                         String.format("%.2f", result.categories[0].score)
             */
-            val label = result.categories[0].label
-            val score = String.format("%.2f", result.categories[0].score)
+            val label = category.categoryName()
+            val score = String.format("%.2f", category.score())
             val distanceText = String.format(" (%.2f m)", distanceMeters)
             // リアルタイムのピクセル幅を表示
             val pixelWidthText = String.format(" | W: %d px", pixelWidth.toInt())
@@ -184,21 +268,56 @@ class OverlayView(context: Context?, attrs: AttributeSet?) : View(context, attrs
             // ラベル文字を描画
             canvas.drawText(drawableText, left, top + bounds.height(), textPaint)
         }
+
+         */
     }
 
     //カメラからの検出結果を受け取り、描画用データとしてセットする
     fun setResults(
-      detectionResults: MutableList<Detection>, //検出結果一覧
-      imageHeight: Int,                         //カメラ画像の高さ
-      imageWidth: Int,                          //カメラ画像の幅
+      detectionResults: ObjectDetectorResult, //検出結果一覧
+      outputHeight: Int,                         //カメラ画像の高さ
+      outputWidth: Int,                          //カメラ画像の幅
+      imageRotation: Int
     ) {
         results = detectionResults
+        this.outputWidth = outputWidth
+        this.outputHeight = outputHeight
+        this.outputRotate = imageRotation
+
+        // 回転による幅と高さの入れ替え
+        //0度、180度: 画像はそのままの向き、または上下逆さまなので、幅と高さの関係は変わらない。
+        //90度、270度: 画像が横倒しになるため、元の幅が「高さ」に、元の高さが「幅」に入れ替える。
+        //これをpairを使用して、回転後の正しい「横幅」と「縦幅」を特定する。
+        val rotatedWidthHeight = when (imageRotation) {
+            0, 180 -> Pair(outputWidth, outputHeight)
+            90, 270 -> Pair(outputHeight, outputWidth)
+            else -> return
+        }
 
         // プレビュービューはFILL_STARTモードです。そのため、
         //キャプチャされた画像が表示されるサイズに合わせて、
         //バウンディングボックスを拡大する必要があります。
         //カメラ画像と View のスケール差を補正する
-        scaleFactor = max(width * 1f / imageWidth, height * 1f / imageHeight)
+        scaleFactor = when (runningMode) {
+            //画像が画面からはみ出さないよう、「幅の倍率」と「高さの倍率」のうち、小さい方（min）を採用します。
+            RunningMode.IMAGE,
+            RunningMode.VIDEO -> {
+                min(
+                    width * 1f / rotatedWidthHeight.first,
+                    height * 1f / rotatedWidthHeight.second
+                )
+            }
+
+            RunningMode.LIVE_STREAM -> {
+                max(
+                    width * 1f / rotatedWidthHeight.first,
+                    height * 1f / rotatedWidthHeight.second
+                )
+            }
+        }
+
+        //再描画の指示
+        invalidate()
 
     }
 

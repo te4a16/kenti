@@ -19,7 +19,10 @@ package org.tensorflow.lite.examples.objectdetection
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
 import org.tensorflow.lite.examples.objectdetection.databinding.ActivityMainBinding
 import android.content.res.Configuration//PIP
 import androidx.activity.OnBackPressedCallback
@@ -32,6 +35,7 @@ class MainActivity : AppCompatActivity() {
 
     // ViewBinding 用の変数
     private lateinit var activityMainBinding: ActivityMainBinding
+    private val viewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +45,19 @@ class MainActivity : AppCompatActivity() {
 
         // アクティビティの表示内容としてセット
         setContentView(activityMainBinding.root)
+
+        //フラグメントコンテナ（画面遷移の土台）の取得
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.fragment_container) as NavHostFragment
+        //画面遷移を管理するコントローラの取得
+        val navController = navHostFragment.navController
+        //コントローラーとの紐づけ
+        activityMainBinding.navigation.setupWithNavController(navController)
+        //再選択時の挙動の設定
+        activityMainBinding.navigation.setOnNavigationItemReselectedListener {
+            //空処理にすることで、何もしない（ignore）ように設定し、不要なリロードを防ぐ
+            // ignore the reselection
+        }
 
         // 1. 設定ボタンのリスナー
         activityMainBinding.settingsButton.setOnClickListener {

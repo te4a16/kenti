@@ -1,31 +1,29 @@
-task downloadModelFile(type: Download) {
-    src 'https://storage.googleapis.com/download.tensorflow.org/models/tflite/task_library/object_detection/android/lite-model_ssd_mobilenet_v1_1_metadata_2.tflite'
-    dest project.ext.ASSET_DIR + '/mobilenetv1.tflite'
-    overwrite false
-}
+/*
+ * Copyright 2023 The TensorFlow Authors. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 task downloadModelFile0(type: Download) {
-    src 'https://storage.googleapis.com/download.tensorflow.org/models/tflite/task_library/object_detection/android/lite-model_efficientdet_lite0_detection_metadata_1.tflite'
+    src 'https://storage.googleapis.com/mediapipe-models/object_detector/efficientdet_lite0/float32/1/efficientdet_lite0.tflite'
     dest project.ext.ASSET_DIR + '/efficientdet-lite0.tflite'
     overwrite false
 }
 
 task downloadModelFile1(type: Download) {
-    src 'https://storage.googleapis.com/download.tensorflow.org/models/tflite/task_library/object_detection/android/lite-model_efficientdet_lite1_detection_metadata_1.tflite'
-    dest project.ext.ASSET_DIR + '/efficientdet-lite1.tflite'
-    overwrite false
-}
-
-task downloadModelFile2(type: Download) {
-    src 'https://storage.googleapis.com/download.tensorflow.org/models/tflite/task_library/object_detection/android/lite-model_efficientdet_lite2_detection_metadata_1.tflite'
+    src 'https://storage.googleapis.com/mediapipe-models/object_detector/efficientdet_lite2/float32/1/efficientdet_lite2.tflite'
     dest project.ext.ASSET_DIR + '/efficientdet-lite2.tflite'
     overwrite false
 }
 
-task copyTestModel(type: Copy, dependsOn: downloadModelFile) {
-    from project.ext.ASSET_DIR + '/mobilenetv1.tflite'
-    into project.ext.TEST_ASSETS_DIR
-}
-
-preBuild.dependsOn downloadModelFile, downloadModelFile0, downloadModelFile1, downloadModelFile2,
-        copyTestModel
+preBuild.dependsOn downloadModelFile0, downloadModelFile1

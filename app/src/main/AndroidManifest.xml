@@ -69,6 +69,7 @@
 
         </activity>
 
+        <!-- 設定画面へのアクティビティ -->
         <activity
             android:name=".SettingsActivity"
             android:parentActivityName=".MainActivity" 
