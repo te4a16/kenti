@@ -77,7 +77,7 @@ class ObjectDetectorHelper(
 
         val baseOptionsBuilder = BaseOptions.builder()
 
-        // // 使用 delegate の切替（CPU / GPU / NNAPI）デフォルトはCPU
+        // // 使用 delegate の切替（CPU / GPU ）デフォルトはCPU
         when (currentDelegate) {
             DELEGATE_CPU -> {
                 baseOptionsBuilder.setDelegate(Delegate.CPU)
@@ -129,7 +129,7 @@ class ObjectDetectorHelper(
 
             // ⭐ ラベルのホワイトリストを設定 ⭐
             // このリストに含まれないラベルの結果は、検出器から返されません。
-            //optionsBuilder.setCategoryAllowlist(ALLOWED_LABELS)
+            optionsBuilder.setCategoryAllowlist(ALLOWED_LABELS)
 
             imageProcessingOptions = ImageProcessingOptions.builder()
                 .setRotationDegrees(imageRotation).build()
