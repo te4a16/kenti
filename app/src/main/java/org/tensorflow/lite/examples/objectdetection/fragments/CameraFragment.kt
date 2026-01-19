@@ -502,109 +502,103 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
     // オブジェクト検出後にUIを更新する。元の画像の高さ/幅を抽出し、
     // OverlayViewを通じてバウンディングボックスを適切にスケーリング・配置する。
     // 物体検出結果を UI に反映
-    override fun onResults(
-        resultBundle: ObjectDetectorHelper.ResultBundle
-    ) {
-        activity?.runOnUiThread {
-            // OverlayView へ結果を渡す
-            if (_fragmentCameraBinding != null) {
-                fragmentCameraBinding.bottomSheetLayout.inferenceTimeVal.text =
-                    String.format("%d ms", resultBundle.inferenceTime)
+    override fun onResults(resultBundle: ObjectDetectorHelper.ResultBundle) {
+    if (_fragmentCameraBinding == null) return
 
-                // キャンバス上に描画するために必要な情報を OverlayView に渡します
-                val detectionResult = resultBundle.results[0]
-                if (isAdded) {
-                    fragmentCameraBinding.overlay.setResults(
-                        detectionResult,
-                        resultBundle.inputImageHeight,
-                        resultBundle.inputImageWidth,
-                        resultBundle.inputImageRotation
-                    )
-                }
+    activity?.runOnUiThread {
+        val binding = fragmentCameraBinding ?: return@runOnUiThread
 
-                //描画実行
-                fragmentCameraBinding.overlay.invalidate()
-            }
+        // 1. OverlayView に結果を渡して描画を更新
+        binding.overlay.setResults(
+            resultBundle.results[0],
+            resultBundle.inputImageHeight,
+            resultBundle.inputImageWidth,
+            resultBundle.inputImageRotation
+        )
 
+        // --- 通知ロジックの開始 ---
+        var nearestDistance = Float.MAX_VALUE
+        var nearestPersonBox: RectF? = null
+        var nearestPersonLabel = "person"
+        val detections = resultBundle.results[0].detections()
 
-            var nearestDistance = Float.MAX_VALUE
-            var nearestPersonBox: android.graphics.RectF? = null
-            var finalShouldNotify = false
-            var finalNotificationTitle = ""
-            var finalNotificationMessage = ""
-
-            // MediaPipe の結果構造を解析
-            // 2. 結果リストの解析
-            val detections = resultBundle.results.firstOrNull()?.detections() ?: LinkedList()
-            for (detection in detections) {
-                val category = detection.categories()[0]
-                val label = category.categoryName()
-                val score = category.score()
+        // 2. 検出された物体の中から、最も近い「人(person)」を探す
+        for (detection in detections) {
+            val category = detection.categories()[0]
+            val label = category.categoryName()
+            
+            if (label == "person") {
                 val boundingBox = detection.boundingBox()
+                val pixelWidth = boundingBox.width()
 
-                if (label == "person") {
-                    // 1. 座標と距離の計算
-                    val topPositionRatio = boundingBox.top / resultBundle.inputImageHeight
-                    val pixelWidth = boundingBox.width()
-                    val currentDistance =
-                        (DistanceConstants.TARGET_REAL_WIDTH_M * DistanceConstants.VIRTUAL_FOCAL_LENGTH_F) / pixelWidth
-
-                    // 2. 音声警告マネージャーに座標も渡す（ここで足なら内部でreturnされる）
-                    distanceAlertManager.checkAndAlert(
-                        currentDistance,
-                        label,
-                        topPositionRatio,
-                        stepDetector.isWalking
-                    )
-
-                    // 3. 画面通知・判定用の足除外（上端が0.7より下なら足とみなして無視）
-                    if (topPositionRatio > 0.70f) {
-                        continue
-                    }
-
-                    // 4. 有効な「人」の中で一番近いものを更新
-                    if (score >= 0.5f && currentDistance < nearestDistance) {
-                        nearestDistance = currentDistance
-                        nearestPersonBox = boundingBox
-                    }
-                }
-            }
-
-
-            // 5. ヘッドアップ通知の判定（一番近い人が4m以内にいる場合）
-            if (nearestPersonBox != null && nearestDistance <= ALERT_DISTANCE_M) {
-                // --- 追加：歩いている時だけ通知処理へ進む ---
-                if (stepDetector.isWalking) {
-                    if (!isNotificationSent) {
-                        val directionGuide =
-                            avoidanceManager.getAvoidanceMessage(nearestPersonBox!!, resultBundle.inputImageWidth)
-                        finalNotificationTitle = directionGuide
-                        // ここで nearestDistance を使うように修正（エラー箇所）
-                        finalNotificationMessage =
-                            "前 ${String.format("%.2f m", nearestDistance)} に人がいます"
-                        finalShouldNotify = true
-                        isNotificationSent = true
-                    }
+                // 距離を算出
+                val distance = if (pixelWidth > 0) {
+                    (DistanceConstants.TARGET_REAL_WIDTH_M * DistanceConstants.VIRTUAL_FOCAL_LENGTH_F) / pixelWidth
                 } else {
-                    isNotificationSent = false
+                    Float.MAX_VALUE
                 }
-            } else {
-                isNotificationSent = false
+
+                if (distance < nearestDistance) {
+                    nearestDistance = distance
+                    nearestPersonBox = boundingBox
+                    nearestPersonLabel = label
+                }
             }
-
-            if (finalShouldNotify) {
-                notificationHelper.showNotification(
-                    finalNotificationTitle,
-                    finalNotificationMessage
-                )
-            }
-            fragmentCameraBinding.overlay.invalidate()
-
-
         }
 
+        // 3. 距離に応じた通知判定 (文字通知用)
+        var finalShouldNotify = false
+        var finalNotificationTitle = ""
+        var finalNotificationMessage = ""
+        val alertThreshold = 2.0f 
 
+        if (nearestPersonBox != null && nearestDistance < alertThreshold) {
+            if (!isNotificationSent) {
+                val directionGuide = avoidanceManager.getAvoidanceMessage(
+                    nearestPersonBox!!, 
+                    resultBundle.inputImageWidth
+                )
+                
+                finalNotificationTitle = directionGuide
+                finalNotificationMessage = String.format("前方 %.2f m に人がいます", nearestDistance)
+                finalShouldNotify = true
+                isNotificationSent = true 
+            }
+        } else {
+            isNotificationSent = false
+        }
+
+        // 4. 文字通知の実行
+        if (finalShouldNotify) {
+            notificationHelper.showNotification(
+                finalNotificationTitle,
+                finalNotificationMessage
+            )
+        }
+
+        // 5. 【追加】音声通知 (DistanceAlertManager) の呼び出し
+        if (nearestPersonBox != null) {
+            // 足元判定用の topRatio を計算
+            val topRatio = nearestPersonBox!!.top / resultBundle.inputImageHeight.toFloat()
+
+            // --- 歩行中判定のコメントアウト表示 ---
+            val isWalkingMock = true 
+            /* 本来は以下のように歩数計と連動させる:
+               val isWalkingMock = stepDetector.isUserWalking 
+            */
+
+            distanceAlertManager.checkAndAlert(
+                nearestDistance,
+                nearestPersonLabel,
+                topRatio,
+                isWalkingMock // true を渡しているので静止状態でも鳴ります
+            )
+        }
+
+        // 描画の強制更新
+        binding.overlay.invalidate()
     }
+}
 
     // エラー時
     override fun onError(error: String, errorCode: Int) {
