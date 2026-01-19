@@ -103,176 +103,101 @@ class OverlayView(context: Context?, attrs: AttributeSet?) : View(context, attrs
     //検出結果の描画処理
     //カメラフレーム上にViewを重ね、四角形とラベルを表示する
     override fun draw(canvas: Canvas) {
-        super.draw(canvas)
+    super.draw(canvas)
 
-        //検出された各物体ごとに処理
-        results?.detections()?.map {
-            Log.d("OverlayView", "Box Left: ${it.boundingBox().left}")
-            //バウンディングボックスの座標
-            val boxRect = RectF(
-                it.boundingBox().left,
-                it.boundingBox().top,
-                it.boundingBox().right,
-                it.boundingBox().bottom
-            )
-            //画像の中心を原点に設定する。画像の中心を軸に回転させるため。
-            val matrix = Matrix()
-            matrix.postTranslate(-outputWidth / 2f, -outputHeight / 2f)
+    // 1. 検出結果がない場合は処理しない
+    val detections = results?.detections() ?: return
 
-            // デバイスの向きに合わせて座標を回転させます。
-            matrix.postRotate(outputRotate.toFloat())
+    // 2. 物体ごとにループ（MediaPipeの最新形式に対応）
+    detections.forEach { detection ->
+        val boundingBox = detection.boundingBox()
 
-            // 回転後、再び元の座標系（左上が0,0）に戻す。
-            // 90度または270度回転した場合、幅（Width）と高さ（Height）が入れ替わるため、
-            // 縦、横で画面の中心を変える
-            if (outputRotate == 90 || outputRotate == 270) {
-                matrix.postTranslate(outputHeight / 2f, outputWidth / 2f)
-            } else {
-                matrix.postTranslate(outputWidth / 2f, outputHeight / 2f)
-            }
-            //作成した変換行列を実際の長方形データ（boxRect）に適用する
-            matrix.mapRect(boxRect)
-            boxRect
-
-        }?.forEachIndexed { index, floats ->
-
-            Log.d("OverlayView", "View Width: $width, Scale: $scaleFactor")
-            //座標のスケーリング（拡大・縮小）
-            val top = floats.top * scaleFactor
-            val bottom = floats.bottom * scaleFactor
-            val left = floats.left * scaleFactor
-            val right = floats.right * scaleFactor
-
-            // バウンディングボックスの描画
-            val drawableRect = RectF(left, top, right, bottom)
-            canvas.drawRect(drawableRect, boxPaint)
-
-            // 表示テキスト（ラベルとスコア）の準備
-            val category = results?.detections()!![index].categories()[0]
-            val drawableText =
-                category.categoryName() + " " + String.format(
-                    "%.2f",
-                    category.score()
-                )
-
-            // テキスト背景の描画（読みやすくするため）
-            textBackgroundPaint.getTextBounds(
-                drawableText,
-                0,
-                drawableText.length,
-                bounds
-            )
-            val textWidth = bounds.width()
-            val textHeight = bounds.height()
-            canvas.drawRect(
-                left,
-                top,
-                left + textWidth + BOUNDING_RECT_TEXT_PADDING,
-                top + textHeight + BOUNDING_RECT_TEXT_PADDING,
-                textBackgroundPaint
-            )
-
-            // テキスト自体の描画
-            canvas.drawText(
-                drawableText,
-                left,
-                top + bounds.height(),
-                textPaint
-            )
+        // --- A. 座標変換 (画面回転とスケーリングを考慮) ---
+        val boxRect = RectF(boundingBox.left, boundingBox.top, boundingBox.right, boundingBox.bottom)
+        val matrix = Matrix()
+        
+        // 中心を軸に回転させる処理
+        matrix.postTranslate(-outputWidth / 2f, -outputHeight / 2f)
+        matrix.postRotate(outputRotate.toFloat())
+        if (outputRotate == 90 || outputRotate == 270) {
+            matrix.postTranslate(outputHeight / 2f, outputWidth / 2f)
+        } else {
+            matrix.postTranslate(outputWidth / 2f, outputHeight / 2f)
         }
-        /*
-        // 描画が始まる前に、校正用のピクセル幅を画面上部の情報として表示する
-        // --- 【追加】校正ピクセル幅の表示 ---
-        val FOCAL_LENGTH = DistanceConstants.VIRTUAL_FOCAL_LENGTH_F
-        val calibText = "FOCAL_LENGTH: ${FOCAL_LENGTH.toInt()}"
+        matrix.mapRect(boxRect)
 
-        // 校正値の描画位置（例：Viewの左上隅から少し下げた位置）
-        textBackgroundPaint.getTextBounds(calibText, 0, calibText.length, bounds)
-        val calibTextX = 20f
-        val calibTextY = bounds.height() + 20f
+        // Viewのサイズに合わせてスケーリング
+        val left = boxRect.left * scaleFactor
+        val top = boxRect.top * scaleFactor
+        val right = boxRect.right * scaleFactor
+        val bottom = boxRect.bottom * scaleFactor
 
-        // 背景矩形を描画（ここではシンプルに黒背景）
+        // --- B. 距離計算ロジック (コメントアウトされていた内容を復活) ---
+        val focalLength = DistanceConstants.VIRTUAL_FOCAL_LENGTH_F
+        val realWidth = DistanceConstants.TARGET_REAL_WIDTH_M
+        
+        // 距離計算に使うピクセル幅（回転前の元の値を使用）
+        val pixelWidth = boundingBox.width()
+
+        val distanceMeters = if (pixelWidth > 0) {
+            (realWidth * focalLength) / pixelWidth
+        } else {
+            0.0f
+        }
+
+        // --- C. ラベル・スコア・距離情報の構築 ---
+        val category = detection.categories()[0]
+        val label = category.categoryName()
+        val score = category.score()
+
+        // 通知リスナーを叩く (CameraFragmentなどで音声を出すため)
+        distanceAlertListener?.onDistanceUpdated(distanceMeters, label)
+
+        // 表示用テキスト: 「ラベル スコア (距離m) | ピクセル幅px」
+        val drawableText = String.format(
+            "%s %.2f (%.2fm) | W: %dpx",
+            label,
+            score,
+            distanceMeters,
+            pixelWidth.toInt()
+        )
+
+        // --- D. 描画処理 ---
+        val drawableRect = RectF(left, top, right, bottom)
+        
+        // バウンディングボックスの描画
+        canvas.drawRect(drawableRect, boxPaint)
+
+        // テキスト背景と文字の描画
+        textBackgroundPaint.getTextBounds(drawableText, 0, drawableText.length, bounds)
+        val textWidth = bounds.width()
+        val textHeight = bounds.height()
+
         canvas.drawRect(
-            calibTextX,
-            calibTextY - bounds.height() - Companion.BOUNDING_RECT_TEXT_PADDING,
-            calibTextX + bounds.width() + Companion.BOUNDING_RECT_TEXT_PADDING,
-            calibTextY + Companion.BOUNDING_RECT_TEXT_PADDING,
+            left,
+            top,
+            left + textWidth + BOUNDING_RECT_TEXT_PADDING,
+            top + textHeight + BOUNDING_RECT_TEXT_PADDING,
             textBackgroundPaint
         )
-        // 文字を描画
-        canvas.drawText(calibText, calibTextX, calibTextY, textPaint)
-        // ------------------------------------
-
-        for (result in results) {
-            val boundingBox = result.boundingBox()
-
-            // 検出結果の座標を View のスケールに合わせる
-            val top = boundingBox.top * scaleFactor
-            val bottom = boundingBox.bottom * scaleFactor
-            val left = boundingBox.left * scaleFactor
-            val right = boundingBox.right * scaleFactor
-
-            // --- 【追加】距離計算ロジックをここに組み込む ---
-
-            val focalLength = DistanceConstants.VIRTUAL_FOCAL_LENGTH_F
-            val realWidth = DistanceConstants.TARGET_REAL_WIDTH_M
-
-            // 検出されたバウンディングボックスのピクセル幅 O_pixel を取得
-            val pixelWidth = boundingBox.right - boundingBox.left
-
-            // 距離 D を計算 (メートル単位)
-            // D = (O_physical * f) / O_pixel
-            val distanceMeters = if (pixelWidth > 0) {
-                (realWidth * focalLength) / pixelWidth
-            } else {
-                0.0f
-            }
-
-            // ---【追加】距離とクラス名を外部へ通知 ---
-            val category = result.categories()[0]
-            val className = category.categoryName()
-            distanceAlertListener?.onDistanceUpdated(distanceMeters, className)
-
-            // --- 【ここまで】距離計算ロジック ---
-
-            // バウンディングボックスを描画
-            val drawableRect = RectF(left, top, right, bottom)
-            canvas.drawRect(drawableRect, boxPaint)
-
-            // ラベル文字（カテゴリ名 + 信頼度）
-            /*
-            val drawableText =
-                result.categories[0].label + " " +
-                        String.format("%.2f", result.categories[0].score)
-            */
-            val label = category.categoryName()
-            val score = String.format("%.2f", category.score())
-            val distanceText = String.format(" (%.2f m)", distanceMeters)
-            // リアルタイムのピクセル幅を表示
-            val pixelWidthText = String.format(" | W: %d px", pixelWidth.toInt())
-
-            val drawableText = "${label} ${score}${distanceText} ${pixelWidthText}"
-
-            // 表示テキストの背後に矩形を描画する
-            // テキスト背景のサイズ計算
-            textBackgroundPaint.getTextBounds(drawableText, 0, drawableText.length, bounds)
-            val textWidth = bounds.width()
-            val textHeight = bounds.height()
-            // テキスト背景の黒い四角を描画
-            canvas.drawRect(
-                left,
-                top,
-                left + textWidth + Companion.BOUNDING_RECT_TEXT_PADDING,
-                top + textHeight + Companion.BOUNDING_RECT_TEXT_PADDING,
-                textBackgroundPaint
-            )
-
-            // ラベル文字を描画
-            canvas.drawText(drawableText, left, top + bounds.height(), textPaint)
-        }
-
-         */
+        canvas.drawText(drawableText, left, top + bounds.height(), textPaint)
     }
+
+    // --- E. 校正用デバッグ情報の表示 (画面左上) ---
+    val calibText = "FOCAL_LENGTH: ${DistanceConstants.VIRTUAL_FOCAL_LENGTH_F.toInt()}"
+    textBackgroundPaint.getTextBounds(calibText, 0, calibText.length, bounds)
+    val calibX = 20f
+    val calibY = bounds.height() + 20f
+
+    canvas.drawRect(
+        calibX,
+        calibY - bounds.height() - BOUNDING_RECT_TEXT_PADDING,
+        calibX + bounds.width() + BOUNDING_RECT_TEXT_PADDING,
+        calibY + BOUNDING_RECT_TEXT_PADDING,
+        textBackgroundPaint
+    )
+    canvas.drawText(calibText, calibX, calibY, textPaint)
+}
 
     //カメラからの検出結果を受け取り、描画用データとしてセットする
     fun setResults(
