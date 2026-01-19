@@ -140,28 +140,31 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
     }
 
     override fun onPause() {
-        super.onPause()
+    super.onPause()
 
-        // ObjectDetectorの設定を保存する
+    // 1. 設定の保存（これはPiP中も行ってOK）
+    if (this::objectDetectorHelper.isInitialized) {
+        viewModel.setModel(objectDetectorHelper.currentModel)
+        viewModel.setDelegate(objectDetectorHelper.currentDelegate)
+        viewModel.setThreshold(objectDetectorHelper.threshold)
+        viewModel.setMaxResults(objectDetectorHelper.maxResults)
+    }
+
+    // 2. 物体検出の終了処理（重要：PiP移行時以外のみ実行）
+    // PiPモードがサポートされていない、またはPiPに移行しない通常のバックグラウンド移動時のみクリアする
+    if (!PipHelper.isPiPSupported() || isChangingConfigurations()) {
         if (this::objectDetectorHelper.isInitialized) {
-            viewModel.setModel(objectDetectorHelper.currentModel)
-            viewModel.setDelegate(objectDetectorHelper.currentDelegate)
-            viewModel.setThreshold(objectDetectorHelper.threshold)
-            viewModel.setMaxResults(objectDetectorHelper.maxResults)
-            // ObjectDetectorを閉じてリソースを開放する。
             backgroundExecutor.execute { objectDetectorHelper.clearObjectDetector() }
         }
+    }
 
-        // PiPモードがサポートされており、かつアクティビティが構成変更中ではない（例：画面回転ではない）場合
-        // PiPモードへの移行を試みます。
-        if (PipHelper.isPiPSupported() && !isChangingConfigurations()) {
-            activity?.let {
-                // PiPHelper を使って PiP モードに移行
-                // カメラプレビューが表示されている ViewFinder を渡す
-                PipHelper.enterPiPMode(it, fragmentCameraBinding.viewFinder)
-            }
+    // 3. PiPモードへの移行処理
+    if (PipHelper.isPiPSupported() && !isChangingConfigurations()) {
+        activity?.let {
+            PipHelper.enterPiPMode(it, fragmentCameraBinding.viewFinder)
         }
     }
+}
 
     //PIP関連
     override fun onPictureInPictureModeChanged(isInPictureInPictureMode: Boolean) {
@@ -493,12 +496,32 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
      */
 
     override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-        // 画面回転時にターゲット回転を更新
-        imageAnalyzer?.targetRotation = fragmentCameraBinding.viewFinder.display.rotation
+    super.onConfigurationChanged(newConfig)
+    
+    // PiPモードの切り替わりを検知
+    val isInPiP = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+        requireActivity().isInPictureInPictureMode
+    } else {
+        false
     }
 
-    //オブジェクト検出後にUIを更新する。元の画像の高さ/幅を抽出し、
+    if (isInPiP) {
+        // PiP中はUI（設定ボタンやボトムシート）を隠すことで、表示エラーを防ぎ PiP を安定させる
+        fragmentCameraBinding.bottomSheetLayout.root.visibility = View.GONE
+        // オーバーレイ（枠）も非表示にして負荷を下げる（解析自体は裏で動いています）
+        fragmentCameraBinding.overlay.visibility = View.GONE
+    } else {
+        // 通常モードに戻ったら表示を復元
+        fragmentCameraBinding.bottomSheetLayout.root.visibility = View.VISIBLE
+        fragmentCameraBinding.overlay.visibility = View.VISIBLE
+        
+        // プレビューの向きを再調整
+        val displayRotation = fragmentCameraBinding.viewFinder.display.rotation
+        imageAnalyzer?.targetRotation = displayRotation
+    }
+}
+
+
     // オブジェクト検出後にUIを更新する。元の画像の高さ/幅を抽出し、
     // OverlayViewを通じてバウンディングボックスを適切にスケーリング・配置する。
     // 物体検出結果を UI に反映
@@ -550,7 +573,7 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
         var finalShouldNotify = false
         var finalNotificationTitle = ""
         var finalNotificationMessage = ""
-        val alertThreshold = 2.0f 
+        val alertThreshold = 7.0f 
 
         if (nearestPersonBox != null && nearestDistance < alertThreshold) {
             if (!isNotificationSent) {
@@ -581,9 +604,9 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
             // 足元判定用の topRatio を計算
             val topRatio = nearestPersonBox!!.top / resultBundle.inputImageHeight.toFloat()
 
-            // --- 歩行中判定のコメントアウト表示 ---
+            // 歩行中判定
             val isWalkingMock = true 
-            /* 本来は以下のように歩数計と連動させる:
+            /* 歩行判定使うならこっち:
                val isWalkingMock = stepDetector.isUserWalking 
             */
 
