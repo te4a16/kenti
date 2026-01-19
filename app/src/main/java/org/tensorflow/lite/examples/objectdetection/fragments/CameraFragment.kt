@@ -35,14 +35,12 @@ import androidx.camera.core.Camera
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageAnalysis.OUTPUT_IMAGE_FORMAT_RGBA_8888
-import androidx.camera.core.ImageProxy
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
-import java.util.LinkedList
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import org.tensorflow.lite.examples.objectdetection.MainViewModel
@@ -50,6 +48,10 @@ import org.tensorflow.lite.examples.objectdetection.ObjectDetectorHelper
 import org.tensorflow.lite.examples.objectdetection.R
 import org.tensorflow.lite.examples.objectdetection.databinding.FragmentCameraBinding
 import com.google.mediapipe.tasks.vision.core.RunningMode
+
+//
+import androidx.camera.core.ImageProxy
+import java.util.LinkedList
 
 //通知
 import android.os.Handler
@@ -71,10 +73,16 @@ import org.tensorflow.lite.examples.objectdetection.PipHelper
 
 class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
 
+    // ログ用のメッセージタグ
     private val TAG = "ObjectDetection"
 
+    // 実際のViewの参照を保持する
+    // フラグメントは画面が表示されていない間もインスタンスが残る場合があるが、
+    // View（ボタンやレイアウト）は破棄される。
+    // nullを代入できるようにすることで不要なViewをメモリに保持し続けないようにする。
     private var _fragmentCameraBinding: FragmentCameraBinding? = null
 
+    //プログラムの中で実際にViewを操作する時に使う「窓口」
     private val fragmentCameraBinding
         get() = _fragmentCameraBinding!!
 
@@ -498,7 +506,6 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
         imageAnalyzer?.targetRotation = fragmentCameraBinding.viewFinder.display.rotation
     }
 
-    //オブジェクト検出後にUIを更新する。元の画像の高さ/幅を抽出し、
     // オブジェクト検出後にUIを更新する。元の画像の高さ/幅を抽出し、
     // OverlayViewを通じてバウンディングボックスを適切にスケーリング・配置する。
     // 物体検出結果を UI に反映
