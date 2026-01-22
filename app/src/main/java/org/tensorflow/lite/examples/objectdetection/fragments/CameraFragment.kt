@@ -476,6 +476,7 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
                         val currentDistance = (DistanceConstants.TARGET_REAL_WIDTH_M * DistanceConstants.VIRTUAL_FOCAL_LENGTH_F) / pixelWidth
 
                         // 2. 音声警告マネージャーに座標も渡す（ここで足なら内部でreturnされる）
+                        //第4引数はstepDetector.isWalkingです。今回はtrueにする
                         distanceAlertManager.checkAndAlert(currentDistance, label, topPositionRatio,true)
 
                         // 3. 画面通知・判定用の足除外（上端が0.7より下なら足とみなして無視）
@@ -505,7 +506,7 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
                         isNotificationSent = true
                     }
                  //}
-            } else {
+                    } else {
                 isNotificationSent = false
             }
 
