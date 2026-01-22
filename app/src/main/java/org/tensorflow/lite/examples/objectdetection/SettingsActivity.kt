@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 // setting_page.xmlから自動生成されたBindingクラス（ファイル名から推測）
 import org.tensorflow.lite.examples.objectdetection.databinding.SettingPageBinding 
+import android.widget.SeekBar
+import android.content.Context
 
 class SettingsActivity : AppCompatActivity() {
 
@@ -14,19 +16,33 @@ class SettingsActivity : AppCompatActivity() {
         binding = SettingPageBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // 戻るボタン（close_button）が押されたらこの画面を閉じる
+        // 1. 共有設定（保存先）を開く
+        val sharedPrefs = getSharedPreferences("Settings", Context.MODE_PRIVATE)
+
+        // 2. 現在保存されている音量をシークバーに反映させる（デフォルトは80%）
+        val savedVolume = sharedPrefs.getInt("alert_volume", 80)
+        binding.volumeSeekBar.progress = savedVolume
+
+        // 3. シークバーを動かした時の処理
+        binding.volumeSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                // バーを動かしたらその値を保存する
+                sharedPrefs.edit().putInt("alert_volume", progress).apply()
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+        })
+
+        // 戻るボタン
         binding.closeButton.setOnClickListener {
             finish() 
         }
 
-        // 音量設定項目（item_volume_button）が押された時の処理
-        binding.itemVolumeButton.setOnClickListener {
-            // ここに音量設定の処理を記述
-        }
-
-        // リセット項目（item_reset_button）が押された時の処理
+        // リセットボタン（80に戻す）
         binding.itemResetButton.setOnClickListener {
-            // ここにリセットの処理を記述
+            binding.volumeSeekBar.progress = 80
+            sharedPrefs.edit().putInt("alert_volume", 80).apply()
         }
     }
 }

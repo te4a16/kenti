@@ -6,6 +6,7 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import android.speech.tts.TextToSpeech
 import java.util.Locale
+import android.os.Bundle
 
 class DistanceAlertManager(private val context: Context) {
 
@@ -38,9 +39,7 @@ class DistanceAlertManager(private val context: Context) {
         if (className != TARGET_CLASS) return
 
         // 歩いていない場合は、警告処理（音声・バイブ）自体を行わない
-        /*
-        if (!isWalking) return
-        *//
+        //if (!isWalking) return
 
         // 【足元除外】枠のてっぺんが画面の下部3割(0.7以上)にあるなら無視
         if (topRatio > 0.70f) return
@@ -63,16 +62,20 @@ class DistanceAlertManager(private val context: Context) {
         }
     }
 
-    //暫定処理
+    // speak 関数を以下の内容に差し替えてください
     private fun speak(message: String) {
-    // Bundleを使って、音声ストリームを「通知音」として明示する
-    val params = android.os.Bundle()
-    // STREAM_NOTIFICATION を指定することで、バックグラウンドでも再生されやすくなります
-    params.putInt(TextToSpeech.Engine.KEY_PARAM_STREAM, android.media.AudioManager.STREAM_NOTIFICATION)
-    
-    // 確実に「DISTANCE_ALERT」というIDでキューをフラッシュして再生
-    tts?.speak(message, TextToSpeech.QUEUE_FLUSH, params, "DISTANCE_ALERT")
-}
+        // 保存された音量（0〜100）を読み込む
+        val sharedPrefs = context.getSharedPreferences("Settings", Context.MODE_PRIVATE)
+        val volumePercent = sharedPrefs.getInt("alert_volume", 80)
+        
+        // TextToSpeech用のパラメータを作成
+        val params = Bundle()
+        // 0.0f (無音) 〜 1.0f (最大) に変換してセット
+        params.putFloat(TextToSpeech.Engine.KEY_PARAM_VOLUME, volumePercent / 100f)
+
+        tts?.speak(message, TextToSpeech.QUEUE_FLUSH, params, "DISTANCE_ALERT")
+    }
+
 
     private fun vibrate() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
