@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <inset
+            android:drawable="@drawable/ic_launcher_foreground_image"
+            android:insetLeft="13%"
+            android:insetRight="13%"
+            android:insetTop="13%"
+            android:insetBottom="8%" />
+    </item>
+</layer-list>
