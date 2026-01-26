@@ -61,30 +61,32 @@
         android:background="@color/toolbar_background">
 
     <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageButton
+        android:id="@+id/settings_button"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="8dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/gear"
+        android:scaleType="fitCenter"
+        android:contentDescription="Settings" />
+
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:paddingVertical="4dp" 
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            android:src="@drawable/resmombie4" />
-
-        <ImageButton
-            android:id="@+id/settings_button"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="8dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:src="@drawable/gear"
-            />
-            
-    </RelativeLayout>
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:layout_toStartOf="@id/settings_button"
+        android:paddingVertical="4dp" 
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:src="@drawable/resmombie4" />
+        
+</RelativeLayout>
 </androidx.appcompat.widget.Toolbar>
 
 
