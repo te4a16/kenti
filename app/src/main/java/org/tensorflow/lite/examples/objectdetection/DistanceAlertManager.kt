@@ -8,6 +8,7 @@ import android.speech.tts.TextToSpeech
 import java.util.Locale
 import android.os.Bundle
 
+//距離音声通知のコントローラぽいやつ
 class DistanceAlertManager(private val context: Context) {
 
     private var tts: TextToSpeech? = null
@@ -16,8 +17,8 @@ class DistanceAlertManager(private val context: Context) {
 
     companion object {
         private const val ALERT_INTERVAL_MS = 3000L
+        private const val ALERT_DISTANCE_4M = 4.0f
         private const val ALERT_DISTANCE_2M = 2.0f
-        private const val ALERT_DISTANCE_1M = 1.0f
         private const val TARGET_CLASS = "person"
     }
 
@@ -49,13 +50,14 @@ class DistanceAlertManager(private val context: Context) {
 
         val distanceMessage = String.format("危険です。%.1fメートル先に人がいます。", distanceMeters)
 
+        //4メートル以下で音声通知
         when {
-            distanceMeters <= ALERT_DISTANCE_1M -> {
+            distanceMeters <= ALERT_DISTANCE_2M -> {
                 speak(distanceMessage)
                 vibrate()
                 lastAlertTime = currentTime
             }
-            distanceMeters <= ALERT_DISTANCE_2M -> {
+            distanceMeters <= ALERT_DISTANCE_4M -> {
                 speak(distanceMessage)
                 lastAlertTime = currentTime
             }
@@ -77,6 +79,7 @@ class DistanceAlertManager(private val context: Context) {
     }
 
 
+    //バイブレーション
     private fun vibrate() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             vibrator.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE))
