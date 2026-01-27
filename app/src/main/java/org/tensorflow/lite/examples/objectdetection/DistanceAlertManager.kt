@@ -11,6 +11,7 @@ import android.os.Bundle
 //距離音声通知のコントローラぽいやつ
 class DistanceAlertManager(private val context: Context) {
 
+    private var lastDistanceMeters = -1f //前回の距離を保持
     private var tts: TextToSpeech? = null
     private val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
     private var lastAlertTime = 0L
@@ -38,6 +39,20 @@ class DistanceAlertManager(private val context: Context) {
      */
     fun checkAndAlert(distanceMeters: Float, className: String, topRatio: Float, isWalking: Boolean) {
         if (className != TARGET_CLASS) return
+
+        //同方向判定処理
+        if (lastDistanceMeters > 0) {
+            val delta = lastDistanceMeters - distanceMeters //プラスなら近づいている
+            
+            // 誤差を考慮したしきい値（例：0.3m以上一気に縮まったら「接近」とみなす）
+            // この 0.3f を調整して、感度を決めます
+            if (delta < 0.3f) {
+                // あまり距離が変わっていない、または遠ざかっている場合は更新だけして終了
+                lastDistanceMeters = distanceMeters
+                return 
+            }
+        }
+        lastDistanceMeters = distanceMeters
 
         // 歩いていない場合は、警告処理（音声・バイブ）自体を行わない
         //if (!isWalking) return
