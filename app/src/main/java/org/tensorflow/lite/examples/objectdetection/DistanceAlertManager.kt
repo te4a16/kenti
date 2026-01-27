@@ -48,7 +48,7 @@ class DistanceAlertManager(private val context: Context) {
         val currentTime = System.currentTimeMillis()
         if (currentTime - lastAlertTime < ALERT_INTERVAL_MS) return
 
-        val distanceMessage = String.format("危険です。%.1fメートル先に人がいます。", distanceMeters)
+        val distanceMessage = String.format("顔をあげてください。%.1fメートル先に障害物があります。", distanceMeters)
 
         //4メートル以下で音声通知
         when {
