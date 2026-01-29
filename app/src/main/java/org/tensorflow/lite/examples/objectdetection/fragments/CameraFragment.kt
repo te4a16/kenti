@@ -99,7 +99,7 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
 
     // 距離ベースの通知制御用変数
     private var isNotificationSent = false // 通知が送信済みかどうか (6m圏内に入った時)
-    private val ALERT_DISTANCE_M = 6.0f // 通知を出す距離の閾値 (6メートル)
+    private val ALERT_DISTANCE_M = 8.0f // 通知を出す距離の閾値 (6メートル)
 
     // 画面の縦横比 (OverlayView のスケール計算に利用)
     private var previewWidth = 0

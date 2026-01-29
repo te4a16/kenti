@@ -46,7 +46,7 @@ class DistanceAlertManager(private val context: Context) {
             
             // 誤差を考慮したしきい値（例：0.3m以上一気に縮まったら「接近」とみなす）
             // この 0.3f を調整して、感度を決めます
-            if (delta < 0.3f) {
+            if (delta < 0.5f) {
                 // あまり距離が変わっていない、または遠ざかっている場合は更新だけして終了
                 lastDistanceMeters = distanceMeters
                 return 
@@ -63,7 +63,7 @@ class DistanceAlertManager(private val context: Context) {
         val currentTime = System.currentTimeMillis()
         if (currentTime - lastAlertTime < ALERT_INTERVAL_MS) return
 
-        val distanceMessage = String.format("顔をあげてください。%.1fメートル先に障害物があります。", distanceMeters)
+        val distanceMessage = String.format("顔をあげてください。", distanceMeters)
 
         //4メートル以下で音声通知
         when {
