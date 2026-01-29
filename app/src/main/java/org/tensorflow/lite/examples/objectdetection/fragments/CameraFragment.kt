@@ -469,11 +469,14 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
                     val score = detection.categories[0].score
                     val boundingBox = detection.boundingBox
 
-                    if (label == "person") {
+                    if (DistanceConstants.LABEL_WIDTH_MAP.containsKey(label)) {
                         // 1. 座標と距離の計算
-                        val topPositionRatio = boundingBox.top / imageHeight
+                        val topPositionRatio = boundingBox.top / imageHeight.toFloat()
                         val pixelWidth = boundingBox.width()
-                        val currentDistance = (DistanceConstants.TARGET_REAL_WIDTH_M * DistanceConstants.VIRTUAL_FOCAL_LENGTH_F) / pixelWidth
+
+                        // --- ここを修正：TARGET_REAL_WIDTH_M の代わりに Map から幅を取得 ---
+                        val realWidth = DistanceConstants.LABEL_WIDTH_MAP[label] ?: DistanceConstants.DEFAULT_REAL_WIDTH_M
+                        val currentDistance = (realWidth * DistanceConstants.VIRTUAL_FOCAL_LENGTH_F) / pixelWidth
 
                         // 2. 音声警告マネージャーに座標も渡す（ここで足なら内部でreturnされる）
                         //第4引数はstepDetector.isWalkingです。今回はtrueにする
