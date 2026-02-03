@@ -47,7 +47,7 @@ class StepDetector(context: Context) : SensorEventListener {
             // 一歩検知するたびに「停止タイマー」をリセット
             handler.removeCallbacks(stopWalkingRunnable)
             // 2秒間次の一歩がなければ停止とみなす
-            handler.postDelayed(stopWalkingRunnable, 2000)
+            handler.postDelayed(stopWalkingRunnable, 1000)
         }
     }
 

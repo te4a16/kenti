@@ -130,7 +130,9 @@ class OverlayView(context: Context?, attrs: AttributeSet?) : View(context, attrs
             // --- 【追加】距離計算ロジックをここに組み込む ---
 
             val focalLength = DistanceConstants.VIRTUAL_FOCAL_LENGTH_F
-            val realWidth = DistanceConstants.TARGET_REAL_WIDTH_M
+            val labelName = result.categories[0].label // ここで labelName を定義する
+            val realWidth = DistanceConstants.LABEL_WIDTH_MAP[labelName] 
+                            ?: DistanceConstants.DEFAULT_REAL_WIDTH_M // Mapにない場合はデフォルト(0.45m)
 
             // 検出されたバウンディングボックスのピクセル幅 O_pixel を取得
             val pixelWidth = boundingBox.right - boundingBox.left
@@ -144,8 +146,8 @@ class OverlayView(context: Context?, attrs: AttributeSet?) : View(context, attrs
             }
 
             // ---【追加】距離とクラス名を外部へ通知 ---
-            val className = result.categories[0].label
-            distanceAlertListener?.onDistanceUpdated(distanceMeters, className)
+            //val className = result.categories[0].label
+            distanceAlertListener?.onDistanceUpdated(distanceMeters, labelName)
 
             // --- 【ここまで】距離計算ロジック ---
 

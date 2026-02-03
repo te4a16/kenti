@@ -98,8 +98,8 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
     private lateinit var distanceAlertManager: DistanceAlertManager
 
     // 距離ベースの通知制御用変数
-    private var isNotificationSent = false // 通知が送信済みかどうか (6m圏内に入った時)
-    private val ALERT_DISTANCE_M = 8.0f // 通知を出す距離の閾値 (6メートル)
+    private var isNotificationSent = false // 通知が送信済みかどうか (8m圏内に入った時)
+    private val ALERT_DISTANCE_M = 8.0f // 通知を出す距離の閾値 (8メートル)
 
     // 画面の縦横比 (OverlayView のスケール計算に利用)
     private var previewWidth = 0
@@ -463,21 +463,25 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
             var finalNotificationTitle = ""
             var finalNotificationMessage = ""
 
+
             if (results != null) {
                 for (detection in results) {
                     val label = detection.categories[0].label
                     val score = detection.categories[0].score
                     val boundingBox = detection.boundingBox
 
-                    if (label == "person") {
+                    if (DistanceConstants.LABEL_WIDTH_MAP.containsKey(label)) {
                         // 1. 座標と距離の計算
-                        val topPositionRatio = boundingBox.top / imageHeight
+                        val topPositionRatio = boundingBox.top / imageHeight.toFloat()
                         val pixelWidth = boundingBox.width()
-                        val currentDistance = (DistanceConstants.TARGET_REAL_WIDTH_M * DistanceConstants.VIRTUAL_FOCAL_LENGTH_F) / pixelWidth
+
+                        // --- ここを修正：TARGET_REAL_WIDTH_M の代わりに Map から幅を取得 ---
+                        val realWidth = DistanceConstants.LABEL_WIDTH_MAP[label] ?: DistanceConstants.DEFAULT_REAL_WIDTH_M
+                        val currentDistance = (realWidth * DistanceConstants.VIRTUAL_FOCAL_LENGTH_F) / pixelWidth
 
                         // 2. 音声警告マネージャーに座標も渡す（ここで足なら内部でreturnされる）
                         //第4引数はstepDetector.isWalkingです。今回はtrueにする
-                        distanceAlertManager.checkAndAlert(currentDistance, label, topPositionRatio,true)
+                        distanceAlertManager.checkAndAlert(currentDistance, label, topPositionRatio,stepDetector.isWalking)
 
                         // 3. 画面通知・判定用の足除外（上端が0.7より下なら足とみなして無視）
                         if (topPositionRatio > 0.70f) {
@@ -493,28 +497,44 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
                 }
             }
 
-            // 5. ヘッドアップ通知の判定（一番近い人が6m以内にいる場合）
-            if (nearestPersonBox != null && nearestDistance <= ALERT_DISTANCE_M) {
-                // --- 追加：歩いている時だけ通知処理へ進む ---
-                 //if (stepDetector.isWalking) {
-                    if (!isNotificationSent) {
-                        val directionGuide = avoidanceManager.getAvoidanceMessage(nearestPersonBox!!, imageWidth)
-                        finalNotificationTitle = directionGuide
-                        // ここで nearestDistance を使うように修正（エラー箇所）
-                        finalNotificationMessage = "前 ${String.format("%.2f m", nearestDistance)} に人がいます"
-                        finalShouldNotify = true
-                        isNotificationSent = true
-                    }
-                 //}
-                    } else {
-                isNotificationSent = false
-            }
+            // 5. ヘッドアップ通知の判定（一番近い人が8m以内にいる場合）
+if (nearestPersonBox != null) {
+    val objectCenterX = nearestPersonBox.centerX() / imageWidth
 
+    // 条件：距離が 8m 以内
+    if (nearestDistance <= ALERT_DISTANCE_M) {
+
+        // 歩行中かつ、前回の通知から2秒以上経過（isNotificationSentがfalse）している場合
+        if (stepDetector.isWalking && !isNotificationSent) { 
+            val directionGuide = avoidanceManager.getAvoidanceMessage(nearestPersonBox, imageWidth)
+            finalNotificationTitle = directionGuide
+            finalNotificationMessage = "前 ${String.format("%.2f m", nearestDistance)} に人がいます"
+            finalShouldNotify = true
+
+            // フラグを true にして連続通知をブロック
+            isNotificationSent = true 
+
+            // 2秒（2000ミリ秒）後にフラグを false に戻し、再通知を許可する
+            Handler(Looper.getMainLooper()).postDelayed({
+                isNotificationSent = false
+            }, 2000)
+        }
+    } else {
+        // 8m圏外に出た場合は、2秒待たずにフラグをリセットしても良いでしょう（任意）
+        // ただし、タイマーが走っている間は postDelayed が後から false に上書きします
+        isNotificationSent = false
+    }
+} else {
+    // 誰も検知していない場合
+    isNotificationSent = false
+}
+
+            // 6. 最後に一括で通知を実行
             if (finalShouldNotify) {
                 notificationHelper.showNotification(finalNotificationTitle, finalNotificationMessage)
             }
             fragmentCameraBinding.overlay.invalidate()
-        }
+        } // activity?.runOnUiThread の閉じ
     }
 
     // エラー時
