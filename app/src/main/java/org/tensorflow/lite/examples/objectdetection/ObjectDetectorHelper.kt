@@ -181,8 +181,8 @@ class ObjectDetectorHelper(
 
         // 検出を許可するラベル（ホワイトリスト）を定義
         private val ALLOWED_LABELS = listOf("person", "bicycle", "car", "motorcycle", "bus",
-            "truck", "traffic light", "fire hydrant", "stop sign", "bench", "cat", "dog",
-            "horse", "cow", "bear", "umbrella", "suitcase", "sports ball", "bottle","chair",
+            "truck", "traffic light", "fire hydrant", "stop sign", "cat", "dog",
+            "horse", "cow", "bear", "umbrella", "suitcase", "sports ball", "bottle",
             "potted plant")
 
     }

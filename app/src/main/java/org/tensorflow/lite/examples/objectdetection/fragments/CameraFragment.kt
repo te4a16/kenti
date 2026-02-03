@@ -99,7 +99,7 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
 
     // 距離ベースの通知制御用変数
     private var isNotificationSent = false // 通知が送信済みかどうか (6m圏内に入った時)
-    private val ALERT_DISTANCE_M = 8.0f // 通知を出す距離の閾値 (6メートル)
+    private val ALERT_DISTANCE_M = 3.5f // 通知を出す距離の閾値 (3.5メートル)
 
     // 画面の縦横比 (OverlayView のスケール計算に利用)
     private var previewWidth = 0
@@ -477,7 +477,7 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
 
                         // 2. 音声警告マネージャーに座標も渡す（ここで足なら内部でreturnされる）
                         //第4引数はstepDetector.isWalkingです。今回はtrueにする
-                        distanceAlertManager.checkAndAlert(currentDistance, label, topPositionRatio,true)
+                        distanceAlertManager.checkAndAlert(currentDistance, label, topPositionRatio)
 
                         // 3. 画面通知・判定用の足除外（上端が0.7より下なら足とみなして無視）
                         if (topPositionRatio > 0.70f) {

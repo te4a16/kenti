@@ -18,8 +18,8 @@ class DistanceAlertManager(private val context: Context) {
 
     companion object {
         private const val ALERT_INTERVAL_MS = 3000L
-        private const val ALERT_DISTANCE_4M = 4.0f
-        private const val ALERT_DISTANCE_2M = 2.0f
+        private const val ALERT_DISTANCE_4M = 2.0f
+        private const val ALERT_DISTANCE_2M = 1.0f
         private const val TARGET_CLASS = "person"
     }
 
@@ -37,45 +37,25 @@ class DistanceAlertManager(private val context: Context) {
      /**
      * @param isWalking 追加：現在の歩行状態
      */
-    fun checkAndAlert(distanceMeters: Float, className: String, topRatio: Float, isWalking: Boolean) {
+    fun checkAndAlert(distanceMeters: Float, className: String, topRatio: Float) {
         if (className != TARGET_CLASS) return
 
-        //同方向判定処理
-        if (lastDistanceMeters > 0) {
-            val delta = lastDistanceMeters - distanceMeters //プラスなら近づいている
-            
-            // 誤差を考慮したしきい値（例：0.3m以上一気に縮まったら「接近」とみなす）
-            // この 0.3f を調整して、感度を決めます
-            if (delta < 0.5f) {
-                // あまり距離が変わっていない、または遠ざかっている場合は更新だけして終了
-                lastDistanceMeters = distanceMeters
-                return 
-            }
-        }
-        lastDistanceMeters = distanceMeters
-
-        // 歩いていない場合は、警告処理（音声・バイブ）自体を行わない
-        //if (!isWalking) return
-
-        // 【足元除外】枠のてっぺんが画面の下部3割(0.7以上)にあるなら無視
+        // 足元除外（画面下部にいすぎる場合は無視）
         if (topRatio > 0.70f) return
 
         val currentTime = System.currentTimeMillis()
         if (currentTime - lastAlertTime < ALERT_INTERVAL_MS) return
 
-        val distanceMessage = String.format("顔をあげてください。", distanceMeters)
+        val distanceMessage = "顔をあげてください。"
 
-        //4メートル以下で音声通知
-        when {
-            distanceMeters <= ALERT_DISTANCE_2M -> {
-                speak(distanceMessage)
-                vibrate()
-                lastAlertTime = currentTime
-            }
-            distanceMeters <= ALERT_DISTANCE_4M -> {
-                speak(distanceMessage)
-                lastAlertTime = currentTime
-            }
+        // 距離判定（同方向検知は削除済み）
+        if (distanceMeters <= ALERT_DISTANCE_2M) {
+            speak(distanceMessage)
+            vibrate()
+            lastAlertTime = currentTime
+        } else if (distanceMeters <= ALERT_DISTANCE_4M) {
+            speak(distanceMessage)
+            lastAlertTime = currentTime
         }
     }
 
