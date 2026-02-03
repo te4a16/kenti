@@ -46,7 +46,7 @@ class DistanceAlertManager(private val context: Context) {
             
             // 誤差を考慮したしきい値（例：0.3m以上一気に縮まったら「接近」とみなす）
             // この 0.3f を調整して、感度を決めます
-            if (delta < 0.5f) {
+            if (delta < 0.1f) {
                 // あまり距離が変わっていない、または遠ざかっている場合は更新だけして終了
                 lastDistanceMeters = distanceMeters
                 return 
@@ -55,7 +55,7 @@ class DistanceAlertManager(private val context: Context) {
         lastDistanceMeters = distanceMeters
 
         // 歩いていない場合は、警告処理（音声・バイブ）自体を行わない
-        //if (!isWalking) return
+        if (!isWalking) return
 
         // 【足元除外】枠のてっぺんが画面の下部3割(0.7以上)にあるなら無視
         if (topRatio > 0.70f) return
