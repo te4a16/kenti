@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import org.tensorflow.lite.examples.objectdetection.databinding.SettingPageBinding 
 import android.widget.SeekBar
 import android.content.Context
+import android.content.Intent
 
 class SettingsActivity : AppCompatActivity() {
 
@@ -44,5 +45,11 @@ class SettingsActivity : AppCompatActivity() {
             binding.volumeSeekBar.progress = 80
             sharedPrefs.edit().putInt("alert_volume", 80).apply()
         }
+
+        binding.itemLicenseButton.setOnClickListener {
+            val intent = Intent(this, LicenseListActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 }

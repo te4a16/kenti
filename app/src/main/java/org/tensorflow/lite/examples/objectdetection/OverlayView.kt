@@ -14,10 +14,6 @@
  * limitations under the License.
  */
 
-/*
- * OverlayView: カメラ映像上に物体検出結果（バウンディングボックスとラベル）を描画するための View
- */
-
 package org.tensorflow.lite.examples.objectdetection
 
 import android.content.Context
@@ -33,38 +29,42 @@ import java.util.LinkedList
 import kotlin.math.max
 import org.tensorflow.lite.task.vision.detector.Detection
 
+/**
+ * OverlayView: カメラ映像上に物体検出結果（バウンディングボックス、ラベル、距離情報）を描画するためのカスタムView
+ */
 class OverlayView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
 
-    // 検出結果リスト
+    // 検出結果のリスト
     private var results: List<Detection> = LinkedList<Detection>()
 
     /**
-     * 距離情報を外部（Fragmentなど）に通知するためのリスナー
+     * 算出された距離情報をFragment等の呼び出し元に通知するためのリスナー
      */
     interface DistanceAlertListener {
         fun onDistanceUpdated(distanceMeters: Float, className: String)
     }
 
-    // 距離通知用リスナー
+    // 距離通知用リスナーのインスタンス
     var distanceAlertListener: DistanceAlertListener? = null
 
-    // ボックス・テキスト背景・文字の描画に使用する Paint
-    private var boxPaint = Paint()
-    private var textBackgroundPaint = Paint()
-    private var textPaint = Paint()
+    // 描画用のPaintオブジェクト
+    private var boxPaint = Paint()            // 枠線用
+    private var textBackgroundPaint = Paint() // テキスト背景用
+    private var textPaint = Paint()           // 文字用
 
-    // カメラ画像と View のスケール差を補正する係数
+    // カメラ解像度と画面表示サイズの差を補正するスケール
     private var scaleFactor: Float = 1f
 
-    // テキスト描画時のサイズ取得用
+    // テキストの描画範囲（サイズ）計測用
     private var bounds = Rect()
 
     init {
-        // 各 Paint の初期設定
         initPaints()
     }
 
-    //Viewをクリアして、Paintを初期状態に戻す
+    /**
+     * Viewの状態をクリアする
+     */
     fun clear() {
         textPaint.reset()
         textBackgroundPaint.reset()
@@ -73,139 +73,118 @@ class OverlayView(context: Context?, attrs: AttributeSet?) : View(context, attrs
         initPaints()
     }
 
-    //バウンディングボックス描画用やテキスト描画用の Paint を初期化する
+    /**
+     * 枠線やテキストの描画スタイル（色、太さ、サイズ）を初期化
+     */
     private fun initPaints() {
-        // ラベル背景の黒い四角の設定
         textBackgroundPaint.color = Color.BLACK
         textBackgroundPaint.style = Paint.Style.FILL
         textBackgroundPaint.textSize = 50f
 
-        // ラベル文字の設定（白文字）
         textPaint.color = Color.WHITE
         textPaint.style = Paint.Style.FILL
         textPaint.textSize = 50f
 
-        // バウンディングボックスの設定（線色・太さ）
         boxPaint.color = ContextCompat.getColor(context!!, R.color.bounding_box_color)
         boxPaint.strokeWidth = 8F
         boxPaint.style = Paint.Style.STROKE
     }
 
-    //検出結果の描画処理
-    //カメラフレーム上にViewを重ね、四角形とラベルを表示する
+    /**
+     * Viewの描画処理。検出された物体の枠、ラベル、推定距離、ピクセル幅を順に描画する
+     */
     override fun draw(canvas: Canvas) {
         super.draw(canvas)
 
-        // 描画が始まる前に、校正用のピクセル幅を画面上部の情報として表示する
-        // --- 【追加】校正ピクセル幅の表示 ---
-        val FOCAL_LENGTH = DistanceConstants.VIRTUAL_FOCAL_LENGTH_F
-        val calibText = "FOCAL_LENGTH: ${FOCAL_LENGTH.toInt()}"
+        // 1. デバッグ情報の描画（現在の仮想焦点距離を表示）
+        val focalLengthConst = DistanceConstants.VIRTUAL_FOCAL_LENGTH_F
+        val calibText = "FOCAL_LENGTH: ${focalLengthConst.toInt()}"
 
-        // 校正値の描画位置（例：Viewの左上隅から少し下げた位置）
         textBackgroundPaint.getTextBounds(calibText, 0, calibText.length, bounds)
         val calibTextX = 20f
         val calibTextY = bounds.height() + 20f
 
-        // 背景矩形を描画（ここではシンプルに黒背景）
         canvas.drawRect(
             calibTextX,
-            calibTextY - bounds.height() - Companion.BOUNDING_RECT_TEXT_PADDING,
-            calibTextX + bounds.width() + Companion.BOUNDING_RECT_TEXT_PADDING,
-            calibTextY + Companion.BOUNDING_RECT_TEXT_PADDING,
+            calibTextY - bounds.height() - BOUNDING_RECT_TEXT_PADDING,
+            calibTextX + bounds.width() + BOUNDING_RECT_TEXT_PADDING,
+            calibTextY + BOUNDING_RECT_TEXT_PADDING,
             textBackgroundPaint
         )
-        // 文字を描画
         canvas.drawText(calibText, calibTextX, calibTextY, textPaint)
-        // ------------------------------------
 
+        // 2. 各検出結果の描画
         for (result in results) {
             val boundingBox = result.boundingBox
 
-            // 検出結果の座標を View のスケールに合わせる
+            // 座標を現在の画面表示スケールに変換
             val top = boundingBox.top * scaleFactor
             val bottom = boundingBox.bottom * scaleFactor
             val left = boundingBox.left * scaleFactor
             val right = boundingBox.right * scaleFactor
 
-            // --- 【追加】距離計算ロジックをここに組み込む ---
-
-            val focalLength = DistanceConstants.VIRTUAL_FOCAL_LENGTH_F
-            val labelName = result.categories[0].label // ここで labelName を定義する
+            // --- 距離計算ロジック ---
+            val labelName = result.categories[0].label
+            // ラベル名に対応する実世界の幅(m)を取得、不明な場合はデフォルト値
             val realWidth = DistanceConstants.LABEL_WIDTH_MAP[labelName] 
-                            ?: DistanceConstants.DEFAULT_REAL_WIDTH_M // Mapにない場合はデフォルト(0.45m)
+                            ?: DistanceConstants.DEFAULT_REAL_WIDTH_M
 
-            // 検出されたバウンディングボックスのピクセル幅 O_pixel を取得
+            // 画像内での物体の幅（ピクセル）
             val pixelWidth = boundingBox.right - boundingBox.left
 
-            // 距離 D を計算 (メートル単位)
-            // D = (O_physical * f) / O_pixel
+            // 単眼カメラの原理に基づき距離(m)を算出: D = (実幅 * 焦点距離) / ピクセル幅
             val distanceMeters = if (pixelWidth > 0) {
-                (realWidth * focalLength) / pixelWidth
+                (realWidth * focalLengthConst) / pixelWidth
             } else {
                 0.0f
             }
 
-            // ---【追加】距離とクラス名を外部へ通知 ---
-            //val className = result.categories[0].label
+            // 算出した距離をリスナー経由で通知
             distanceAlertListener?.onDistanceUpdated(distanceMeters, labelName)
 
-            // --- 【ここまで】距離計算ロジック ---
-
-            // バウンディングボックスを描画
+            // --- 描画の実行 ---
+            // 枠線の描画
             val drawableRect = RectF(left, top, right, bottom)
             canvas.drawRect(drawableRect, boxPaint)
 
-            // ラベル文字（カテゴリ名 + 信頼度）
-            /*
-            val drawableText =
-                result.categories[0].label + " " +
-                        String.format("%.2f", result.categories[0].score)
-            */
+            // 表示テキストの構築（ラベル、スコア、距離、ピクセル幅）
             val label = result.categories[0].label
             val score = String.format("%.2f", result.categories[0].score)
             val distanceText = String.format(" (%.2f m)", distanceMeters)
-            // リアルタイムのピクセル幅を表示
             val pixelWidthText = String.format(" | W: %d px", pixelWidth.toInt())
-
             val drawableText = "${label} ${score}${distanceText} ${pixelWidthText}"
 
-            // 表示テキストの背後に矩形を描画する
-            // テキスト背景のサイズ計算
+            // テキスト背景（黒矩形）の描画
             textBackgroundPaint.getTextBounds(drawableText, 0, drawableText.length, bounds)
-            val textWidth = bounds.width()
-            val textHeight = bounds.height()
-            // テキスト背景の黒い四角を描画
             canvas.drawRect(
                 left,
                 top,
-                left + textWidth + Companion.BOUNDING_RECT_TEXT_PADDING,
-                top + textHeight + Companion.BOUNDING_RECT_TEXT_PADDING,
+                left + bounds.width() + BOUNDING_RECT_TEXT_PADDING,
+                top + bounds.height() + BOUNDING_RECT_TEXT_PADDING,
                 textBackgroundPaint
             )
 
-            // ラベル文字を描画
+            // テキスト（白文字）の描画
             canvas.drawText(drawableText, left, top + bounds.height(), textPaint)
         }
     }
 
-    //カメラからの検出結果を受け取り、描画用データとしてセットする
+    /**
+     * ObjectDetectorから検出結果を受け取り、Viewを更新する
+     */
     fun setResults(
-      detectionResults: MutableList<Detection>, //検出結果一覧
-      imageHeight: Int,                         //カメラ画像の高さ
-      imageWidth: Int,                          //カメラ画像の幅
+      detectionResults: MutableList<Detection>,
+      imageHeight: Int,
+      imageWidth: Int,
     ) {
         results = detectionResults
-
-        // プレビュービューはFILL_STARTモードです。そのため、
-        //キャプチャされた画像が表示されるサイズに合わせて、
-        //バウンディングボックスを拡大する必要があります。
-        //カメラ画像と View のスケール差を補正する
+        // カメラのプレビューサイズと実際のViewのサイズ比からスケールを計算
         scaleFactor = max(width * 1f / imageWidth, height * 1f / imageHeight)
-
+        // 再描画を要求
+        invalidate()
     }
 
     companion object {
-        // ラベル背景の余白
         private const val BOUNDING_RECT_TEXT_PADDING = 8
     }
 }
