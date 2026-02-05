@@ -48,77 +48,51 @@ import org.tensorflow.lite.examples.objectdetection.ObjectDetectorHelper
 import org.tensorflow.lite.examples.objectdetection.R
 import org.tensorflow.lite.examples.objectdetection.databinding.FragmentCameraBinding
 import org.tensorflow.lite.task.vision.detector.Detection
-//通知
 import android.os.Handler
 import android.os.Looper
 import org.tensorflow.lite.examples.objectdetection.NotificationHelper
 import java.util.concurrent.TimeUnit
 import android.graphics.RectF
-
-//音声通知
 import org.tensorflow.lite.examples.objectdetection.DistanceAlertManager
 import org.tensorflow.lite.examples.objectdetection.OverlayView
 import org.tensorflow.lite.examples.objectdetection.AvoidanceNavigationManager
-
 import org.tensorflow.lite.examples.objectdetection.DistanceConstants
 import org.tensorflow.lite.examples.objectdetection.StepDetector
-
-//PiP
 import org.tensorflow.lite.examples.objectdetection.PipHelper
 
+/**
+ * カメラ映像の取得、物体検出の実行、距離に応じた通知制御を行うメインフラグメント
+ */
 class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
 
     private val TAG = "ObjectDetection"
-
     private var _fragmentCameraBinding: FragmentCameraBinding? = null
+    private val fragmentCameraBinding get() = _fragmentCameraBinding!!
 
-    private val fragmentCameraBinding
-        get() = _fragmentCameraBinding!!
-
-    //物体検出の補助クラス
     private lateinit var objectDetectorHelper: ObjectDetectorHelper
-
-    //カメラ画像保持用
     private lateinit var bitmapBuffer: Bitmap
-
-    //CameraX用の各種ユースケース
     private var preview: Preview? = null
     private var imageAnalyzer: ImageAnalysis? = null
     private var camera: Camera? = null
     private var cameraProvider: ProcessCameraProvider? = null
-
-    //カメラ処理を行うバックグラウンドスレッド
-    /** Blocking camera operations are performed using this executor */
     private lateinit var cameraExecutor: ExecutorService
 
-    // 通知ヘルパー
+    // 各種マネージャー・ヘルパー
     private lateinit var notificationHelper: NotificationHelper
-
-    // 音声通知ヘルパー
     private lateinit var distanceAlertManager: DistanceAlertManager
-
-    // 距離ベースの通知制御用変数
-    private var isNotificationSent = false // 通知が送信済みかどうか (8m圏内に入った時)
-    private val ALERT_DISTANCE_M = 8.0f // 通知を出す距離の閾値 (8メートル)
-
-    // 画面の縦横比 (OverlayView のスケール計算に利用)
-    private var previewWidth = 0
-    private var previewHeight = 0
-    private var scaleFactor = 1f
-
-    //回避通知
+    private lateinit var stepDetector: StepDetector
     private val avoidanceManager = AvoidanceNavigationManager()
 
-    //歩行検知
-    private lateinit var stepDetector: StepDetector
+    // 通知制御用フラグと定数
+    private var isNotificationSent = false
+    private val ALERT_DISTANCE_M = 8.0f
 
     override fun onResume() {
         super.onResume()
-
-        // 画面が表示されている間だけ歩行検知を開始
+        // 歩行検知センサーのリスナーを開始
         stepDetector.startListening()
 
-        //パーミッションが剥奪されていないか確認
+        // 必要な権限があるか確認し、なければ権限リクエスト画面へ遷移
         if (!PermissionsFragment.hasPermissions(requireContext())) {
             Navigation.findNavController(requireActivity(), R.id.fragment_container)
                 .navigate(CameraFragmentDirections.actionCameraToPermissions())
@@ -127,77 +101,55 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
 
     override fun onPause() {
         super.onPause()
-        
-        // PiPモードがサポートされており、かつアクティビティが構成変更中ではない（例：画面回転ではない）場合
-        // PiPモードへの移行を試みます。
+        // アプリがバックグラウンドに回る際、PiPモードへ移行を試行
         if (PipHelper.isPiPSupported() && !isChangingConfigurations()) {
             activity?.let {
-                // PiPHelper を使って PiP モードに移行
-                // カメラプレビューが表示されている ViewFinder を渡す
                 PipHelper.enterPiPMode(it, fragmentCameraBinding.viewFinder)
             }
         }
     }
 
     override fun onPictureInPictureModeChanged(isInPictureInPictureMode: Boolean) {
-    super.onPictureInPictureModeChanged(isInPictureInPictureMode)
+        super.onPictureInPictureModeChanged(isInPictureInPictureMode)
 
-    _fragmentCameraBinding?.let { binding ->
-        val params = view?.layoutParams as? ViewGroup.MarginLayoutParams
-        
-        if (isInPictureInPictureMode) {
-            // PiP時は余白を完全に消す
-            params?.topMargin = 0
+        _fragmentCameraBinding?.let { binding ->
+            val params = view?.layoutParams as? ViewGroup.MarginLayoutParams
+            
+            if (isInPictureInPictureMode) {
+                // PiPモード：UIを非表示にし、全画面表示に調整
+                params?.topMargin = 0
+                binding.bottomSheetLayout.root.visibility = View.GONE
+                binding.overlay.visibility = View.GONE
+                activity?.findViewById<View>(R.id.toolbar)?.visibility = View.GONE
+            } else {
+                // 通常モード：UIを再表示し、アクションバー分の余白を復元
+                val typedArray = activity?.theme?.obtainStyledAttributes(intArrayOf(android.R.attr.actionBarSize))
+                val actionBarHeight = typedArray?.getDimensionPixelSize(0, 0) ?: 0
+                typedArray?.recycle()
+
+                params?.topMargin = actionBarHeight
+                binding.bottomSheetLayout.root.visibility = View.VISIBLE
+                binding.overlay.visibility = View.VISIBLE
+                activity?.findViewById<View>(R.id.toolbar)?.visibility = View.VISIBLE
+            }
             view?.layoutParams = params
             view?.requestLayout()
-
-            binding.bottomSheetLayout.root.visibility = View.GONE
-            binding.overlay.visibility = View.GONE
-            activity?.findViewById<View>(R.id.toolbar)?.visibility = View.GONE
-        } else {
-            // 通常時はアクションバー（ヘッダー）の高さ分のマージンを戻す
-            val typedArray = activity?.theme?.obtainStyledAttributes(intArrayOf(android.R.attr.actionBarSize))
-            val actionBarHeight = typedArray?.getDimensionPixelSize(0, 0) ?: 0
-            typedArray?.recycle() // ここで確実にメモリ解放
-
-            params?.topMargin = actionBarHeight
-            view?.layoutParams = params
-            view?.requestLayout()
-
-            binding.bottomSheetLayout.root.visibility = View.VISIBLE
-            binding.overlay.visibility = View.VISIBLE
-            activity?.findViewById<View>(R.id.toolbar)?.visibility = View.VISIBLE
         }
     }
-}
 
-    //アクティビティが構成変更（回転など）中かどうかをチェック
     private fun isChangingConfigurations() = activity?.isChangingConfigurations ?: false
 
     override fun onDestroyView() {
         super.onDestroyView()
-
-        //音声・バイブ・Handler 解放
+        // 各種リソースの解放
         distanceAlertManager.shutdown()
-
-        _fragmentCameraBinding = null
-        //super.onDestroyView()
-
-        //バックグラウンドスレッド停止
         cameraExecutor.shutdown()
+        _fragmentCameraBinding = null
     }
-    
 
-    override fun onCreateView(
-      inflater: LayoutInflater,
-      container: ViewGroup?,
-      savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _fragmentCameraBinding = FragmentCameraBinding.inflate(inflater, container, false)
-
-        // NotificationHelper の初期化
         notificationHelper = NotificationHelper(requireContext())
-
         return fragmentCameraBinding.root
     }
 
@@ -205,57 +157,34 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //物体検出の初期化
-        objectDetectorHelper = ObjectDetectorHelper(
-            context = requireContext(),
-            objectDetectorListener = this)
-        
-        //歩行検知の初期化
+        // ヘルパークラスの初期化
+        objectDetectorHelper = ObjectDetectorHelper(context = requireContext(), objectDetectorListener = this)
         stepDetector = StepDetector(requireContext())
-
-        // 音声アラート関係
         distanceAlertManager = DistanceAlertManager(requireContext())
 
-        // OverlayView と DistanceAlertManager を接続
-           // onViewCreated 内の該当箇所を修正
-            fragmentCameraBinding.overlay.distanceAlertListener =
-                object : OverlayView.DistanceAlertListener {
-                    override fun onDistanceUpdated(
-                    distanceMeters: Float,
-                    className: String
-                ) {
-            // ここでは topRatio が取得できないため、一旦 0.0f を渡すか、
-            // もしくはこのリスナー自体を無効化（onResults側で一括処理しているため）
-            // distanceAlertManager.checkAndAlert(distanceMeters, className, 0.0f)
-                }
-            }
-
-        //バックグラウンド実行者を初期化する
-        //バックグラウンドスレッド開始
+        // カメラ用スレッドの開始
         cameraExecutor = Executors.newSingleThreadExecutor()
 
-        //viewFinderがレイアウト完了したらカメラをセットアップ
+        // Viewの描画完了後にカメラをセットアップ
         fragmentCameraBinding.viewFinder.post {
-            //カメラとその使用例を設定する
             setUpCamera()
         }
 
-        //UIコントロールウィジェットにリスナーをアタッチする
-        //下部UIのボタンなど設定
+        // 設定パネル（BottomSheet）の初期化
         initBottomSheetControls()
     }
 
-    // 下部の設定用 UI（閾値・検出数・スレッド数・モデルなど）のリスナー設定を行う
+    /**
+     * 設定パネルのボタンやスピナーにリスナーを登録
+     */
     private fun initBottomSheetControls() {
-        //クリック時、検出スコアの閾値を下限値まで引き下げ
+        // 閾値の増減
         fragmentCameraBinding.bottomSheetLayout.thresholdMinus.setOnClickListener {
             if (objectDetectorHelper.threshold >= 0.1) {
                 objectDetectorHelper.threshold -= 0.1f
                 updateControlsUi()
             }
         }
-
-        //クリックすると、検出スコアの閾値下限を引き上げる
         fragmentCameraBinding.bottomSheetLayout.thresholdPlus.setOnClickListener {
             if (objectDetectorHelper.threshold <= 0.8) {
                 objectDetectorHelper.threshold += 0.1f
@@ -263,15 +192,13 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
             }
         }
 
-        //クリック時、検出数減らす
+        // 最大検出数の増減
         fragmentCameraBinding.bottomSheetLayout.maxResultsMinus.setOnClickListener {
             if (objectDetectorHelper.maxResults > 1) {
                 objectDetectorHelper.maxResults--
                 updateControlsUi()
             }
         }
-
-        //クリック時、検出数増やす
         fragmentCameraBinding.bottomSheetLayout.maxResultsPlus.setOnClickListener {
             if (objectDetectorHelper.maxResults < 5) {
                 objectDetectorHelper.maxResults++
@@ -279,16 +206,13 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
             }
         }
 
-        //クリック時、スレッド数減
-        // When clicked, decrease the number of threads used for detection
+        // スレッド数の増減
         fragmentCameraBinding.bottomSheetLayout.threadsMinus.setOnClickListener {
             if (objectDetectorHelper.numThreads > 1) {
                 objectDetectorHelper.numThreads--
                 updateControlsUi()
             }
         }
-
-        //クリック時、スレッド数増
         fragmentCameraBinding.bottomSheetLayout.threadsPlus.setOnClickListener {
             if (objectDetectorHelper.numThreads < 4) {
                 objectDetectorHelper.numThreads++
@@ -296,156 +220,107 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
             }
         }
 
-        //推論デリゲート選択(CPU / GPU / NNAPI)
-        //クリックすると、推論に使用される基盤となるハードウェアを変更します。
-        //現在の選択肢はCPU、GPU、NNAPIです
-        fragmentCameraBinding.bottomSheetLayout.spinnerDelegate.setSelection(0, false)
+        // デリゲート（CPU/GPU等）の切り替え
         fragmentCameraBinding.bottomSheetLayout.spinnerDelegate.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                     objectDetectorHelper.currentDelegate = p2
                     updateControlsUi()
                 }
-
-                override fun onNothingSelected(p0: AdapterView<*>?) {
-                    /* no op */
-                }
+                override fun onNothingSelected(p0: AdapterView<*>?) {}
             }
 
-        //モデル選択(各種TFLiteモデル)
-        //クリックすると、オブジェクト検出に使用される基盤モデルを変更します
-        fragmentCameraBinding.bottomSheetLayout.spinnerModel.setSelection(0, false)
+        // モデルの切り替え
         fragmentCameraBinding.bottomSheetLayout.spinnerModel.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                     objectDetectorHelper.currentModel = p2
                     updateControlsUi()
                 }
-
-                override fun onNothingSelected(p0: AdapterView<*>?) {
-                    /* no op */
-                }
+                override fun onNothingSelected(p0: AdapterView<*>?) {}
             }
     }
 
-    // UI 表示値更新 + 検出器リセット
+    /**
+     * 設定変更時にUIテキストを更新し、検出器を再生成する
+     */
     private fun updateControlsUi() {
-        fragmentCameraBinding.bottomSheetLayout.maxResultsValue.text =
-            objectDetectorHelper.maxResults.toString()
-        fragmentCameraBinding.bottomSheetLayout.thresholdValue.text =
-            String.format("%.2f", objectDetectorHelper.threshold)
-        fragmentCameraBinding.bottomSheetLayout.threadsValue.text =
-            objectDetectorHelper.numThreads.toString()
+        fragmentCameraBinding.bottomSheetLayout.maxResultsValue.text = objectDetectorHelper.maxResults.toString()
+        fragmentCameraBinding.bottomSheetLayout.thresholdValue.text = String.format("%.2f", objectDetectorHelper.threshold)
+        fragmentCameraBinding.bottomSheetLayout.threadsValue.text = objectDetectorHelper.numThreads.toString()
 
-        // 再初期化ではなくクリアする必要があるのは、GPUデリゲートが
-        //適用可能な場合に使用するスレッド上で初期化される必要があるためである。
-        //検出器再生成
         objectDetectorHelper.clearObjectDetector()
         fragmentCameraBinding.overlay.clear()
     }
 
-    //CameraXを初期化し、カメラユースケースのバインド準備を行う
+    /**
+     * CameraXの初期化とプロバイダーの取得
+     */
     private fun setUpCamera() {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext())
-        cameraProviderFuture.addListener(
-            {
-                // CameraProvider
-                cameraProvider = cameraProviderFuture.get()
-
-                // カメラのユースケースを構築し、連携させる
-                bindCameraUseCases()
-            },
-            ContextCompat.getMainExecutor(requireContext())
-        )
+        cameraProviderFuture.addListener({
+            cameraProvider = cameraProviderFuture.get()
+            bindCameraUseCases()
+        }, ContextCompat.getMainExecutor(requireContext()))
     }
 
-    //プレビュー / 画像解析ユースケースをバインド
+    /**
+     * カメラのPreviewとImageAnalysisをライフサイクルにバインド
+     */
     @SuppressLint("UnsafeOptInUsageError")
     private fun bindCameraUseCases() {
+        val cameraProvider = cameraProvider ?: throw IllegalStateException("Camera initialization failed.")
+        val cameraSelector = CameraSelector.Builder().requireLensFacing(CameraSelector.LENS_FACING_BACK).build()
 
-        // CameraProvider
-        val cameraProvider =
-            cameraProvider ?: throw IllegalStateException("Camera initialization failed.")
+        // プレビューの設定
+        preview = Preview.Builder()
+            .setTargetAspectRatio(AspectRatio.RATIO_4_3)
+            .setTargetRotation(fragmentCameraBinding.viewFinder.display.rotation)
+            .build()
 
-        // CameraSelector - 背面カメラのみを使用しているという前提で動作します
-        //背面カメラを選択
-        val cameraSelector =
-            CameraSelector.Builder().requireLensFacing(CameraSelector.LENS_FACING_BACK).build()
-
-        // Preview. 4:3比率のみを使用しています。これは当社のモデルに最も近い比率だからです。
-        //プレビュー設定
-        preview =
-            Preview.Builder()
-                .setTargetAspectRatio(AspectRatio.RATIO_4_3)
-                .setTargetRotation(fragmentCameraBinding.viewFinder.display.rotation)
-                .build()
-
-        // 画像解析。モデル動作に合わせるためRGBA 8888を使用
-        //画像解析（RGBA 8888）で物体検出を行う
-        imageAnalyzer =
-            ImageAnalysis.Builder()
-                .setTargetAspectRatio(AspectRatio.RATIO_4_3)
-                .setTargetRotation(fragmentCameraBinding.viewFinder.display.rotation)
-                .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
-                .setOutputImageFormat(OUTPUT_IMAGE_FORMAT_RGBA_8888)
-                .build()
-                //その後、アナライザーをインスタンスに割り当てることができます
-                .also {
-                    it.setAnalyzer(cameraExecutor) { image ->
-                    // 初回のみ Bitmap バッファを生成
-                        if (!::bitmapBuffer.isInitialized) {
-                            //画像回転とRGB画像バッファは、アナライザの実行が
-                            //開始された後にのみ初期化される
-                            bitmapBuffer = Bitmap.createBitmap(
-                              image.width,
-                              image.height,
-                              Bitmap.Config.ARGB_8888
-                            )
-                        }
-
-                        detectObjects(image)
+        // 画像解析の設定（物体検出用）
+        imageAnalyzer = ImageAnalysis.Builder()
+            .setTargetAspectRatio(AspectRatio.RATIO_4_3)
+            .setTargetRotation(fragmentCameraBinding.viewFinder.display.rotation)
+            .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
+            .setOutputImageFormat(OUTPUT_IMAGE_FORMAT_RGBA_8888)
+            .build()
+            .also {
+                it.setAnalyzer(cameraExecutor) { image ->
+                    if (!::bitmapBuffer.isInitialized) {
+                        bitmapBuffer = Bitmap.createBitmap(image.width, image.height, Bitmap.Config.ARGB_8888)
                     }
+                    detectObjects(image)
                 }
+            }
 
-        // Must unbind the use-cases before rebinding them
-        //再バインドのため一度クリア
         cameraProvider.unbindAll()
 
         try {
-            //ここで渡せるユースケースの数は可変です - 
-            //カメラは CameraControl および CameraInfo へのアクセスを提供します
-            // プレビューと解析をライフサイクルにバインド
             camera = cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageAnalyzer)
-
-            // ビューファインダーの表面プロバイダーをプレビューユースケースに接続する
-            // プレビュー表示先をセット
             preview?.setSurfaceProvider(fragmentCameraBinding.viewFinder.surfaceProvider)
         } catch (exc: Exception) {
             Log.e(TAG, "Use case binding failed", exc)
         }
     }
 
-    //画像解析　→　物体検出
+    /**
+     * カメラフレームをBitmapに変換し、検出処理を呼び出す
+     */
     private fun detectObjects(image: ImageProxy) {
-        // RGBA バッファを bitmapBuffer にコピー
         image.use { bitmapBuffer.copyPixelsFromBuffer(image.planes[0].buffer) }
-
         val imageRotation = image.imageInfo.rotationDegrees
-        //ビットマップと回転角度をオブジェクト検出ヘルパーに渡して処理と検出を行う
-        // TFLite に画像と回転を渡して検出
         objectDetectorHelper.detect(bitmapBuffer, imageRotation)
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        // 画面回転時にターゲット回転を更新
         imageAnalyzer?.targetRotation = fragmentCameraBinding.viewFinder.display.rotation
     }
 
-    //オブジェクト検出後にUIを更新する。元の画像の高さ/幅を抽出し、
- // オブジェクト検出後にUIを更新する。元の画像の高さ/幅を抽出し、
-    // OverlayViewを通じてバウンディングボックスを適切にスケーリング・配置する。
-    // 物体検出結果を UI に反映
+    /**
+     * 物体検出完了後のコールバック。距離計算、音声警告、画面通知を行う
+     */
     override fun onResults(
         results: MutableList<Detection>?,
         inferenceTime: Long,
@@ -453,6 +328,7 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
         imageWidth: Int
     ) {
         activity?.runOnUiThread {
+            // 描画レイヤーに結果を渡す
             results?.let {
                 fragmentCameraBinding.overlay.setResults(it, imageHeight, imageWidth)
             }
@@ -463,7 +339,6 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
             var finalNotificationTitle = ""
             var finalNotificationMessage = ""
 
-
             if (results != null) {
                 for (detection in results) {
                     val label = detection.categories[0].label
@@ -471,24 +346,19 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
                     val boundingBox = detection.boundingBox
 
                     if (DistanceConstants.LABEL_WIDTH_MAP.containsKey(label)) {
-                        // 1. 座標と距離の計算
+                        // 1. 距離の算出
                         val topPositionRatio = boundingBox.top / imageHeight.toFloat()
                         val pixelWidth = boundingBox.width()
-
-                        // --- ここを修正：TARGET_REAL_WIDTH_M の代わりに Map から幅を取得 ---
-                        val realWidth = DistanceConstants.LABEL_WIDTH_MAP[label] ?: DistanceConstants.DEFAULT_REAL_WIDTH_M
+                        val realWidth = DistanceConstants.LABEL_WIDTH_MAP[label] ?: 0.45f
                         val currentDistance = (realWidth * DistanceConstants.VIRTUAL_FOCAL_LENGTH_F) / pixelWidth
 
-                        // 2. 音声警告マネージャーに座標も渡す（ここで足なら内部でreturnされる）
-                        //第4引数はstepDetector.isWalkingです。今回はtrueにする
-                        distanceAlertManager.checkAndAlert(currentDistance, label, topPositionRatio,stepDetector.isWalking)
+                        // 2. 音声・バイブ警告の判定
+                        distanceAlertManager.checkAndAlert(currentDistance, label, topPositionRatio, stepDetector.isWalking)
 
-                        // 3. 画面通知・判定用の足除外（上端が0.7より下なら足とみなして無視）
-                        if (topPositionRatio > 0.70f) {
-                            continue 
-                        }
+                        // 3. 画面下部の物体（足元など）は通知対象から除外
+                        if (topPositionRatio > 0.70f) continue 
 
-                        // 4. 有効な「人」の中で一番近いものを更新
+                        // 4. 通知対象となる最も近い物体を特定
                         if (score >= 0.5f && currentDistance < nearestDistance) {
                             nearestDistance = currentDistance
                             nearestPersonBox = boundingBox
@@ -497,50 +367,43 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
                 }
             }
 
-            // 5. ヘッドアップ通知の判定（一番近い人が8m以内にいる場合）
-if (nearestPersonBox != null) {
-    val objectCenterX = nearestPersonBox.centerX() / imageWidth
+            // 5. ヘッドアップ通知（画面通知）の判定
+            if (nearestPersonBox != null) {
+                // 8m以内の場合
+                if (nearestDistance <= ALERT_DISTANCE_M) {
+                    // 歩行中かつ通知クールタイム（2秒）を過ぎている場合
+                    if (stepDetector.isWalking && !isNotificationSent) { 
+                        val directionGuide = avoidanceManager.getAvoidanceMessage(nearestPersonBox, imageWidth)
+                        finalNotificationTitle = directionGuide
+                        finalNotificationMessage = "前 ${String.format("%.2f m", nearestDistance)} に人がいます"
+                        finalShouldNotify = true
 
-    // 条件：距離が 8m 以内
-    if (nearestDistance <= ALERT_DISTANCE_M) {
-
-        // 歩行中かつ、前回の通知から2秒以上経過（isNotificationSentがfalse）している場合
-        if (stepDetector.isWalking && !isNotificationSent) { 
-            val directionGuide = avoidanceManager.getAvoidanceMessage(nearestPersonBox, imageWidth)
-            finalNotificationTitle = directionGuide
-            finalNotificationMessage = "前 ${String.format("%.2f m", nearestDistance)} に人がいます"
-            finalShouldNotify = true
-
-            // フラグを true にして連続通知をブロック
-            isNotificationSent = true 
-
-            // 2秒（2000ミリ秒）後にフラグを false に戻し、再通知を許可する
-            Handler(Looper.getMainLooper()).postDelayed({
+                        // 通知フラグを立て、2秒後にリセットするタイマーを開始
+                        isNotificationSent = true 
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            isNotificationSent = false
+                        }, 2000)
+                    }
+                } else {
+                    // 8m圏外の場合はフラグをリセット
+                    isNotificationSent = false
+                }
+            } else {
+                // 誰も検知していない場合はフラグをリセット
                 isNotificationSent = false
-            }, 2000)
-        }
-    } else {
-        // 8m圏外に出た場合は、2秒待たずにフラグをリセットしても良いでしょう（任意）
-        // ただし、タイマーが走っている間は postDelayed が後から false に上書きします
-        isNotificationSent = false
-    }
-} else {
-    // 誰も検知していない場合
-    isNotificationSent = false
-}
+            }
 
-            // 6. 最後に一括で通知を実行
+            // 6. 条件を満たした場合のみ通知を実行
             if (finalShouldNotify) {
                 notificationHelper.showNotification(finalNotificationTitle, finalNotificationMessage)
             }
             fragmentCameraBinding.overlay.invalidate()
-        } // activity?.runOnUiThread の閉じ
+        }
     }
 
-    // エラー時
     override fun onError(error: String) {
         activity?.runOnUiThread {
             Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
         }
     }
-} // CameraFragment クラス自体の終わり（ここが抜けていた可能性があります）
+}

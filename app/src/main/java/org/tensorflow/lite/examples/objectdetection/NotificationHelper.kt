@@ -10,29 +10,30 @@ import androidx.core.app.NotificationCompat
 import org.tensorflow.lite.examples.objectdetection.fragments.CameraFragment
 
 /**
- * ヘッドアップ通知を管理するヘルパークラス
- * 永続的な通知ではなく、通常の通知として表示します。
+ * 障害物検知時のヘッドアップ通知（画面上部へのポップアップ）を管理するクラス
  */
 class NotificationHelper(private val context: Context) {
 
-    private val NOTIFICATION_ID = 101 // 通知ID (常に同じIDを使うことで既存の通知を上書きします)
-    private val CHANNEL_ID = "object_detection_alerts_channel" // 通知チャンネルID
-    private val CHANNEL_NAME = "Object Detection Alerts" // 通知チャンネル名
+    private val NOTIFICATION_ID = 101 // 通知の識別子（同じIDを使用して通知を更新・上書きする）
+    private val CHANNEL_ID = "object_detection_alerts_channel" // 通知チャンネルの一意識別子
+    private val CHANNEL_NAME = "Object Detection Alerts" // ユーザーに表示されるチャンネル名
 
     init {
         createNotificationChannel()
     }
 
-    // Android O (API 26) 以降で必要な通知チャンネルを作成する
+    /**
+     * Android 8.0 (API 26) 以上で必要な通知チャンネルを構築・登録する
+     */
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            // ヘッドアップ通知として一時的に表示されるよう、重要度を高く設定
+            // ヘッドアップ表示（ポップアップ）を有効にするため重要度を HIGH に設定
             val importance = NotificationManager.IMPORTANCE_HIGH 
             val channel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME, importance).apply {
                 description = "Shows the latest object detection status as a head-up notification."
-                enableVibration(true) // バイブレーションを有効にする
+                enableVibration(true)
             }
-            // チャンネルをシステムに登録
+            
             val notificationManager: NotificationManager =
                 context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
@@ -40,12 +41,12 @@ class NotificationHelper(private val context: Context) {
     }
 
     /**
-     * 指定されたメッセージで通知を瞬時に表示します。
-     * @param title 通知のタイトル
-     * @param statusMessage 通知に表示するメッセージ
+     * 通知を作成し、ユーザーに表示する
+     * @param title 通知のタイトル（回避指示など）
+     * @param statusMessage 通知の本文（距離情報など）
      */
     fun showNotification(title: String, statusMessage: String) {
-        // 通知タップ時に開くActivityを設定 (ここではMainActivity)
+        // 通知をタップした際にアプリ（MainActivity）を前面に開くためのIntent設定
         val intent = Intent(context, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
@@ -53,18 +54,18 @@ class NotificationHelper(private val context: Context) {
             context, 0, intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         )
 
-        // 通知の構築
+        // 通知オブジェクトの構築
         val notification = NotificationCompat.Builder(context, CHANNEL_ID)
-            .setContentTitle(title) // タイトル
-            .setContentText(statusMessage) // メッセージ
-            .setSmallIcon(R.drawable.ic_notification) // 必要な通知アイコン (R.drawable.ic_notification は準備済みと仮定します)
-            .setContentIntent(pendingIntent) // タップ時の処理
-            .setPriority(NotificationCompat.PRIORITY_HIGH) // 重要度を高く設定（ヘッドアップ表示のため）
+            .setContentTitle(title)
+            .setContentText(statusMessage)
+            .setSmallIcon(R.drawable.ic_notification) // ステータスバーに表示されるアイコン
+            .setContentIntent(pendingIntent)
+            .setPriority(NotificationCompat.PRIORITY_HIGH) // 重要度高（ヘッドアップ通知用）
             .setCategory(NotificationCompat.CATEGORY_STATUS)
-            .setAutoCancel(true) // ユーザーがタップすると通知を自動で消す
+            .setAutoCancel(true) // タップ時に通知を自動消去
             .build()
 
-        // 通知を表示
+        // システムに通知の発行を依頼
         val notificationManager =
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.notify(NOTIFICATION_ID, notification)

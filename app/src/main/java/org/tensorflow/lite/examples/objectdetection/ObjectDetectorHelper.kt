@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-//TensorFlow Lite の物体検出を扱うためのヘルパークラス
-
 package org.tensorflow.lite.examples.objectdetection
 
 import android.content.Context
@@ -30,57 +28,52 @@ import org.tensorflow.lite.task.core.BaseOptions
 import org.tensorflow.lite.task.vision.detector.Detection
 import org.tensorflow.lite.task.vision.detector.ObjectDetector
 
+/**
+ * TensorFlow Lite Task Library を使用して物体検出を実行するヘルパークラス
+ */
 class ObjectDetectorHelper(
-  var threshold: Float = 0.5f,  //検出スコアの閾値
-  var numThreads: Int = 2,      //使用スレッド数
-  var maxResults: Int = 3,      //返す最大検出数
-  var currentDelegate: Int = 0, //使用するDelegate（CPU/GPU/NNAPI）
-  var currentModel: Int = 0,    // 使用するモデルの種類
-  val context: Context,
-  val objectDetectorListener: DetectorListener?
+    var threshold: Float = 0.5f,  // 検出スコアのしきい値
+    var numThreads: Int = 2,      // 推論に使用するスレッド数
+    var maxResults: Int = 3,      // 取得する最大検出数
+    var currentDelegate: Int = 0, // 演算デバイス（CPU/GPU/NNAPI）の選択
+    var currentModel: Int = 0,    // 使用する学習済みモデルの選択
+    val context: Context,
+    val objectDetectorListener: DetectorListener?
 ) {
 
-    // この例では、変更時にリセットできるように変数（var）である必要があります。
-    //ObjectDetectorが変更されない場合は、遅延定数（lazy val）が望ましいでしょう。
-    // ObjectDetector のインスタンス（設定変更時に再作成するため var）
+    // ObjectDetector インスタンス（設定変更時に再生成するため nullable/var）
     private var objectDetector: ObjectDetector? = null
 
     init {
-        // 初期化時に Detector をセットアップ
         setupObjectDetector()
     }
 
+    /**
+     * Detectorを明示的にクリアする
+     */
     fun clearObjectDetector() {
-        // Detector をクリアして再作成を可能にする
         objectDetector = null
     }
 
-    // オブジェクト検出器を、それを使用しているスレッド上の現在の設定で初期化します。
-    //CPU および NNAPI デリゲートは、メインスレッドで作成されバックグラウンドスレッド
-    //で使用される検出器と併用できますが、GPU デリゲートは検出器を初期化したスレッド上
-    //で使用する必要があります。
-    // 現在の設定に基づいて ObjectDetector を初期化
+    /**
+     * 現在の設定（モデル、スレッド数、デバイス）に基づいてObjectDetectorを初期化する
+     */
     fun setupObjectDetector() {
-        // 検出器の基本オプションを作成し、最大結果数とスコア閾値を指定する
-        // モデルへの基本設定（閾値・結果数）
+        // 1. 検出器の基本オプション設定
         val optionsBuilder =
             ObjectDetector.ObjectDetectorOptions.builder()
                 .setScoreThreshold(threshold)
                 .setMaxResults(maxResults)
-                // ⭐ ラベルのホワイトリストを設定 ⭐
-                // このリストに含まれないラベルの結果は、検出器から返されません。
+                // ホワイトリスト：特定のラベル（人や車など）のみを検出対象にする
                 .setLabelAllowList(ALLOWED_LABELS)
 
-        // BaseOptions：スレッド数や delegate 設定を行う
+        // 2. 実行環境（スレッド数など）の設定
         val baseOptionsBuilder = BaseOptions.builder().setNumThreads(numThreads)
 
-        // 使用 delegate の切替（CPU / GPU / NNAPI）デフォルトはCPU
+        // デバイスの選択（GPU使用時は端末の互換性をチェック）
         when (currentDelegate) {
-            DELEGATE_CPU -> {
-                // Default
-            }
+            DELEGATE_CPU -> { /* デフォルト */ }
             DELEGATE_GPU -> {
-                // GPU が使える端末かチェック
                 if (CompatibilityList().isDelegateSupportedOnThisDevice) {
                     baseOptionsBuilder.useGpu()
                 } else {
@@ -92,10 +85,9 @@ class ObjectDetectorHelper(
             }
         }
 
-        // BaseOptions を ObjectDetectorOptions に反映
         optionsBuilder.setBaseOptions(baseOptionsBuilder.build())
 
-        // 使用するモデルを選択
+        // 3. モデルファイルのパス設定
         val modelName =
             when (currentModel) {
                 MODEL_MOBILENETV1 -> "mobilenetv1.tflite"
@@ -105,12 +97,11 @@ class ObjectDetectorHelper(
                 else -> "mobilenetv1.tflite"
             }
 
-        // モデルファイルを読み込み ObjectDetector を初期化
+        // 4. ObjectDetectorの生成
         try {
             objectDetector =
                 ObjectDetector.createFromFileAndOptions(context, modelName, optionsBuilder.build())
         } catch (e: IllegalStateException) {
-            // 初期化に失敗した場合
             objectDetectorListener?.onError(
                 "Object detector failed to initialize. See error logs for details"
             )
@@ -118,38 +109,35 @@ class ObjectDetectorHelper(
         }
     }
 
-    // Bitmap 画像を入力して物体検出を実行
+    /**
+     * Bitmap画像に対して物体検出を実行する
+     * @param image 検出対象のBitmap
+     * @param imageRotation カメラの回転角度
+     */
     fun detect(image: Bitmap, imageRotation: Int) {
-
-        // Detector が未生成なら再生成
         if (objectDetector == null) {
             setupObjectDetector()
         }
 
-        // 推論時間は、プロセスの開始時と終了時のシステム時間の差である
-        // 処理時間計測開始
+        // 推論時間の計測開始
         var inferenceTime = SystemClock.uptimeMillis()
 
-        // 画像用のプリプロセッサを作成する。
-        // See https://www.tensorflow.org/lite/inference_with_metadata/
-        //            lite_support#imageprocessor_architecture
-        // 入力画像の前処理（回転補正）
+        // 画像の前処理：デバイスの向きに合わせて画像を回転させる
         val imageProcessor =
             ImageProcessor.Builder()
-                .add(Rot90Op(-imageRotation / 90)) // 画面の回転を補正
+                .add(Rot90Op(-imageRotation / 90))
                 .build()
 
-        // 画像を前処理し、検出用にTensorImageに変換する。
-        // Bitmap → TensorImage に変換
+        // BitmapをTensorImage形式に変換
         val tensorImage = imageProcessor.process(TensorImage.fromBitmap(image))
 
-        // 検出実行
+        // 検出の実行
         val results = objectDetector?.detect(tensorImage)
 
-        // 処理時間計測終了
+        // 推論時間の計算
         inferenceTime = SystemClock.uptimeMillis() - inferenceTime
 
-        // 結果をコールバックで返す
+        // 結果をリスナーを通じて通知
         objectDetectorListener?.onResults(
             results,
             inferenceTime,
@@ -157,7 +145,9 @@ class ObjectDetectorHelper(
             tensorImage.width)
     }
 
-    // 結果・エラーを受け取るリスナー
+    /**
+     * 検出結果やエラーを受け取るためのインターフェース
+     */
     interface DetectorListener {
         fun onError(error: String)
         fun onResults(
@@ -169,21 +159,23 @@ class ObjectDetectorHelper(
     }
 
     companion object {
-        // Delegate 種類
+        // Delegate定数
         const val DELEGATE_CPU = 0
         const val DELEGATE_GPU = 1
         const val DELEGATE_NNAPI = 2
-        // 使用モデル種類
+        
+        // モデル識別定数
         const val MODEL_MOBILENETV1 = 0
         const val MODEL_EFFICIENTDETV0 = 1
         const val MODEL_EFFICIENTDETV1 = 2
         const val MODEL_EFFICIENTDETV2 = 3
 
-        // 検出を許可するラベル（ホワイトリスト）を定義
-        private val ALLOWED_LABELS = listOf("person", "bicycle", "car", "motorcycle", "bus",
+        // 検出を許可するラベル（歩行支援に役立つ障害物を中心に定義）
+        private val ALLOWED_LABELS = listOf(
+            "person", "bicycle", "car", "motorcycle", "bus",
             "truck", "traffic light", "fire hydrant", "stop sign", "bench", "cat", "dog",
             "horse", "cow", "bear", "umbrella", "suitcase", "sports ball", "bottle","chair",
-            "potted plant")
-
+            "potted plant"
+        )
     }
 }

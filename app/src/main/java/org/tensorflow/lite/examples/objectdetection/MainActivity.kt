@@ -21,33 +21,30 @@ import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import org.tensorflow.lite.examples.objectdetection.databinding.ActivityMainBinding
-import android.content.res.Configuration//PIP
+import android.content.res.Configuration
 import androidx.activity.OnBackPressedCallback
 
 /**
- * Main entry point into our app. This app follows the single-activity pattern, and all
- * functionality is implemented in the form of fragments.
+ * アプリのエントリーポイントとなるメインアクティビティ。
+ * シングルアクティビティ構造で、各機能はフラグメントとして実装される。
  */
 class MainActivity : AppCompatActivity() {
 
-    // ViewBinding 用の変数
     private lateinit var activityMainBinding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // layout/activity_main.xml を ViewBinding 経由で読み込む
+        // ViewBindingによるレイアウトの初期化
         activityMainBinding = ActivityMainBinding.inflate(layoutInflater)
-
-        // アクティビティの表示内容としてセット
         setContentView(activityMainBinding.root)
 
-        // 1. 設定ボタンのリスナー
+        // 設定画面へ遷移するボタンのイベント登録
         activityMainBinding.settingsButton.setOnClickListener {
             navigateToSettings()
         }
 
-        // 2. Android 13以降推奨の戻る処理の登録（onBackPressedの代替）
+        // Android 10 (Q) 専用：メモリリーク対策用の戻る処理登録
         if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q) {
             onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
@@ -55,37 +52,34 @@ class MainActivity : AppCompatActivity() {
                 }
             })
         }
-
     }
 
-    //PiP
+    /**
+     * ホームボタン押下時などのシステムイベント。
+     * PiP（ピクチャーインピクチャー）モードへの移行契機として利用。
+     */
     override fun onUserLeaveHint() {
         super.onUserLeaveHint()
-        
-        // PiPモードがサポートされており、かつ現在 PiP モードではない場合、
-        // PiPモードへの移行を試みるよう Fragment に促します。
-        // 実際のPiP移行は CameraFragment 内で行われます。
+        // 実際の移行処理は CameraFragment の onPause 等で行われる
     }
 
-    //設定画面 (SettingsActivity) への遷移
+    /**
+     * 設定画面 (SettingsActivity) を起動する
+     */
     private fun navigateToSettings() {
         val intent = Intent(this, SettingsActivity::class.java)
         startActivity(intent)
     }
 
-    
-
+    /**
+     * 戻るボタンが押された際の処理
+     */
     override fun onBackPressed() {
-        // Android 10(Q) の戻る操作で起きるメモリリーク対策
+        // Android 10(Q) の既知のメモリリーク回避用
         if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q) {
-            // Android Qにおけるメモリリーク問題の回避策（IRequestFinishCallback$Stub内）
-            // (https://issuetracker.google.com/issues/139738913)
-            // 特殊処理
             finishAfterTransition()
         } else {
-            // 通常の戻る動作
             super.onBackPressed()
         }
     }
-
 }
