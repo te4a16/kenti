@@ -87,6 +87,8 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
     private var isNotificationSent = false
     private val ALERT_DISTANCE_M = 8.0f
 
+    private var lastDistance: Float = Float.MAX_VALUE
+
     override fun onResume() {
         super.onResume()
         // 歩行検知センサーのリスナーを開始
@@ -369,31 +371,45 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
 
             // 5. ヘッドアップ通知（画面通知）の判定
             if (nearestPersonBox != null) {
-                // 8m以内の場合
+                // 進路上の判定（必要なら 0.3f..0.7f のコメントアウトを外す）
+                val objectCenterX = nearestPersonBox.centerX() / imageWidth
+                val currentDistance = nearestDistance // 今回検知した最短距離
+                val isApproaching = (lastDistance - currentDistance) > 0.4f //(40cm)
+                
+                // 8m以内 かつ 歩行中 の判定
                 if (nearestDistance <= ALERT_DISTANCE_M) {
-                    // 歩行中かつ通知クールタイム（2秒）を過ぎている場合
-                    if (stepDetector.isWalking && !isNotificationSent) { 
-                        val directionGuide = avoidanceManager.getAvoidanceMessage(nearestPersonBox, imageWidth)
-                        finalNotificationTitle = directionGuide
-                        finalNotificationMessage = "前 ${String.format("%.2f m", nearestDistance)} に人がいます"
-                        finalShouldNotify = true
+                    if (stepDetector.isWalking && isApproaching) {
+                        // クールタイム（isNotificationSent）でガード
+                        if (!isNotificationSent) {
+                            val directionGuide = avoidanceManager.getAvoidanceMessage(nearestPersonBox, imageWidth)
+                            finalNotificationTitle = directionGuide
+                            finalNotificationMessage = "前 ${String.format("%.2f m", nearestDistance)} に人がいます"
+                            finalShouldNotify = true
 
-                        // 通知フラグを立て、2秒後にリセットするタイマーを開始
-                        isNotificationSent = true 
-                        Handler(Looper.getMainLooper()).postDelayed({
-                            isNotificationSent = false
-                        }, 2000)
+                            // 通知フラグを立て、0.5秒後にリセット
+                            isNotificationSent = true 
+                            Handler(Looper.getMainLooper()).postDelayed({
+                                isNotificationSent = false
+                            }, 500) // ここを 500ms (0.5秒) に変更
+                        }
+                    } else if(!isApproaching){
+                        // 立ち止まったら即リセットして、次に歩き出した瞬間に出るようにする
+                        isNotificationSent = false
                     }
                 } else {
-                    // 8m圏外の場合はフラグをリセット
+                    // 8m圏外
                     isNotificationSent = false
                 }
+
+                lastDistance = currentDistance
+
             } else {
-                // 誰も検知していない場合はフラグをリセット
+                // 誰も検知していない
                 isNotificationSent = false
+                lastDistance = Float.MAX_VALUE
             }
 
-            // 6. 条件を満たした場合のみ通知を実行
+            // 6. 通知の実行
             if (finalShouldNotify) {
                 notificationHelper.showNotification(finalNotificationTitle, finalNotificationMessage)
             }
